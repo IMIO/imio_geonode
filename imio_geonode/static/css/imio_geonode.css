@@ -1,0 +1,9 @@
+.navbar-brand {
+background: url(static/img/imio-logo.png) no-repeat;
+}
+.container{
+	width: 1100px;
+}
+.navbar-collapse{
+	width: 1100px;
+}
