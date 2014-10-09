@@ -1,5 +1,11 @@
 .navbar-brand {
-background: url(static/img/imio-logo.png) no-repeat;
+background: url(static/img/logo.png) no-repeat;
+}
+
+.nav-logo {
+    width: 373px;
+    height: 79px;
+    background: url(/static/img/imio-logo-large.png) no-repeat;
 }
 .container{
 	width: 1100px;
