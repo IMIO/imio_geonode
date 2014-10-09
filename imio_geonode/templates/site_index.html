@@ -8,6 +8,18 @@
   <div class="hero-unit">
     <h1>{% trans "Welcome" %}</h1>
     <div class="hero-unit-content">
+		<div class="intro">
+				<img src = '/static/img/imio-logo-large.png'>
+			<p>
+				{% blocktrans %}
+				IMIO-Géonode est un plateforme d'hébergement et de gestion des données cartographiques.
+				{% endblocktrans %}
+			</p>
+			<span>
+				Pour davantage d'information à propos d'IMIO, l'intercommunale de Mutualisation Informatique et Organisationnelle merci de visiter
+				<a href="http://uwigsmona.weebly.com/">notre site web</a>.
+			</span>
+		</div>
       <div class="btns">
         <a class="btn btn-large" href="{% url "layer_browse" %}">
           {% trans "Explore Layers" %}
