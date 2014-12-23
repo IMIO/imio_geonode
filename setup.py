@@ -1,8 +1,17 @@
+# -*- coding: utf-8 -*-
 import os
 from distutils.core import setup
+genode_version = '2.4b7'
+gdal_version = '1.10.1'
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+install_requires = [
+    'geonode',
+    #'geonode=={0}'.format(genode_version),
+    # 'numpy',
+    'pygdal=={0}'.format(gdal_version),
+]
 
 setup(
     name="imio_geonode",
@@ -18,8 +27,9 @@ setup(
     ],
     license="BSD",
     keywords="imio_geonode geonode django",
-    url='https://github.com/imio_geonode/imio_geonode',
+    url='https://github.com/imio/imio_geonode',
     packages=['imio_geonode',],
     include_package_data=True,
+    install_requires=install_requires,
     zip_safe=False,
 )
