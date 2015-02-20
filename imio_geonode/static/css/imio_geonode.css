@@ -1,5 +1,5 @@
 .navbar-brand {
-        background: url(/static/img/logo.png) no-repeat;
+        background: url("/static/img/logo.png") no-repeat scroll 0 0 / 75% auto rgba(0, 0, 0, 0);
         width: 150px;
 }
 
