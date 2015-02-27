@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 from django.core.management import call_command
 from django.utils.translation import ugettext_lazy as _
