@@ -45,12 +45,12 @@ def is_auth(view_func):
 
 @is_auth
 def admin_view_imio(request, template='adminimio/imio_management.html'):
-    try:
-        context_dict = {}
+    if request.method == 'GET':
         return render_to_response(template, RequestContext(request, context_dict))
-    except PermissionDenied: # maybe need to be remove
+    elif request.method == 'POST':
+        form = testForm(request.POST)
+        out = {}
         return HttpResponse(
-            loader.render_to_string(
-                '401.html', RequestContext(
-                    request, {
-                        'error_message': _("You are not allowed to view this page.")})), status=403)
+            json.dumps(out),
+            mimetype='application/json',
+            status=status_code)
