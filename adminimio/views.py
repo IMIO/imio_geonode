@@ -31,6 +31,7 @@ def is_auth(view_func):
     member, displaying the login page if necessary.
     """
     def _checklogin(request, *args, **kwargs):
+        print('   !!! _checklogin() !!!')
         if request.user.is_active and request.user.is_staff:
             return view_func(request, *args, **kwargs)
         else:
@@ -45,12 +46,20 @@ def is_auth(view_func):
 
 @is_auth
 def admin_view_imio(request, template='adminimio/imio_management.html'):
-    if request.method == 'GET':
-        return render_to_response(template, RequestContext(request, context_dict))
-    elif request.method == 'POST':
+    out = {}
+    print('   !!! admin_view_imio() !!!')
+    if request.method == 'POST':
+        print('   !!! request de type POST !!!')
         form = testForm(request.POST)
-        out = {}
+        # La methode de mise jour
+        Im.updatelayer()
+
+        out['success'] = True
+
         return HttpResponse(
             json.dumps(out),
             mimetype='application/json',
             status=status_code)
+    else:
+        print('   !!! request de type GET !!!')
+        return render_to_response(template, RequestContext(request, out))
