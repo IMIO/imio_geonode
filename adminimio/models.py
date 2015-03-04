@@ -5,7 +5,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import signals
 from django import forms
 
+from django.contrib.auth.models import User
+
 from geonode.people.models import Profile
+from geonode.groups.models import GroupProfile
+
 
 class Im(models.Model):
 
@@ -18,6 +22,17 @@ class Im(models.Model):
         return mark_safe("<img class='loading' src='/static/img/loading.gif' alt='loading' style='display:none;' /><a data-identifier='task_%i' class='task'><img src='/static/img/process.png' style='cursor:pointer;' /></a>") % self.id
     my_task_init.allow_tags = True
     my_task_init.short_description = _(u"Execute Task")
+
+    @staticmethod
+    def crea_group_with_manager(name_user, name_group):
+        print('    !!! dans crea_group_with_manager() de adminimio !!!')
+        user = User.objects.create_user(name_user, 'lennon@thebeatles.com', name_user)
+        user.is_staff = True
+        #user.save(using=self._db)
+        geonode_user = Profile(user)
+
+        group = GroupProfile()
+        group.join(geonode_user)
 
 
 def profile_post_save(instance, sender, **kwargs):

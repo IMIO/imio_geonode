@@ -1,0 +1,70 @@
+{% extends "adminimio/imio_base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load url from future %}
+
+{% block title %} {% trans "Imio administration" %} - {{ block.super }} {% endblock %}
+
+{% block body_class %}adminimio{% endblock %}
+
+{% block body_outer %}
+<div class="row">
+  <div class="col-md-8">
+    <div>Preparation de l'interface d'administration</div>
+    {% block body %}{% endblock %}
+  </div>
+  <div class="col-md-4">
+  {% block sidebar %}{% endblock %}
+  </div>
+  <br/>
+  <form id="form_updatelayers" action="{% url "imio_management_commune" %}" method="post">
+    <input type="text" name="in_user">
+    <input type="text" name="in_comm"> 
+    <input type="hidden" value="{{ csrf_token }}" id="csrf_token" name="csrf_token">
+    <input class="btn" id="b_commune_user" type="submit" value="creation">
+  </form>
+  <br/>
+  <div id="form_updatelayers_result">
+  </div>
+  <div><a href="{% url "_action" %}">action</a></div>
+</div>
+<script type="text/javascript">
+{% autoescape off %}
+  csrf_token =  "{{ csrf_token }}",
+  form_target = "/admninimio",
+  geogig_enabled = {{ GEOGIG_ENABLED|lower  }},
+  time_enabled = {{ TIME_ENABLED|lower  }},
+  userLookup = "{% url "geonode.views.ajax_lookup" %}"
+{% endautoescape %}
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    var form = document.getElementById('form_updatelayers')
+
+    if(form.addEventListener){
+        form.addEventListener("submit", function(evt){
+            evt.preventDefault();
+
+            var r = new XMLHttpRequest();
+
+            r.onreadystatechange = function () {
+                //code
+                if (r.readyState != 4 || r.status != 200) return;
+                document.getElementById('form_updatelayers_result').innerHTML = 'success';
+                alert("Success: " + r.responseText);
+            };
+
+            r.open("POST", form.attributes["action"].value, true);
+            r.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+
+            r.send("csrf_token="+csrf_token);
+        }
+        , false);
+    }else if(form.attachEvent){
+        form.attachEvent('onsubmit', send_cmd);
+    }
+
+})
+</script>
+{% endblock %}
+
