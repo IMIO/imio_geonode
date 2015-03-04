@@ -3,6 +3,7 @@ from django.db import models
 from django.core.management import call_command
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import signals
+from django import forms
 
 from geonode.people.models import Profile
 
@@ -24,3 +25,7 @@ def profile_post_save(instance, sender, **kwargs):
     print('   !!! On a recupere un signal profile_post_save, sender=Profile !!!')
 
 signals.post_save.connect(profile_post_save, sender=Profile)
+
+
+class ValifdForm(forms.Form):
+    csrf_token = forms.CharField()
