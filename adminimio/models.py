@@ -42,13 +42,13 @@ class Im(models.Model):
         # Test si nom user est deja prit
         lUser = list(User.objects.all())
         for u in lUser:
-           if u.name_long == name_user:
-              raise Exception('That user name already exists')
+            if u.name_long == name_user:
+                raise Exception('That user name already exists')
 
         lGroup = list(GroupProfile.objects.all())
         for g in lGroup:
             if g.title == name_group or g.slug == slugify(name_group):
-              raise('That group name already exists')
+                raise('That group name already exists')
 
         user = User.objects.create_user(name_user, None, name_user)
         user.is_staff = True
@@ -67,6 +67,72 @@ class Im(models.Model):
         group.save()
 
         return True
+
+    @staticmethod
+    def crea_group_with_manager_and_user(name_user, name_group):
+        '''
+        Methode de creation de groupe pour commune,
+        Deux utilisateur y seront ajouter, un en user RO
+        et un en manager RW
+        '''
+        # Recuperation de la surcharge de user
+        User = get_user_model()
+
+
+        u_ro = name_group+'_'+name_user
+        u_rw = name_group+'_admin'
+
+        g_user = name_group+'_ro'
+        g_admin = name_group+'_rw'
+
+        # Test si nom user est deja prit
+        lUser = list(User.objects.all())
+        for u in lUser:
+            if u.name_long == u_ro or u.name_long == u_rw:
+                raise Exception('That user name already exists')
+
+        lGroup = list(GroupProfile.objects.all())
+        for g in lGroup:
+            if( g.title == g_user or g.slug == slugify(g_user) or
+                g.title == g_admin or g.slug == slugify(g_admin)) :
+                raise('That group name already exists')
+
+        # RW
+        user_rw = User.objects.create_user(u_rw, None, u_rw)
+        user_rw.is_staff = True
+        user_rw.save()
+
+        group_admin = GroupProfile()
+        group_admin.title = g_admin
+        group_admin.slug = slugify(g_admin)
+        group_admin.description = g_admin
+
+        group_admin.save()
+
+        group_admin.join(user_rw, role="manager")
+
+
+        # RO
+        user_ro = User.objects.create_user(u_ro, None, u_ro)
+        user_ro.save()
+
+        group_user = GroupProfile()
+        group_user.title = g_user
+        group_user.slug = slugify(g_user)
+        group_user.description = g_user
+
+        group_user.save()
+
+        group_user.join(user_rw, role="manager")
+        group_user.join(user_ro)
+
+
+        user_rw.save()
+        group_admin.save()
+
+        user_ro.save()
+        group_user.save()
+
 
 
 def profile_post_save(instance, sender, **kwargs):
