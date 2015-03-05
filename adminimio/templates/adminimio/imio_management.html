@@ -17,51 +17,9 @@
   {% block sidebar %}{% endblock %}
   </div>
   <br/>
-  <form id="form_updatelayers" action="{% url "imio_management" %}" method="post">
-    <input type="hidden" value="{{ csrf_token }}" id="csrf_token" name="csrf_token">
-    <input class="btn" id="b_updatelayers" type="submit" value="updatelayers">
-  </form>
+  <div class="imio_management"><a href="{% url "imio_management_updatelayer" %}">Utilitaire de mise a jour des layers</a></div>
   <br/>
-  <div id="form_updatelayers_result">
-  </div>
-  <div><a href="{% url "imio_management_action" %}">action</a></div>
+  <div class="imio_management"><a href="{% url "imio_management_commune" %}">Utilitaire de création de nouvelle commune</a></div>
+  <br/>
 </div>
-<script type="text/javascript">
-{% autoescape off %}
-  csrf_token =  "{{ csrf_token }}",
-  form_target = "/admninimio",
-  geogig_enabled = {{ GEOGIG_ENABLED|lower  }},
-  time_enabled = {{ TIME_ENABLED|lower  }},
-  userLookup = "{% url "geonode.views.ajax_lookup" %}"
-{% endautoescape %}
-
-document.addEventListener('DOMContentLoaded', function() {
-
-    var form = document.getElementById('form_updatelayers')
-
-    if(form.addEventListener){
-        form.addEventListener("submit", function(evt){
-            evt.preventDefault();
-
-            var r = new XMLHttpRequest();
-
-            r.onreadystatechange = function () {
-                //code
-                if (r.readyState != 4 || r.status != 200) return;
-                document.getElementById('form_updatelayers_result').innerHTML = 'success';
-                alert("Success: " + r.responseText);
-            };
-
-            r.open("POST", form.attributes["action"].value, true);
-            r.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-
-            r.send("csrf_token="+csrf_token);
-        }
-        , false);
-    }else if(form.attachEvent){
-        form.attachEvent('onsubmit', send_cmd);
-    }
-
-})
-</script>
 {% endblock %}

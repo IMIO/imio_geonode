@@ -48,39 +48,40 @@ def is_auth(view_func):
 @is_auth
 def admin_view_imio(request, template='adminimio/imio_management.html'):
     out = {}
-    print('   !!! admin_view_imio() !!!')
+    return render_to_response(template, RequestContext(request, out))
+
+
+@is_auth
+def admin_view_updatelayer(request, template='adminimio/imio_management_updatelayer.html'):
+    result = False
+    out = {}
     if request.method == 'POST':
         out['success'] = False
-        print('   !!! request de type POST !!!')
-        token_session = request.token
+        #token_session = request.token
         form = ValidFormUpdateLayer(request.POST)
         if form.is_valid():
-            if csrf_token in request.POST:
-                form_token = form.cleaned_data['csrf_token']
-                request_token = request.POST['csrf_token']
-                if form_token == request_token :
-                    # La methode de mise jour
-                    Im.updatelayer()
-                    out['success'] = True
+            form_token = form.cleaned_data['csrf_token']
+            #request_token = request.POST['csrf_token']
+            #if form_token == request_token :
+            # La methode de mise jour
+            try:
+                created, updated, failed = Im.updatelayer()
+                result = True
+                out['success'] = True
+            except Exception as e:
+                out['error'] = str(e.message)
+        if result == True:
+            out['success'] = True
+            status_code = 200
+        else:
+            status_code = 500
 
         return HttpResponse(
             json.dumps(out),
             mimetype='application/json',
             status=status_code)
     else:
-        print('   !!! request de type GET !!!')
         return render_to_response(template, RequestContext(request, out))
-
-@is_auth
-def admin_view_imio_action(request, template='adminimio/imio_management.html'):
-    print('   !!! admin_view_imio_action() !!!')
-    out = {}
-    Im.updatelayer()
-    return render_to_response(template, RequestContext(request, out))
-
-
-
-
 
 
 @is_auth
@@ -116,5 +117,4 @@ def admin_view_crea_group_with_manager(request, template='adminimio/imio_managem
             mimetype='application/json',
             status=status_code)
     else:
-        print('   !!! request de type GET !!!')
         return render_to_response(template, RequestContext(request, out))

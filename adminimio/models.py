@@ -4,6 +4,7 @@ from django.core.management import call_command
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import signals
 from django import forms
+from StringIO import StringIO
 from slugify import slugify
 
 from django.contrib.auth import get_user_model
@@ -17,7 +18,15 @@ class Im(models.Model):
     @staticmethod
     def updatelayer():
         print('   !!! dans updatelayer() de adminimio !!!')
-        call_command('updatelayers')
+        out = StringIO()
+        call_command('updatelayers', stdout=out)
+        ret = out.getvalue() # Verifier pourquoi vide
+        out.close()
+        # recupere les infos de retour de methode
+        created = 0
+        updated = 0
+        failed = 0
+        return created, updated, failed
 
     def my_task_init(self):
         return mark_safe("<img class='loading' src='/static/img/loading.gif' alt='loading' style='display:none;' /><a data-identifier='task_%i' class='task'><img src='/static/img/process.png' style='cursor:pointer;' /></a>") % self.id
