@@ -4,8 +4,9 @@ from django.core.management import call_command
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import signals
 from django import forms
+from slugify import slugify
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from geonode.people.models import Profile
 from geonode.groups.models import GroupProfile
@@ -26,13 +27,37 @@ class Im(models.Model):
     @staticmethod
     def crea_group_with_manager(name_user, name_group):
         print('    !!! dans crea_group_with_manager() de adminimio !!!')
-        user = User.objects.create_user(name_user, 'lennon@thebeatles.com', name_user)
+        # Recuperation de la surcharge de user
+        User = get_user_model()
+
+        # Test si nom user est deja prit
+        lUser = list(User.objects.all())
+        for u in lUser:
+           if u.name_long == name_user:
+              raise Exception('That user name already exists')
+
+        lGroup = list(GroupProfile.objects.all())
+        for g in lGroup:
+            if g.title == name_group or g.slug == slugify(name_group):
+              raise('That group name already exists')
+
+        user = User.objects.create_user(name_user, None, name_user)
         user.is_staff = True
-        #user.save(using=self._db)
-        geonode_user = Profile(user)
+        user.save()
 
         group = GroupProfile()
-        group.join(geonode_user)
+        group.title = name_group
+        group.slug = slugify(name_group)
+        group.description = name_group
+
+        group.save()
+
+        group.join(user, role="manager")
+
+        user.save()
+        group.save()
+
+        return True
 
 
 def profile_post_save(instance, sender, **kwargs):
@@ -41,6 +66,3 @@ def profile_post_save(instance, sender, **kwargs):
 
 signals.post_save.connect(profile_post_save, sender=Profile)
 
-
-class ValifdForm(forms.Form):
-    csrf_token = forms.CharField()

@@ -23,6 +23,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from functools import wraps
 
 from adminimio.models import Im
+from adminimio.forms import ValidFormUpdatelayer, ValidFormCommuneUser
 
 
 def is_auth(view_func):
@@ -52,7 +53,7 @@ def admin_view_imio(request, template='adminimio/imio_management.html'):
         out['success'] = False
         print('   !!! request de type POST !!!')
         token_session = request.token
-        form = ValifdForm(request.POST)
+        form = ValidFormUpdateLayer(request.POST)
         if form.is_valid():
             if csrf_token in request.POST:
                 form_token = form.cleaned_data['csrf_token']
@@ -77,24 +78,39 @@ def admin_view_imio_action(request, template='adminimio/imio_management.html'):
     Im.updatelayer()
     return render_to_response(template, RequestContext(request, out))
 
+
+
+
+
+
 @is_auth
-def admin_view_crea_group_with_manager(request, template='adminimio/imio_management__commune.html'):
+def admin_view_crea_group_with_manager(request, template='adminimio/imio_management_commune.html'):
+    result = False
     out = {}
     print('   !!! admin_view_crea_group_with_manager() !!!')
     if request.method == 'POST':
         out['success'] = False
         print('   !!! request de type POST !!!')
-        token_session = request.token
-        form = ValifdForm(request.POST)
-        if form.is_valid():
-            if csrf_token in request.POST:
-                form_token = form.cleaned_data['csrf_token']
-                request_token = request.POST['csrf_token']
-                if form_token == request_token :
-                    # La methode de mise jour
-                    Im.updatelayer()
-                    out['success'] = True
+        #token_session = request.token
+        form = ValidFormCommuneUser(request.POST)
 
+        if form.is_valid():
+            form_token = form.cleaned_data['csrf_token']
+            user_name = form.cleaned_data['in_user']
+            comm_name = form.cleaned_data['in_comm']
+            
+            try:
+               result = Im.crea_group_with_manager(user_name,comm_name)
+            except Exception as e:
+                out['error'] = str(e.message)
+
+        if result == True:
+            out['success'] = True
+            status_code = 200
+        else:
+            status_code = 500
+
+        print(out)
         return HttpResponse(
             json.dumps(out),
             mimetype='application/json',
