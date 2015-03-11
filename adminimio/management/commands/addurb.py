@@ -15,6 +15,19 @@ class Command(BaseCommand):
 
     args = 'params'
     help = 'Collect layer from Database'
+    geoserver_rest_url = 'http://localhost:8080/geoserver/rest'
+    urb = {
+            "capa":"Parcelles",
+            "toli":"cadastre_ln_toponymiques",
+            "canu":"cadastre_pt_num",
+            "cabu":"Batiments",
+            "gept":"cadastre_points_generaux",
+            "gepn":"cadastre_pol_gen",
+            "inpt":"point",
+            "geli":"cadastre_ln_generales",
+            "inli":"cadastre_ln_informations",
+            "topt":"point",
+            }
 
     option_list = BaseCommand.option_list + (
     make_option("-p", "--gpw",
@@ -73,15 +86,11 @@ class Command(BaseCommand):
         default="admin",
         help="Geoserver admin = [default: %default]"),
     )
-    
-    def handle(self, *args, **options):
 
-        #connect to geoserver
-        cat = Catalog("http://localhost:8080/geoserver/rest", options['geoserveradmin'], options['gpw'])
-
-        #create datrastore for URB schema
+    def createDataStore(self, options):
+        cat = Catalog(self.geoserver_rest_url, options['geoserveradmin'], options['gpw'])
+        #create datastore for URB schema
         ws = cat.create_workspace(options['alias'],options['uri'])
-
         ds = cat.create_datastore(options['alias'], ws)
         ds.connection_parameters.update(
             host=options['urbanUrl'],
@@ -90,32 +99,23 @@ class Command(BaseCommand):
             user=options['postuser'],
             passwd=options['ropw'],
             dbtype="postgis")
-
         cat.save(ds)
+        return ws.name , ds.name, ds.resource_type
+    
+    def addLayersToGeoserver(self, options):
+        cat = Catalog(self.geoserver_rest_url, options['geoserveradmin'], options['gpw'])
+
         ds = cat.get_store(options['alias'])
 
-        #config object
-        urb = {
-            "capa":"Parcelles",
-            "toli":"cadastre_ln_toponymiques",
-            "canu":"cadastre_pt_num",
-            "cabu":"Batiments",
-            "gept":"cadastre_points_generaux",
-            "gepn":"cadastre_pol_gen",
-            "inpt":"point",
-            "geli":"cadastre_ln_generales",
-            "inli":"cadastre_ln_informations",
-            "topt":"point",
-            }
-
+        layers = []
         try:
             #connect to tables and create layers and correct urban styles
             print("premiere boucle")
-            for table in urb:
+            for table in self.urb:
 
                 print("in")
                 # push data in geoserver
-                style = urb[table]
+                style = self.urb[table]
                 ft = cat.publish_featuretype(table, ds, 'EPSG:31370', srs='EPSG:31370')
                 ft.default_style = style
                 cat.save(ft)
@@ -123,33 +123,39 @@ class Command(BaseCommand):
                 res_title = options['alias']+"_"+table
                 cat.save(ft)
                 print("out")
-
-            print("2iem boucle")
-            for table in urb:
-
-                # rename layer
-#               layer, created = Layer.objects.get_or_create(name=res_name, defaults={
-#                   "workspace": ws.name,
-#                   "store": ds.name,
-#                   "storeType": ds.resource_type,
-#                   "typename": "%s:%s" % (ws.name.encode('utf-8'), res_name.encode('utf-8')),
-#                   "title": res_title or 'No title provided',
-#                   "abstract": 'No abstract provided',
-#                   #"owner": owner,
-#                   "uuid": str(uuid4())
-#                   #"bbox_x0": Decimal(ft.latLonBoundingBox.miny),
-#                   #"bbox_x1": Decimal(ft.latLonBoundingBox.maxy),
-#                   #"bbox_y0": Decimal(ft.latLonBoundingBox.minx),
-#                   #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)
-#                   })
-
-                if created:
-                    layer.set_default_permissions()
-                    layer.save()
-                else:
-                    print("   !!! le layer n'as pas ete cree ... Verifier si il etait deja cree avant ?")
+                layers.append({ 'res_name' : res_name, 'res_title' : res_title })
         except Exception as e:
             print(str(e))
 
+        return layers
+
+    def addLayersToGeonode(self, options, ws_name, ds_name, ds_resource_type, layers):
+        for layer in layers:
+            created = False
+
+            layer, created = Layer.objects.get_or_create(name=layer['res_name'], defaults={
+                "workspace": ws_name,
+                "store":  ds_name,
+                "storeType": ds_resource_type,
+                "typename": "%s:%s" % (ws_name.encode('utf-8'), layer['res_name'].encode('utf-8')),
+                "title": layer['res_title'] or 'No title provided',
+                "abstract": 'No abstract provided',
+                #"owner": owner,
+                "uuid": str(uuid4())
+                #"bbox_x0": Decimal(ft.latLonBoundingBox.miny),
+                #"bbox_x1": Decimal(ft.latLonBoundingBox.maxy),
+                #"bbox_y0": Decimal(ft.latLonBoundingBox.minx),
+                #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)       
+            })         
+            if created:
+                layer.set_default_permissions()
+                layer.save()
+            else:
+                print("   !!! le layer n'as pas ete cree ... Verifier si il etait deja cree avant ?")
+
+    def handle(self, *args, **options):
+        ws_name , ds_name, ds_resource_type =  self.createDataStore(options)
+        layers = self.addLayersToGeoserver(options)
+        self.addLayersToGeonode(options,ws_name, ds_name,ds_resource_type, layers)
         print("call_command('updatelayers')")
         #call_command('updatelayers')

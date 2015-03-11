@@ -5,7 +5,7 @@ DEBUG = TEMPLATE_DEBUG = True
 DEBUG_STATIC = False
 
 SITENAME = 'Imio-GeoNode'
-SITEURL = 'http://localhost:2780/'
+SITEURL = 'http://localhost:8080/'
 
 GEOSERVER_URL = SITEURL + 'geoserver/'
 
