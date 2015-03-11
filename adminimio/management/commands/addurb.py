@@ -132,6 +132,7 @@ class Command(BaseCommand):
             print("premiere boucle")
             for table in urb:
 
+                print("in")
                 # push data in geoserver
                 style = urb[table]
                 ft = cat.publish_featuretype(table, ds, 'EPSG:31370', srs='EPSG:31370')
@@ -139,6 +140,8 @@ class Command(BaseCommand):
                 cat.save(ft)
                 res_name = ft.dirty['name']
                 res_title = options['alias']+"_"+table
+                cat.save(ft)
+                print("out")
 
             print("2iem boucle")
             for table in urb:
@@ -167,4 +170,5 @@ class Command(BaseCommand):
         except Exception as e:
             print(str(e))
 
-        call_command('updatelayers')
+        print("call_command('updatelayers')")
+        #call_command('updatelayers')
