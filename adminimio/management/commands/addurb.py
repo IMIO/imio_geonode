@@ -73,25 +73,6 @@ class Command(BaseCommand):
         default="admin",
         help="Geoserver admin = [default: %default]"),
     )
-
-    #parser = OptionParser()
-    #parser.add_option("-p", "--gpw", action="store", type="string", dest="gpw", default="", help="Geoserver admin password [default: %default]")
-    #parser.add_option("-u", "--urbanUrl", action="store", type="string", dest="urbanUrl", default="", help="Urban URL [default: %default]")
-    #parser.add_option("-r", "--ropw", action="store", type="string", dest="ropw", default="", help="Remote postGIS ro_user password [default: %default]")
-    #parser.add_option("-d", "--database", action="store", type="string", dest="database", default="urb_xxx", help="remote urban database name [default: %default]")
-    #parser.add_option("-a", "--alias", action="store", type="string", dest="alias", default="", help="prefix alias [default: %default]")
-    #parser.add_option("-z", "--uri", action="store", type="string", dest="uri", default="imio.be", help="uri= [default: %default]")
-    #parser.add_option("-g", "--postuser", action="store", type="string", dest="postuser", default="ro_user", help="db_use r= [default: %default]")
-    #parser.add_option("-c", "--geoserveradmin", action="store", type="string", dest="geoserveradmin", default="admin", help="Geoserver admin = [default: %default]")
-    #(options, args) = parser.parse_args()
-    #if options.gpw is None:
-    #    parser.error('Admin geoserver password not given')
-    #if options.urbanUrl is None:
-    #    parser.error('Urban postGIS URL not given')
-    #if options.ropw is None:
-    #    parser.error('database password not given')
-    #if options.alias is None:
-    #    parser.error('alias not given')
     
     def handle(self, *args, **options):
 
