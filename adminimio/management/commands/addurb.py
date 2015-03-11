@@ -112,15 +112,18 @@ class Command(BaseCommand):
             #connect to tables and create layers and correct urban styles
             print("premiere boucle")
             for table in self.urb:
-                style = self.urb[table]
-                ft = cat.publish_featuretype(table, ds, 'EPSG:31370', srs='EPSG:31370')
-                ft.default_style = style
-                cat.save(ft)
-                res_name = ft.dirty['name']
-                res_title = options['alias']+"_"+table
-                cat.save(ft)
-             
-                layers.append({ 'res_name' : res_name, 'res_title' : res_title })
+                try:
+                    style = self.urb[table]
+                    ft = cat.publish_featuretype(table, ds, 'EPSG:31370', srs='EPSG:31370')
+                    ft.default_style = style
+                    cat.save(ft)
+                    res_name = ft.dirty['name']
+                    res_title = options['alias']+"_"+table
+                    cat.save(ft)
+
+                    layers.append({ 'res_name' : res_name, 'res_title' : res_title })
+                except Exception as e:
+                    print(str(e))
 
         except Exception as e:
             print(str(e))
