@@ -20,8 +20,9 @@ class Command(BaseCommand):
     parser.add_option("-r", "--ropw", action="store", type="string", dest="ropw", default="", help="Remote postGIS ro_user password [default: %default]")
     parser.add_option("-d", "--database", action="store", type="string", dest="database", default="urb_xxx", help="remote urban database name [default: %default]")
     parser.add_option("-a", "--alias", action="store", type="string", dest="alias", default="", help="prefix alias [default: %default]")
-    parser.add_option("-z", "--uri", action="store", type="string", dest="uri", default="", help="uri= [default: %default]")
-    parser.add_option("-g", "--postuser", action="store", type="string", dest="postuser", default="", help="db_user= [default: %default]")
+    parser.add_option("-z", "--uri", action="store", type="string", dest="uri", default="imio.be", help="uri= [default: %default]")
+    parser.add_option("-g", "--postuser", action="store", type="string", dest="postuser", default="ro_user", help="db_use r= [default: %default]")
+    parser.add_option("-c", "--geoserveradmin", action="store", type="string", dest="geoserveradmin", default="admin", help="Geoserver admin = [default: %default]")
     (options, args) = parser.parse_args()
     if options.gpw is None:
         parser.error('Admin geoserver password not given')
@@ -31,11 +32,11 @@ class Command(BaseCommand):
         parser.error('ro_user password not given')
     if options.alias is None:
         parser.error('alias not given')
-
+    
     def handle(self, *args, **options):
 
         #connect to geoserver
-        cat = Catalog("http://localhost:8080/geoserver/rest", "raphael", options.gpw)
+        cat = Catalog("http://localhost:8080/geoserver/rest", options.geoserveradmin, options.gpw)
 
         #create datrastore for URB schema
         ws = cat.create_workspace(options.alias,options.uri)
