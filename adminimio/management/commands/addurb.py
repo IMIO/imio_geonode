@@ -112,9 +112,6 @@ class Command(BaseCommand):
             #connect to tables and create layers and correct urban styles
             print("premiere boucle")
             for table in self.urb:
-
-                print("in")
-                # push data in geoserver
                 style = self.urb[table]
                 ft = cat.publish_featuretype(table, ds, 'EPSG:31370', srs='EPSG:31370')
                 ft.default_style = style
@@ -122,8 +119,9 @@ class Command(BaseCommand):
                 res_name = ft.dirty['name']
                 res_title = options['alias']+"_"+table
                 cat.save(ft)
-                print("out")
+             
                 layers.append({ 'res_name' : res_name, 'res_title' : res_title })
+
         except Exception as e:
             print(str(e))
 
@@ -157,5 +155,4 @@ class Command(BaseCommand):
         ws_name , ds_name, ds_resource_type =  self.createDataStore(options)
         layers = self.addLayersToGeoserver(options)
         self.addLayersToGeonode(options,ws_name, ds_name,ds_resource_type, layers)
-        print("call_command('updatelayers')")
-        #call_command('updatelayers')
+
