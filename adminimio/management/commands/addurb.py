@@ -29,7 +29,7 @@ class Command(BaseCommand):
     if options.urbanUrl is None:
         parser.error('Urban postGIS URL not given')
     if options.ropw is None:
-        parser.error('ro_user password not given')
+        parser.error('database password not given')
     if options.alias is None:
         parser.error('alias not given')
     
@@ -93,11 +93,11 @@ class Command(BaseCommand):
 #                   #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)
 #                   })
 
-            if created:
-                layer.set_default_permissions()
-                layer.save()
-            else:
-                print("   !!! le layer n'as pas ete cree ... Verifier si il etait deja cree avant ?")
+                if created:
+                    layer.set_default_permissions()
+                    layer.save()
+                else:
+                    print("   !!! le layer n'as pas ete cree ... Verifier si il etait deja cree avant ?")
         except Exception as e:
             print(str(e))
 
