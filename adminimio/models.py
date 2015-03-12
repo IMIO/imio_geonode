@@ -17,7 +17,6 @@ class Im(models.Model):
 
     @staticmethod
     def updatelayer():
-        print('   !!! dans updatelayer() de adminimio !!!')
         out = StringIO()
         call_command('updatelayers', stdout=out)
         ret = out.getvalue() # Verifier pourquoi vide
@@ -35,7 +34,6 @@ class Im(models.Model):
 
     @staticmethod
     def crea_group_with_manager(name_user, name_group):
-        print('    !!! dans crea_group_with_manager() de adminimio !!!')
         # Recuperation de la surcharge de user
         User = get_user_model()
 
@@ -133,11 +131,30 @@ class Im(models.Model):
         user_ro.save()
         group_user.save()
 
+        return True
+
+
+    @staticmethod
+    def addurb(in_user, in_password, in_dbadresse, in_dbname, in_dbuser, in_dbpassword, in_workspace, in_uri, in_groupname):
+        out = StringIO()
+        call_command('addurb',
+                     stdout=out, 
+                     geoserveradmin=in_user, 
+                     gpw=in_password, 
+                     urbanUrl=in_dbadresse, 
+                     database=in_dbname, 
+                     postuser=in_dbuser, 
+                     ropw=in_dbpassword,
+                     alias=in_workspace,
+                     uri=in_uri,
+                     groupname=in_groupname)
+        ret = out.getvalue() # Verifier pourquoi vide
+        out.close()
+
+        return True
 
 
 def profile_post_save(instance, sender, **kwargs):
     """En vue de recupere des infos lors de l ajout d un utilisateur"""
-    print('   !!! On a recupere un signal profile_post_save, sender=Profile !!!')
 
 signals.post_save.connect(profile_post_save, sender=Profile)
-

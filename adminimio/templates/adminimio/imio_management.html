@@ -17,9 +17,11 @@
   {% block sidebar %}{% endblock %}
   </div>
   <br/>
-  <div class="imio_management"><a href="{% url "imio_management_updatelayer" %}">Utilitaire de mise a jour des layers</a></div>
+  <div class="imio_management"><a href="{% url "imio_management_updatelayer" %}">Utilitaire de mise a jour des couches</a></div>
   <br/>
   <div class="imio_management"><a href="{% url "imio_management_commune" %}">Utilitaire de création de nouvelle commune</a></div>
+  <br/>
+  <div class="imio_addurb"><a href="{% url "imio_management_addurb" %}">Utilitaire de récuperation de couche</a></div>
   <br/>
 </div>
 {% endblock %}

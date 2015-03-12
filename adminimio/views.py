@@ -23,7 +23,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from functools import wraps
 
 from adminimio.models import Im
-from adminimio.forms import ValidFormUpdatelayer, ValidFormCommuneUser
+from adminimio.forms import *
 
 
 def is_auth(view_func):
@@ -88,10 +88,8 @@ def admin_view_updatelayer(request, template='adminimio/imio_management_updatela
 def admin_view_crea_group_with_manager(request, template='adminimio/imio_management_commune.html'):
     result = False
     out = {}
-    print('   !!! admin_view_crea_group_with_manager() !!!')
     if request.method == 'POST':
         out['success'] = False
-        print('   !!! request de type POST !!!')
         #token_session = request.token
         form = ValidFormCommuneUser(request.POST)
 
@@ -101,9 +99,57 @@ def admin_view_crea_group_with_manager(request, template='adminimio/imio_managem
             comm_name = form.cleaned_data['in_comm']
             
             try:
-               result = Im.crea_group_with_manager(user_name,comm_name)
+               result = Im.crea_group_with_manager_and_user(user_name,comm_name)
             except Exception as e:
                 out['error'] = str(e.message)
+
+        else:
+            out['error'] = "Des parametres sont manquant"
+
+        if result == True:
+            out['success'] = True
+            status_code = 200
+        else:
+            status_code = 500
+
+        print(out)
+        return HttpResponse(
+            json.dumps(out),
+            mimetype='application/json',
+            status=status_code)
+    else:
+        return render_to_response(template, RequestContext(request, out))
+
+
+@is_auth
+def admin_view_addurb(request, template='adminimio/imio_management_addurb.html'):
+    result = False
+    out = {}
+    if request.method == 'POST':
+        out['success'] = False
+        #token_session = request.token
+        form = ValidFormAddurb(request.POST)
+
+        if form.is_valid():
+            form_token = form.cleaned_data['csrf_token']
+            in_user = form.cleaned_data['in_user']
+            in_password = form.cleaned_data['in_password']
+            in_dbadresse = form.cleaned_data['in_dbadresse']
+            in_dbname = form.cleaned_data['in_dbname']
+            in_dbuser = form.cleaned_data['in_dbuser']
+            in_dbpassword = form.cleaned_data['in_dbpassword']
+            in_workspace = form.cleaned_data['in_workspace']
+            in_uri = form.cleaned_data['in_uri']
+            in_groupname = form.cleaned_data['in_groupname']
+
+            try:
+               print('in try')
+               result = Im.addurb(in_user, in_password, in_dbadresse, in_dbname, in_dbuser, in_dbpassword, in_workspace, in_uri, in_groupname)
+               print('out try')
+            except Exception as e:
+                out['error'] = str(e.message)
+        else:
+            out['error'] = "Des parametres sont manquant"
 
         if result == True:
             out['success'] = True

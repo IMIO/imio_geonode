@@ -117,7 +117,6 @@ class Command(BaseCommand):
         layers = []
         try:
             #connect to tables and create layers and correct urban styles
-            print("premiere boucle")
             for table in self.urb:
                 try:
                     style = self.urb[table]

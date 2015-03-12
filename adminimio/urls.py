@@ -11,5 +11,6 @@ urlpatterns = patterns(
     url(r'^$', 'admin_view_imio', name='imio_management'),
     url(r'^updatelayer$', 'admin_view_updatelayer', name='imio_management_updatelayer'),
     url(r'^commune$', 'admin_view_crea_group_with_manager', name='imio_management_commune'),
+    url(r'^addurb$', 'admin_view_addurb', name='imio_management_addurb'),
     #url(r'^commune/action$', 'admin_view_crea_group_with_manager_action', name='imio_management_commune_action'),
 )
