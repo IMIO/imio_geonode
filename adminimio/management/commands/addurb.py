@@ -85,6 +85,13 @@ class Command(BaseCommand):
         dest='geoserveradmin',
         default="admin",
         help="Geoserver admin = [default: %default]"),
+    )+ (
+    make_option("-n", "--groupname",
+        action='store',
+        type="string",
+        dest='groupname',
+        default="",
+        help="Group Name for permition = [default: %default]"),
     )
 
     def createDataStore(self, options):
@@ -149,13 +156,31 @@ class Command(BaseCommand):
                 #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)       
             })         
             if created:
-                layer.set_default_permissions()
+                grName = unicode(options['groupname'])
+                perm = {
+                       u'users': {
+                           u'AnonymousUser': [] },
+                       u'groups': {
+                           grName:[u'view_resourcebase'] }
+                       }
+                layer.set_permissions(perm)
                 layer.save()
             else:
-                print("   !!! le layer n'as pas ete cree ... Verifier si il etait deja cree avant ?")
+                print("   !!! le layer "+ layer['res_title'] +" n'as pas ete cree ... Verifier si il etait deja cree avant ?")
 
     def handle(self, *args, **options):
-        ws_name , ds_name, ds_resource_type =  self.createDataStore(options)
-        layers = self.addLayersToGeoserver(options)
-        self.addLayersToGeonode(options,ws_name, ds_name,ds_resource_type, layers)
+        if self.verifParams(options):
+            ws_name , ds_name, ds_resource_type =  self.createDataStore(options)
+            layers = self.addLayersToGeoserver(options)
+            self.addLayersToGeonode(options,ws_name, ds_name,ds_resource_type, layers)
 
+    def verifParams(self, options):
+        if(options['gpw'] is None or options['gpw'] is '' or
+           options['urbanUrl'] is None or options['urbanUrl'] is '' or
+           options['ropw'] is None or options['ropw'] is '' or
+           options['alias'] is None or options['alias'] is '' or
+           options['groupname'] is None or options['groupname'] is ''):
+            print('Some parameter was not define')
+            return False
+        else:
+            return True
