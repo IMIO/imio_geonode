@@ -160,7 +160,7 @@ class Command(BaseCommand):
                        u'users': {
                            u'AnonymousUser': [] },
                        u'groups': {
-                           grName:[u'view_resourcebase'] }
+                           grName:[u'view_resourcebase',u'download_resourcebase'] }
                        }
                 layer.set_permissions(perm)
                 layer.save()
