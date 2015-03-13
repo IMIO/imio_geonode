@@ -21,6 +21,7 @@ from django.db.models import F
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from functools import wraps
+from django.core.context_processors import csrf
 
 from adminimio.models import Im
 from adminimio.forms import *
@@ -81,6 +82,7 @@ def admin_view_updatelayer(request, template='adminimio/imio_management_updatela
             mimetype='application/json',
             status=status_code)
     else:
+        out.update(csrf(request))
         return render_to_response(template, RequestContext(request, out))
 
 
@@ -118,6 +120,7 @@ def admin_view_crea_group_with_manager(request, template='adminimio/imio_managem
             mimetype='application/json',
             status=status_code)
     else:
+        out.update(csrf(request))
         return render_to_response(template, RequestContext(request, out))
 
 
@@ -163,4 +166,5 @@ def admin_view_addurb(request, template='adminimio/imio_management_addurb.html')
             mimetype='application/json',
             status=status_code)
     else:
+        out.update(csrf(request))
         return render_to_response(template, RequestContext(request, out))

@@ -41,14 +41,14 @@
 
 //jquery
 $( document ).ready(function() {
-    console.log( "ready!" );
-
 
     $("#form_comm_user").submit(function( event ) {
         event.preventDefault();
 
         var url = $(this).attr( "action" );
         var donnees = $(this).serialize();
+
+        $("#form_comm_user_result").removeClass();
 
         $.ajax({
             type: "POST",

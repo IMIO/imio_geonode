@@ -17,7 +17,7 @@
   {% block sidebar %}{% endblock %}
   </div>
   <br/>
-  <form id="form_updatelayers" action="{% url "imio_management" %}" method="post">
+  <form id="form_updatelayers" action="{% url "imio_management_updatelayer" %}" method="post">
     <input type="hidden" value="{{ csrf_token }}" id="csrf_token" name="csrf_token">
     <input class="btn" id="b_updatelayers" type="submit" value="updatelayers">
   </form>
@@ -36,14 +36,14 @@
 
 //jquery
 $( document ).ready(function() {
-    console.log( "ready!" );
-
 
     $("#form_updatelayers").submit(function( event ) {
         event.preventDefault();
 
         var url = $(this).attr( "action" );
         var donnees = $(this).serialize();
+
+        $("#form_updatelayers_result").removeClass();
 
         $.ajax({
             type: "POST",
