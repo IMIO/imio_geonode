@@ -62,9 +62,6 @@ def admin_view_updatelayer(request, template='adminimio/imio_management_updatela
         form = ValidFormUpdateLayer(request.POST)
         if form.is_valid():
             form_token = form.cleaned_data['csrf_token']
-            #request_token = request.POST['csrf_token']
-            #if form_token == request_token :
-            # La methode de mise jour
             try:
                 created, updated, failed = Im.updatelayer()
                 result = True
@@ -84,7 +81,6 @@ def admin_view_updatelayer(request, template='adminimio/imio_management_updatela
     else:
         out.update(csrf(request))
         return render_to_response(template, RequestContext(request, out))
-
 
 @is_auth
 def admin_view_crea_group_with_manager(request, template='adminimio/imio_management_commune.html'):

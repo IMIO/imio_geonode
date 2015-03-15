@@ -19,12 +19,13 @@
   <br/>
   <form id="form_updatelayers" action="{% url "imio_management_updatelayer" %}" method="post">
     <input type="hidden" value="{{ csrf_token }}" id="csrf_token" name="csrf_token">
-    <input class="btn" id="b_updatelayers" type="submit" value="updatelayers">
+    <input class="btn" id="b_updatelayers" type="submit" value="Mise a jour des couches">
   </form>
   <br/>
   <div id="form_updatelayers_result">
   </div>
 </div>
+<script src="{{ STATIC_URL }}lib/js/jquery.min.js"></script>
 <script type="text/javascript">
 {% autoescape off %}
   csrf_token =  "{{ csrf_token }}",
@@ -44,6 +45,8 @@ $( document ).ready(function() {
         var donnees = $(this).serialize();
 
         $("#form_updatelayers_result").removeClass();
+        $("#form_updatelayers_result").html("Mise a jour en cours...");
+        $("#form_updatelayers_result").addClass("alert-warning");
 
         $.ajax({
             type: "POST",
@@ -51,10 +54,12 @@ $( document ).ready(function() {
             data: donnees,
             dataType: 'json',
             success: function(info, statut){
-                $("#form_updatelayers_result").html("Mise à jour réussie");
+                $("#form_updatelayers_result").addClass("alert-warning");
+                $("#form_updatelayers_result").html("Update reussie");
                 $("#form_updatelayers_result").addClass("alert-success");
             },
             error : function(request, status, error){
+                $("#form_updatelayers_result").addClass("alert-warning");
                 $("#form_updatelayers_result").html(request.responseJSON.error);
                 $("#form_updatelayers_result").addClass("alert-warning");
             }
@@ -64,3 +69,4 @@ $( document ).ready(function() {
 });
 </script>
 {% endblock %}
+
