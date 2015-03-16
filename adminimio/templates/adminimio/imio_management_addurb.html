@@ -18,6 +18,7 @@
   </div>
   <br/>
   <form id="form_addurb" action="{% url "imio_management_addurb" %}" method="post">
+    {% csrf_token %}
     <input type="hidden" value="{{ user.username }}" name="in_user">
     <div>Votre password :</div>
     <input type="password" name="in_password"><br/>

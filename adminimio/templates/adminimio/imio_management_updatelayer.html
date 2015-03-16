@@ -18,6 +18,7 @@
   </div>
   <br/>
   <form id="form_updatelayers" action="{% url "imio_management_updatelayer" %}" method="post">
+    {% csrf_token %}
     <input type="hidden" value="{{ csrf_token }}" id="csrf_token" name="csrf_token">
     <input class="btn" id="b_updatelayers" type="submit" value="Mise a jour des couches">
   </form>

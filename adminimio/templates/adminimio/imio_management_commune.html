@@ -18,6 +18,7 @@
   </div>
   <br/>
   <form id="form_comm_user" action="{% url "imio_management_commune" %}" method="post">
+    {% csrf_token %}
     <div>Nom d'utilisateur :</div>
     <input type="text" name="in_user"><br/>
     <div>Nom de commune :</div>
