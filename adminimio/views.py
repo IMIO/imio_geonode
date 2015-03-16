@@ -34,7 +34,7 @@ def is_auth(view_func):
     """
     def _checklogin(request, *args, **kwargs):
         print('   !!! _checklogin() !!!')
-        if request.user.is_active and request.user.is_staff:
+        if request.user.is_active and request.user.groups.filter(name='imio').exists():
             return view_func(request, *args, **kwargs)
         else:
             return HttpResponse(
