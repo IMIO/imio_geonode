@@ -51,6 +51,8 @@ $( document ).ready(function() {
         var donnees = $(this).serialize();
 
         $("#form_comm_user_result").removeClass();
+        $("#form_comm_user_result").html("En cours d'execution")
+        $("#form_comm_user_result").addClass("alert-warning");
 
         $.ajax({
             type: "POST",
@@ -58,10 +60,12 @@ $( document ).ready(function() {
             data: donnees,
             dataType: 'json',
             success: function(info, statut){
+                $("#form_comm_user_result").removeClass();
                 $("#form_comm_user_result").html("Création reussie");
                 $("#form_comm_user_result").addClass("alert-success");
             },
             error : function(request, status, error){
+                $("#form_comm_user_result").removeClass();
                 $("#form_comm_user_result").html(request.responseJSON.error);
                 $("#form_comm_user_result").addClass("alert-warning");
             }

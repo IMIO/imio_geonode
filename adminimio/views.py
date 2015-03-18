@@ -33,7 +33,6 @@ def is_auth(view_func):
     member, displaying the login page if necessary.
     """
     def _checklogin(request, *args, **kwargs):
-        print('   !!! _checklogin() !!!')
         if request.user.is_active and request.user.groups.filter(name='imio').exists():
             return view_func(request, *args, **kwargs)
         else:
@@ -142,7 +141,7 @@ def admin_view_addurb(request, template='adminimio/imio_management_addurb.html')
             in_groupname = form.cleaned_data['in_groupname']
 
             try:
-               result = Im.addurb(in_user, in_password, in_dbadresse, in_dbname, in_dbuser, in_dbpassword, in_workspace, in_uri, in_groupname)
+               result, message = Im.addurb(in_user, in_password, in_dbadresse, in_dbname, in_dbuser, in_dbpassword, in_workspace, in_uri, in_groupname)
             except Exception as e:
                 out['error'] = str(e.message)
         else:

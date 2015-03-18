@@ -95,18 +95,22 @@ class Command(BaseCommand):
     )
 
     def createDataStore(self, options):
-        cat = Catalog(self.geoserver_rest_url, options['geoserveradmin'], options['gpw'])
-        #create datastore for URB schema
-        ws = cat.create_workspace(options['alias'],options['uri'])
-        ds = cat.create_datastore(options['alias'], ws)
-        ds.connection_parameters.update(
-            host=options['urbanUrl'],
-            port="5432",
-            database=options['database'],
-            user=options['postuser'],
-            passwd=options['ropw'],
-            dbtype="postgis")
-        cat.save(ds)
+        try:
+            cat = Catalog(self.geoserver_rest_url, options['geoserveradmin'], options['gpw'])
+            #create datastore for URB schema
+            ws = cat.create_workspace(options['alias'],options['uri'])
+            ds = cat.create_datastore(options['alias'], ws)
+            ds.connection_parameters.update(
+                host=options['urbanUrl'],
+                port="5432",
+                database=options['database'],
+                user=options['postuser'],
+                passwd=options['ropw'],
+                dbtype="postgis")
+            cat.save(ds)
+        except Exception as e:
+            print(str(e))
+            raise Exception('Erreur de connexion au Geoserver lors de la création du DataStore')
         return ws.name , ds.name, ds.resource_type
     
     def addLayersToGeoserver(self, options):
@@ -133,45 +137,52 @@ class Command(BaseCommand):
 
         except Exception as e:
             print(str(e))
+            raise Exception('Erreur lors de la récupération des couche dupuit Geoserver')
 
         return layers
 
     def addLayersToGeonode(self, options, ws_name, ds_name, ds_resource_type, layers):
-        for layer in layers:
-            created = False
+        try:
+            for layer in layers:
+                created = False
 
-            layer, created = Layer.objects.get_or_create(name=layer['res_name'], defaults={
-                "workspace": ws_name,
-                "store":  ds_name,
-                "storeType": ds_resource_type,
-                "typename": "%s:%s" % (ws_name.encode('utf-8'), layer['res_name'].encode('utf-8')),
-                "title": layer['res_title'] or 'No title provided',
-                "abstract": 'No abstract provided',
-                #"owner": owner,
-                "uuid": str(uuid4())
-                #"bbox_x0": Decimal(ft.latLonBoundingBox.miny),
-                #"bbox_x1": Decimal(ft.latLonBoundingBox.maxy),
-                #"bbox_y0": Decimal(ft.latLonBoundingBox.minx),
-                #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)       
-            })         
-            if created:
-                grName = unicode(options['groupname'])
-                perm = {
-                       u'users': {
-                           u'AnonymousUser': [] },
-                       u'groups': {
-                           grName:[u'view_resourcebase',u'download_resourcebase'] }
-                       }
-                layer.set_permissions(perm)
-                layer.save()
-            else:
-                print("   !!! le layer "+ layer['res_title'] +" n'as pas ete cree ... Verifier si il etait deja cree avant ?")
+                layer, created = Layer.objects.get_or_create(name=layer['res_name'], defaults={
+                    "workspace": ws_name,
+                    "store":  ds_name,
+                    "storeType": ds_resource_type,
+                    "typename": "%s:%s" % (ws_name.encode('utf-8'), layer['res_name'].encode('utf-8')),
+                    "title": layer['res_title'] or 'No title provided',
+                    "abstract": 'No abstract provided',
+                    #"owner": owner,
+                    "uuid": str(uuid4())
+                    #"bbox_x0": Decimal(ft.latLonBoundingBox.miny),
+                    #"bbox_x1": Decimal(ft.latLonBoundingBox.maxy),
+                    #"bbox_y0": Decimal(ft.latLonBoundingBox.minx),
+                    #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)       
+                })         
+                if created:
+                    grName = unicode(options['groupname'])
+                    perm = {
+                           u'users': {
+                               u'AnonymousUser': [] },
+                           u'groups': {
+                               grName:[u'view_resourcebase',u'download_resourcebase'] }
+                           }
+                    layer.set_permissions(perm)
+                    layer.save()
+                else:
+                    print("   !!! le layer "+ layer['res_title'] +" n'as pas été crée ... Vérifier si il était déjà crée avant ?")
+        except Exception as e:
+            print(str(e))
+            raise Exception('Erreur lors de l\'importation des couches depuit Geoserver')
 
     def handle(self, *args, **options):
         if self.verifParams(options):
             ws_name , ds_name, ds_resource_type =  self.createDataStore(options)
             layers = self.addLayersToGeoserver(options)
             self.addLayersToGeonode(options,ws_name, ds_name,ds_resource_type, layers)
+        else:
+            raise Exception('Des parametres non pas été définit')
 
     def verifParams(self, options):
         if(options['gpw'] is None or options['gpw'] is '' or

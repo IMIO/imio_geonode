@@ -56,12 +56,12 @@ $( document ).ready(function() {
             data: donnees,
             dataType: 'json',
             success: function(info, statut){
-                $("#form_updatelayers_result").addClass("alert-warning");
+                $("#form_updatelayers_result").removeClass();
                 $("#form_updatelayers_result").html("Update reussie");
                 $("#form_updatelayers_result").addClass("alert-success");
             },
             error : function(request, status, error){
-                $("#form_updatelayers_result").addClass("alert-warning");
+                $("#form_updatelayers_result").removeClass();
                 $("#form_updatelayers_result").html(request.responseJSON.error);
                 $("#form_updatelayers_result").addClass("alert-warning");
             }

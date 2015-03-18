@@ -49,7 +49,6 @@ class Im(models.Model):
                 raise('That group name already exists')
 
         user = User.objects.create_user(name_user, None, name_user)
-        user.is_staff = True
         user.save()
 
         group = GroupProfile()
@@ -136,21 +135,26 @@ class Im(models.Model):
     @staticmethod
     def addurb(in_user, in_password, in_dbadresse, in_dbname, in_dbuser, in_dbpassword, in_workspace, in_uri, in_groupname):
         out = StringIO()
-        call_command('addurb',
-                     stdout=out, 
-                     geoserveradmin=in_user, 
-                     gpw=in_password, 
-                     urbanUrl=in_dbadresse, 
-                     database=in_dbname, 
-                     postuser=in_dbuser, 
-                     ropw=in_dbpassword,
-                     alias=in_workspace,
-                     uri=in_uri,
-                     groupname=in_groupname)
-        ret = out.getvalue() # Verifier pourquoi vide
+        message = []
+        try:
+            call_command('addurb',
+                         stdout=out, 
+                         geoserveradmin=in_user, 
+                         gpw=in_password, 
+                         urbanUrl=in_dbadresse, 
+                         database=in_dbname, 
+                         postuser=in_dbuser, 
+                         ropw=in_dbpassword,
+                         alias=in_workspace,
+                         uri=in_uri,
+                         groupname=in_groupname)
+            ret = out.getvalue() # Verifier pourquoi vide
+        except Exception as e:
+            out.close()
+            raise Exception (str(e))
         out.close()
 
-        return True
+        return True, message
 
 
 def profile_post_save(instance, sender, **kwargs):
