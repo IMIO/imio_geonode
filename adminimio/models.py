@@ -136,24 +136,26 @@ class Im(models.Model):
     def addurb(in_user, in_password, in_dbadresse, in_dbname, in_dbuser, in_dbpassword, in_workspace, in_uri, in_groupname):
         out = StringIO()
         message = []
-        try:
-            call_command('addurb',
-                         stdout=out, 
-                         geoserveradmin=in_user, 
-                         gpw=in_password, 
-                         urbanUrl=in_dbadresse, 
-                         database=in_dbname, 
-                         postuser=in_dbuser, 
-                         ropw=in_dbpassword,
-                         alias=in_workspace,
-                         uri=in_uri,
-                         groupname=in_groupname)
-            ret = out.getvalue() # Verifier pourquoi vide
-        except Exception as e:
+        if GroupProfile.objects.filter(title=in_groupname).exists():
+            try:
+                call_command('addurb',
+                             stdout=out, 
+                             geoserveradmin=in_user, 
+                             gpw=in_password, 
+                             urbanUrl=in_dbadresse, 
+                             database=in_dbname, 
+                             postuser=in_dbuser, 
+                             ropw=in_dbpassword,
+                             alias=in_workspace,
+                             uri=in_uri,
+                             groupname=in_groupname)
+                ret = out.getvalue() # Verifier pourquoi vide
+            except Exception as e:
+                out.close()
+                raise Exception (str(e))
             out.close()
-            raise Exception (str(e))
-        out.close()
-
+        else:
+            raise Exception('Le groupe n\'existe pas')
         return True, message
 
 

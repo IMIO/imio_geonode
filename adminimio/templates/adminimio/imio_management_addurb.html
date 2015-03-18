@@ -22,21 +22,21 @@
     {% csrf_token %}
     <input type="hidden" value="{{ user.username }}" name="in_user">
     <div>Votre password :</div>
-    <input type="password" placeholder="Password" name="in_password"><br/>
+    <input type="password" placeholder="Password" name="in_password" required="required"><br/>
     <div>Adresse BD :</div>
-    <input type="text" placeholder="www.adresse.be" name="in_dbadresse"><br/>
+    <input type="text" placeholder="www.adresse.be" name="in_dbadresse" required="required"><br/>
     <div>Nom BD :</div>
-    <input type="text" placeholder="urbangis" name="in_dbname"><br/>
+    <input type="text" placeholder="urbangis" name="in_dbname" required="required"><br/>
     <div>Utilisateur BD :</div>
-    <input type="text" placeholder="admin" name="in_dbuser"><br/>
+    <input type="text" placeholder="admin" name="in_dbuser" required="required"><br/>
     <div>Password BD :</div>
-    <input type="password" placeholder="Password" name="in_dbpassword"><br/>
+    <input type="password" placeholder="Password" name="in_dbpassword" required="required"><br/>
     <div>Workspace :</div>
-    <input type="text" name="in_workspace"><br/>
+    <input type="text" name="in_workspace" required="required"><br/>
     <div>Uri :</div>
-    <input type="text" placeholder="imio.be" name="in_uri"><br/>
+    <input type="text" placeholder="imio.be" name="in_uri" required="required"><br/>
     <div>Nom du groupe :</div>
-    <input type="text" name="in_groupname"><br/>
+    <input type="text" name="in_groupname" required="required"><br/>
     <input type="hidden" value="{{ csrf_token }}" id="csrf_token" name="csrf_token">
     <br/>
     <input class="btn" id="b_addurb" type="submit" value="Envoyer">
