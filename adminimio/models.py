@@ -97,7 +97,6 @@ class Im(models.Model):
 
         # RW
         user_rw = User.objects.create_user(u_rw, None, u_rw)
-        user_rw.is_staff = True
         user_rw.save()
 
         group_admin = GroupProfile()
