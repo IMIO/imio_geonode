@@ -22,22 +22,23 @@
     {% csrf_token %}
     <input type="hidden" value="{{ user.username }}" name="in_user">
     <div>Votre password :</div>
-    <input type="password" name="in_password"><br/>
+    <input type="password" placeholder="Password" name="in_password"><br/>
     <div>Adresse BD :</div>
-    <input type="text" name="in_dbadresse"><br/>
+    <input type="text" placeholder="www.adresse.be" name="in_dbadresse"><br/>
     <div>Nom BD :</div>
-    <input type="text" name="in_dbname"><br/>
+    <input type="text" placeholder="urbangis" name="in_dbname"><br/>
     <div>Utilisateur BD :</div>
-    <input type="text" name="in_dbuser"><br/>
+    <input type="text" placeholder="admin" name="in_dbuser"><br/>
     <div>Password BD :</div>
-    <input type="password" name="in_dbpassword"><br/>
+    <input type="password" placeholder="Password" name="in_dbpassword"><br/>
     <div>Workspace :</div>
     <input type="text" name="in_workspace"><br/>
     <div>Uri :</div>
-    <input type="text" name="in_uri"><br/>
+    <input type="text" placeholder="imio.be" name="in_uri"><br/>
     <div>Nom du groupe :</div>
     <input type="text" name="in_groupname"><br/>
     <input type="hidden" value="{{ csrf_token }}" id="csrf_token" name="csrf_token">
+    <br/>
     <input class="btn" id="b_addurb" type="submit" value="Envoyer">
   </form>
   <br/>
