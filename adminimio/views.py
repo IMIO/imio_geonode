@@ -142,9 +142,7 @@ def admin_view_addurb(request, template='adminimio/imio_management_addurb.html')
             in_groupname = form.cleaned_data['in_groupname']
 
             try:
-               print('in try')
                result = Im.addurb(in_user, in_password, in_dbadresse, in_dbname, in_dbuser, in_dbpassword, in_workspace, in_uri, in_groupname)
-               print('out try')
             except Exception as e:
                 out['error'] = str(e.message)
         else:

@@ -10,12 +10,13 @@
 {% block body_outer %}
 <div class="row">
   <div class="col-md-8">
-    <div>Preparation de l'interface d'administration</div>
     {% block body %}{% endblock %}
   </div>
   <div class="col-md-4">
   {% block sidebar %}{% endblock %}
   </div>
+  <h2>Interface d'administration iMio</h2>
+  <br/>
   <br/>
   <form id="form_addurb" action="{% url "imio_management_addurb" %}" method="post">
     {% csrf_token %}

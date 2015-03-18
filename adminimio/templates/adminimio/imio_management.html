@@ -10,15 +10,15 @@
 {% block body_outer %}
 <div class="row">
   <div class="col-md-8">
-    <div>Preparation de l'interface d'administration</div>
     {% block body %}{% endblock %}
   </div>
   <div class="col-md-4">
   {% block sidebar %}{% endblock %}
   </div>
+  <h2>Interface d'administration iMio</h2>
   <br/>
   <br/>
-  <div class="imio_management"><a href="{% url "imio_management_updatelayer" %}">Utilitaire de mise a jour des couches</a></div>
+  <div class="imio_management"><a href="{% url "imio_management_updatelayer" %}">Utilitaire de mise à jour des couches</a></div>
   <br/>
   <div class="imio_management"><a href="{% url "imio_management_commune" %}">Utilitaire de création de nouvelle commune</a></div>
   <br/>
