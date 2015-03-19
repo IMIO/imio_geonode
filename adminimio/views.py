@@ -67,11 +67,19 @@ def admin_view_updatelayer(request, template='adminimio/imio_management_updatela
                 out['success'] = True
             except Exception as e:
                 out['error'] = str(e.message)
+        else:
+            out['error'] = "Des parametres sont manquant"
         if result == True:
             out['success'] = True
             status_code = 200
+            message = 'Mise a jour reussie'
+            messages.success(request, message)
+            return render_to_response(template, RequestContext(request, out))
         else:
             status_code = 500
+            message = out['error']
+            messages.error(request, message)
+            return render_to_response(template, RequestContext(request, out))
 
         return HttpResponse(
             json.dumps(out),
@@ -106,10 +114,15 @@ def admin_view_crea_group_with_manager(request, template='adminimio/imio_managem
         if result == True:
             out['success'] = True
             status_code = 200
+            message = 'Groupe et utilisateur crée'
+            messages.success(request,message)
+            return render_to_response(template, RequestContext(request, out))
         else:
             status_code = 500
+            message = out['error']
+            messages.error(request,message)
+            return render_to_response(template, RequestContext(request, out))
 
-        print(out)
         return HttpResponse(
             json.dumps(out),
             mimetype='application/json',
@@ -139,9 +152,8 @@ def admin_view_addurb(request, template='adminimio/imio_management_addurb.html')
             in_workspace = form.cleaned_data['in_workspace']
             in_uri = form.cleaned_data['in_uri']
             in_groupname = form.cleaned_data['in_groupname']
-
             try:
-               result, message = Im.addurb(in_user, in_password, in_dbadresse, in_dbname, in_dbuser, in_dbpassword, in_workspace, in_uri, in_groupname)
+                result, message = Im.addurb(in_user, in_password, in_dbadresse, in_dbname, in_dbuser, in_dbpassword, in_workspace, in_uri, in_groupname)
             except Exception as e:
                 out['error'] = str(e.message)
         else:
@@ -149,11 +161,16 @@ def admin_view_addurb(request, template='adminimio/imio_management_addurb.html')
 
         if result == True:
             out['success'] = True
+            message = 'Récuperation des couches terminées'
+            messages.success(request,message)
+            return render_to_response(template, RequestContext(request, out))
             status_code = 200
         else:
             status_code = 500
+            message = out['error']
+            messages.error(request,message)
+            return render_to_response(template, RequestContext(request, out))
 
-        print(out)
         return HttpResponse(
             json.dumps(out),
             mimetype='application/json',

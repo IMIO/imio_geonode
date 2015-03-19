@@ -15,6 +15,8 @@
   <div class="col-md-4">
   {% block sidebar %}{% endblock %}
   </div>
+</div>
+<div class="imio">
   <h2>Interface d'administration iMio</h2>
   <br/>
   <br/>
@@ -58,32 +60,10 @@
 //jquery
 $( document ).ready(function() {
 
-    $("#form_addurb").submit(function( event ) {
-        event.preventDefault();
-
+    $("#b_addurb").click(function() {
         $("#form_addurb_result").removeClass();
         $("#form_addurb_result").html("Récuperation en court");
         $("#form_addurb_result").addClass("alert-warning");
-
-        var url = $(this).attr( "action" );
-        var donnees = $(this).serialize();
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: donnees,
-            dataType: 'json',
-            success: function(info, statut){
-                $("#form_addurb_result").html("Création reussie");
-                $("#form_addurb_result").removeClass();
-                $("#form_addurb_result").addClass("alert-success");
-            },
-            error : function(request, status, error){
-                $("#form_addurb_result").html(request.responseJSON.error);
-                $("#form_addurb_result").removeClass();
-                $("#form_addurb_result").addClass("alert-warning");
-            }
-        });
     });
 
 });
