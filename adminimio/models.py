@@ -82,18 +82,17 @@ class Im(models.Model):
         g_user = name_group+'_ro'
         g_admin = name_group+'_rw'
 
-        # Test si nom user est deja prit
-        lUser = list(User.objects.all())
-        for u in lUser:
-            if u.name_long == u_ro or u.name_long == u_rw:
-                raise Exception('That user name already exists')
 
-        lGroup = list(GroupProfile.objects.all())
-        for g in lGroup:
-            if( g.title == g_user or g.slug == slugify(g_user) or
-                g.title == g_admin or g.slug == slugify(g_admin)) :
-                raise('That group name already exists')
-
+        # Vérification de la disponibiliter des noms
+        if Profile.objects.filter(username=u_ro).exists():
+            raise Exception('Le nom d\'utilisateur généré est déjà utiliser')
+        if Profile.objects.filter(username=u_rw).exists():
+            raise Exception('Le nom d\'utilisateur généré est déjà utiliser')
+        if GroupProfile.objects.filter(title=g_user).exists():
+            raise Exception('Le nom de groupe généré est déjà utiliser')
+        if GroupProfile.objects.filter(title=g_admin).exists():
+            raise Exception('Le nom de groupe généré est déjà utiliser')
+        
         # RW
         user_rw = User.objects.create_user(u_rw, None, u_rw)
         user_rw.save()
