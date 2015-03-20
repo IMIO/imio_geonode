@@ -68,11 +68,11 @@ def admin_view_updatelayer(request, template='adminimio/imio_management_updatela
             except Exception as e:
                 out['error'] = str(e.message)
         else:
-            out['error'] = "Des parametres sont manquant"
+            out['error'] = "Des paramètres sont manquant"
         if result == True:
             out['success'] = True
             status_code = 200
-            message = 'Mise a jour reussie'
+            message = 'Mise à jour réussie'
             messages.success(request, message)
             return render_to_response(template, RequestContext(request, out))
         else:
@@ -109,12 +109,12 @@ def admin_view_crea_group_with_manager(request, template='adminimio/imio_managem
                 out['error'] = str(e.message)
 
         else:
-            out['error'] = "Des parametres sont manquant"
+            out['error'] = "Des paramètres sont manquant"
 
         if result == True:
             out['success'] = True
             status_code = 200
-            message = 'Groupe et utilisateur crée'
+            message = 'Groupes et utilisateurs crée'
             messages.success(request,message)
             return render_to_response(template, RequestContext(request, out))
         else:
@@ -157,7 +157,7 @@ def admin_view_addurb(request, template='adminimio/imio_management_addurb.html')
             except Exception as e:
                 out['error'] = str(e.message)
         else:
-            out['error'] = "Des parametres sont manquant"
+            out['error'] = "Des paramètres sont manquant"
 
         if result == True:
             out['success'] = True

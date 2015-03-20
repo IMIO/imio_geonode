@@ -137,7 +137,7 @@ class Command(BaseCommand):
 
         except Exception as e:
             print(str(e))
-            raise Exception('Erreur lors de la récupération des couche dupuit Geoserver')
+            raise Exception('Erreur lors de la récupération des couches depuis Geoserver')
 
         return layers
 
@@ -182,7 +182,7 @@ class Command(BaseCommand):
             layers = self.addLayersToGeoserver(options)
             self.addLayersToGeonode(options,ws_name, ds_name,ds_resource_type, layers)
         else:
-            raise Exception('Des parametres non pas été définit')
+            raise Exception('Des paramètres non pas été définit')
 
     def verifParams(self, options):
         if(options['gpw'] is None or options['gpw'] is '' or

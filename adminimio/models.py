@@ -85,13 +85,13 @@ class Im(models.Model):
 
         # Vérification de la disponibiliter des noms
         if Profile.objects.filter(username=u_ro).exists():
-            raise Exception('Le nom d\'utilisateur généré est déjà utiliser')
+            raise Exception('Le nom d\'utilisateur généré est déjà utilisé')
         if Profile.objects.filter(username=u_rw).exists():
-            raise Exception('Le nom d\'utilisateur généré est déjà utiliser')
+            raise Exception('Le nom d\'utilisateur généré est déjà utilisé')
         if GroupProfile.objects.filter(title=g_user).exists():
-            raise Exception('Le nom de groupe généré est déjà utiliser')
+            raise Exception('Le nom de groupe généré est déjà utilisé')
         if GroupProfile.objects.filter(title=g_admin).exists():
-            raise Exception('Le nom de groupe généré est déjà utiliser')
+            raise Exception('Le nom de groupe généré est déjà utilisé')
         
         # RW
         user_rw = User.objects.create_user(u_rw, None, u_rw)
