@@ -1,3 +1,4 @@
+
 # -*- coding: utf8 -*-
 from django.core.management.base import BaseCommand, CommandError
 
@@ -98,19 +99,25 @@ class Command(BaseCommand):
         try:
             cat = Catalog(self.geoserver_rest_url, options['geoserveradmin'], options['gpw'])
             #create datastore for URB schema
-            ws = cat.create_workspace(options['alias'],options['uri'])
-            ds = cat.create_datastore(options['alias'], ws)
-            ds.connection_parameters.update(
-                host=options['urbanUrl'],
-                port="5432",
-                database=options['database'],
-                user=options['postuser'],
-                passwd=options['ropw'],
-                dbtype="postgis")
-            cat.save(ds)
+            try:
+                ws = cat.create_workspace(options['alias'],options['uri'])
+            except Exception as e:
+                raise Exception('Le nom du workspace ou l\'alias est déja utiliser')
+            try:
+                ds = cat.create_datastore(options['alias'], ws)
+                ds.connection_parameters.update(
+                    host=options['urbanUrl'],
+                    port="5432",
+                    database=options['database'],
+                    user=options['postuser'],
+                    passwd=options['ropw'],
+                    dbtype="postgis")
+                cat.save(ds)
+            except Exception as e:
+                print(str(e))
+                raise Exception('Erreur de connexion au Geoserver lors de la création du DataStore')
         except Exception as e:
-            print(str(e))
-            raise Exception('Erreur de connexion au Geoserver lors de la création du DataStore')
+            raise Exception(str(e))
         return ws.name , ds.name, ds.resource_type
     
     def addLayersToGeoserver(self, options):
@@ -133,6 +140,7 @@ class Command(BaseCommand):
 
                     layers.append({ 'res_name' : res_name, 'res_title' : res_title })
                 except Exception as e:
+                    # a verifier une fois un possesion des styles
                     print(str(e))
 
         except Exception as e:
@@ -143,15 +151,18 @@ class Command(BaseCommand):
 
     def addLayersToGeonode(self, options, ws_name, ds_name, ds_resource_type, layers):
         try:
-            for layer in layers:
+            for l in layers:
                 created = False
 
-                layer, created = Layer.objects.get_or_create(name=layer['res_name'], defaults={
+                ln = "%s_%s" % (ws_name.encode('utf-8'), l['res_name'].encode('utf-8'))
+                print(ln)
+
+                layer, created = Layer.objects.get_or_create(name=str(ln), defaults={
                     "workspace": ws_name,
                     "store":  ds_name,
                     "storeType": ds_resource_type,
-                    "typename": "%s:%s" % (ws_name.encode('utf-8'), layer['res_name'].encode('utf-8')),
-                    "title": layer['res_title'] or 'No title provided',
+                    "typename": "%s:%s" % (ws_name.encode('utf-8'), l['res_name'].encode('utf-8')),
+                    "title": l['res_title'] or 'No title provided',
                     "abstract": 'No abstract provided',
                     #"owner": owner,
                     "uuid": str(uuid4())
@@ -159,8 +170,10 @@ class Command(BaseCommand):
                     #"bbox_x1": Decimal(ft.latLonBoundingBox.maxy),
                     #"bbox_y0": Decimal(ft.latLonBoundingBox.minx),
                     #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)       
-                })         
+                })
+                print("fin creation")
                 if created:
+                    print("si crée")
                     grName = unicode(options['groupname'])
                     perm = {
                            u'users': {
@@ -170,9 +183,11 @@ class Command(BaseCommand):
                            }
                     layer.set_permissions(perm)
                     layer.save()
+                    print("Layer sauver")
                 else:
-                    print("   !!! le layer "+ layer['res_title'] +" n'as pas été crée ... Vérifier si il était déjà crée avant ?")
+                    print("Layer existe déjà")
         except Exception as e:
+            print('Exception found')
             print(str(e))
             raise Exception('Erreur lors de l\'importation des couches depuit Geoserver')
 
