@@ -6,6 +6,7 @@ from django.db.models import signals
 from django import forms
 from StringIO import StringIO
 from slugify import slugify
+from socket import error as socket_error
 
 from django.contrib.auth import get_user_model
 
@@ -18,13 +19,20 @@ class Im(models.Model):
     @staticmethod
     def updatelayer():
         out = StringIO()
-        call_command('updatelayers', stdout=out)
-        ret = out.getvalue() # Verifier pourquoi vide
-        out.close()
-        # recupere les infos de retour de methode
-        created = 0
-        updated = 0
-        failed = 0
+        try:
+            call_command('updatelayers', stdout=out)
+            ret = out.getvalue() # Verifier pourquoi vide
+        except socket_error as serr:
+            out.close()
+            raise Exception('Erreur de connection au Geoserver')
+        else:
+            # recupere les infos de out
+            created = 0
+            updated = 0
+            failed = 0
+            
+        finally:
+            out.close()
         return created, updated, failed
 
     def my_task_init(self):
