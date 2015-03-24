@@ -159,11 +159,8 @@ class Command(BaseCommand):
         try:
             for l in layers:
                 created = False
-
-                ln = "%s_%s" % (ws_name.encode('utf-8'), l['res_name'].encode('utf-8'))
-                print(ln)
-
-                layer, created = Layer.objects.get_or_create(name=l['res_name'], defaults={
+                layer, created = Layer.objects.get_or_create(typename=ws_name + ':' + l['res_name'], defaults={
+                    "name" : l['res_name'],
                     "workspace": ws_name,
                     "store":  ds_name,
                     "storeType": ds_resource_type,
@@ -177,9 +174,8 @@ class Command(BaseCommand):
                     #"bbox_y0": Decimal(ft.latLonBoundingBox.minx),
                     #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)       
                 })
-                print("fin creation")
+    
                 if created:
-                    print("si crée")
                     grName = unicode(options['groupname'])
                     perm = {
                            u'users': {
@@ -189,13 +185,12 @@ class Command(BaseCommand):
                            }
                     layer.set_permissions(perm)
                     layer.save()
-                    print("Layer sauver")
                 else:
-                    print("Layer existe déjà")
+                    raise Exception('Erreur lors de l\'importation. Le layer'+ws_name + ':' + l['res_name']+'existe déjà')
+
         except Exception as e:
-            print('Exception found')
             print(str(e))
-            raise Exception('Erreur lors de l\'importation des couches depuit Geoserver')
+            raise Exception('Erreur lors de l\'importation des couches depuis Geoserver',e)
 
     def handle(self, *args, **options):
         if self.verifParams(options):
