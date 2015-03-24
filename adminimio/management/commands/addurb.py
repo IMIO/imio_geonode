@@ -50,35 +50,35 @@ class Command(BaseCommand):
         type="string",
         dest='urbanUrl',
         default="",
-        help="Adresse base de donnee [default: %default]"),
+        help="Adresse base de données [default: %default]"),
     )+ (
     make_option("-m", "--dbport",
         action='store',
         type="string",
         dest='dbport',
         default="5432",
-        help="Port base de donnee = [default: %default]"),
+        help="Port base de données = [default: %default]"),
     )+ (
     make_option("-g", "--postuser",
         action='store',
         type="string",
         dest='postuser',
         default="ro_user",
-        help="Utilisateur base de donnee = [default: %default]"),
+        help="Utilisateur base de données = [default: %default]"),
     )+ (
     make_option("-r", "--ropw",
         action='store',
         type="string",
         dest='ropw',
         default="",
-        help="Password base de donnee [default: %default]"),
+        help="Password base de données [default: %default]"),
     )+ (
     make_option("-d", "--database",
         action='store',
         type="string",
         dest='database',
         default="urbangis",
-        help="Nom base de donnee = [default: %default]"),
+        help="Nom base de données = [default: %default]"),
     )+ (
     make_option("-a", "--alias",
         action='store',
@@ -99,7 +99,7 @@ class Command(BaseCommand):
         type="string",
         dest='groupname',
         default="",
-        help="Groupe qui poura voir les couches [default: %default]"),
+        help="Groupe qui pourra voir les couches [default: %default]"),
     )
 
     def createDataStore(self, options):
@@ -114,7 +114,7 @@ class Command(BaseCommand):
                 ds = cat.create_datastore(options['alias'], ws)
                 ds.connection_parameters.update(
                     host=options['urbanUrl'],
-                    port=options['dbport'],#"5432",
+                    port=options['dbport'],
                     database=options['database'],
                     user=options['postuser'],
                     passwd=options['ropw'],
@@ -130,7 +130,10 @@ class Command(BaseCommand):
     def addLayersToGeoserver(self, options):
         cat = Catalog(self.geoserver_rest_url, options['geoserveradmin'], options['gpw'])
 
-        ds = cat.get_store(options['alias'])
+        try:
+            ds = cat.get_store(options['alias'])
+        except Exception as e:
+            raise Exception('Erreur de récupération du workspace')
 
         layers = []
         try:
@@ -184,8 +187,11 @@ class Command(BaseCommand):
                            u'groups': {
                                grName:[u'view_resourcebase',u'download_resourcebase'] }
                            }
-                    layer.set_permissions(perm)
-                    layer.save()
+                    try:
+                        layer.set_permissions(perm)
+                        layer.save()
+                    except:
+                        raise Exception('Problème survenu lors de l\'application des permissions aux couches')
                 else:
                     raise Exception('Erreur lors de l\'importation. Le layer'+ws_name + ':' + l['res_name']+'existe déjà')
 
@@ -196,19 +202,18 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if self.verifParams(options):
             try:
-                print('   !!! try connexion')
                 conn = psycopg2.connect("dbname='" + options['database'] + "' user='" + options['postuser'] + "' host='" + options['urbanUrl'] + "' password='" + options['ropw'] + "' port='" + options['dbport'] + "'")
                 conn.close()
             except psycopg2.Error as e:
                 if 'could not connect to server: Connection refused' in e.message:
                     raise Exception('La connexion au serveur n\'est pas valide. Vérifier l\'adresse et le port')
                 if 'FATAL:  database ' in e.message:
-                    raise Exception('La nom de la basse de donnée n\'est pas correcte')
+                    raise Exception('La nom de la basse de données n\'est pas correcte')
                 if 'FATAL:  password authentication failed ' in e.message:
                     raise Exception('Erreur de login/password')
                 if 'could not translate host name' in e.message:
-                    raise Exception('Erreur sur l\'adresse de la base de donnée')
-                raise Exception('Erreur de connection a la base de donnée')
+                    raise Exception('Erreur sur l\'adresse de la base de données')
+                raise Exception('Erreur de connection à la base de données')
 
             ws_name , ds_name, ds_resource_type =  self.createDataStore(options)
             layers = self.addLayersToGeoserver(options)
