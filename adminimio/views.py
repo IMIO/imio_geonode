@@ -161,7 +161,7 @@ def admin_view_addurb(request, template='adminimio/imio_management_addurb.html')
 
         if result == True:
             out['success'] = True
-            message = 'Récuperation des couches terminées'
+            message = 'Récuperation des couches terminée'
             messages.success(request,message)
             return render_to_response(template, RequestContext(request, out))
             status_code = 200
