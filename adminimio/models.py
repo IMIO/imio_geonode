@@ -140,7 +140,7 @@ class Im(models.Model):
 
 
     @staticmethod
-    def addurb(in_user, in_password, in_dbadresse, in_dbname, in_dbuser, in_dbpassword, in_workspace, in_uri, in_groupname):
+    def addurb(in_user, in_password, in_dbadresse, in_dbport, in_dbname, in_dbuser, in_dbpassword, in_workspace, in_uri, in_groupname):
         out = StringIO()
         message = []
         if GroupProfile.objects.filter(title=in_groupname).exists():
@@ -149,7 +149,8 @@ class Im(models.Model):
                              stdout=out, 
                              geoserveradmin=in_user, 
                              gpw=in_password, 
-                             urbanUrl=in_dbadresse, 
+                             urbanUrl=in_dbadresse,
+                             dbport=in_dbport, 
                              database=in_dbname, 
                              postuser=in_dbuser, 
                              ropw=in_dbpassword,

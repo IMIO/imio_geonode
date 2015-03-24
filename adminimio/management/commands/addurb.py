@@ -44,6 +44,13 @@ class Command(BaseCommand):
         default="",
         help="Urban URL [default: %default]"),
     )+ (
+    make_option("-m", "--dbport",
+        action='store',
+        type="string",
+        dest='dbport',
+        default="",
+        help="dbport [default: %default]"),
+    )+ (
     make_option("-r", "--ropw",
         action='store',
         type="string",
@@ -106,7 +113,7 @@ class Command(BaseCommand):
                 ds = cat.create_datastore(options['alias'], ws)
                 ds.connection_parameters.update(
                     host=options['urbanUrl'],
-                    port="5432",
+                    port=options['dbport'],#"5432",
                     database=options['database'],
                     user=options['postuser'],
                     passwd=options['ropw'],
@@ -156,7 +163,7 @@ class Command(BaseCommand):
                 ln = "%s_%s" % (ws_name.encode('utf-8'), l['res_name'].encode('utf-8'))
                 print(ln)
 
-                layer, created = Layer.objects.get_or_create(name=str(ln), defaults={
+                layer, created = Layer.objects.get_or_create(name=l['res_name'], defaults={
                     "workspace": ws_name,
                     "store":  ds_name,
                     "storeType": ds_resource_type,
