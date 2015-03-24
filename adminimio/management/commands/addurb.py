@@ -8,6 +8,7 @@ from uuid import uuid4
 from decimal import *
 from django.core.management import call_command
 import time
+import psycopg2
 
 from geonode.layers.models import Layer
 
@@ -194,6 +195,21 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if self.verifParams(options):
+            try:
+                print('   !!! try connexion')
+                conn = psycopg2.connect("dbname='" + options['database'] + "' user='" + options['postuser'] + "' host='" + options['urbanUrl'] + "' password='" + options['ropw'] + "' port='" + options['dbport'] + "'")
+                conn.close()
+            except psycopg2.Error as e:
+                if 'could not connect to server: Connection refused' in e.message:
+                    raise Exception('La connexion au serveur n\'est pas valide. Vérifier l\'adresse et le port')
+                if 'FATAL:  database ' in e.message:
+                    raise Exception('La nom de la basse de donnée n\'est pas correcte')
+                if 'FATAL:  password authentication failed ' in e.message:
+                    raise Exception('Erreur de login/password')
+                if 'could not translate host name' in e.message:
+                    raise Exception('Erreur sur l\'adresse de la base de donnée')
+                raise Exception('Erreur de connection a la base de donnée')
+
             ws_name , ds_name, ds_resource_type =  self.createDataStore(options)
             layers = self.addLayersToGeoserver(options)
             self.addLayersToGeonode(options,ws_name, ds_name,ds_resource_type, layers)
