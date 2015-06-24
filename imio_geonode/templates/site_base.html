@@ -1,6 +1,12 @@
 {% extends "base.html" %}
+{% load adminimiotag %}
 {% block extra_head %}
       <link href="{{ STATIC_URL }}css/site_base.css" rel="stylesheet"/>
       <link href="{{ STATIC_URL }}css/sandstone.min.css" rel="stylesheet"/>
       <link href="{{ STATIC_URL }}css/imio_geonode.css" rel="stylesheet"/>
+{% endblock %}
+{% block extra_user_menu %}
+{% if request.user|has_group:"imio" %}
+<li><a href="{% url "imio_management" %}"><i class="fa fa-cog"></i> IMIO</a></li>
+{% endif %}
 {% endblock %}

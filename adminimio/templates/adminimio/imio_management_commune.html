@@ -1,0 +1,59 @@
+{% extends "adminimio/imio_base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load url from future %}
+
+{% block title %} {% trans "Imio administration" %} - {{ block.super }} {% endblock %}
+
+{% block body_class %}adminimio{% endblock %}
+
+{% block body_outer %}
+<div class="row">
+  <div class="col-md-8">
+    {% block body %}{% endblock %}
+  </div>
+  <div class="col-md-4">
+  {% block sidebar %}{% endblock %}
+  </div>
+</div>
+<div class="imio">
+  <h2>Interface d'administration iMio</h2>
+  <br/>
+  <br/>
+  <form id="form_comm_user" action="{% url "imio_management_commune" %}" method="post">
+    {% csrf_token %}
+    <div>Nom d'utilisateur :</div>
+    <input type="text" name="in_user"><br/>
+    <div>Nom de commune :</div>
+    <input type="text" name="in_comm"> <br/>
+    <input type="hidden" value="{{ csrf_token }}" id="csrf_token" name="csrf_token">
+    <br/>
+    <input class="btn" id="b_commune_user" type="submit" value="creation">
+  </form>
+  <br/>
+  <div id="form_comm_user_result">
+  </div>
+</div>
+<script src="/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+{% autoescape off %}
+  csrf_token =  "{{ csrf_token }}",
+  form_target = "/admninimio",
+  geogig_enabled = {{ GEOGIG_ENABLED|lower  }},
+  time_enabled = {{ TIME_ENABLED|lower  }},
+  userLookup = "{% url "geonode.views.ajax_lookup" %}"
+{% endautoescape %}
+
+//jquery
+$( document ).ready(function() {
+
+    $("#b_commune_user").click(function() {
+        $("#form_comm_user_result").removeClass();
+        $("#form_comm_user_result").html("En cours d'execution")
+        $("#form_comm_user_result").addClass("alert-warning");
+    });
+
+});
+</script>
+{% endblock %}
+

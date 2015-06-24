@@ -1,6 +1,5 @@
 .navbar-brand {
-        background: url(/static/img/logo.png) no-repeat;
-        margin-bottom: 10px;
+        background: url("/static/img/logo.png") no-repeat scroll 0 0 / 75% auto rgba(0, 0, 0, 0);
         width: 150px;
 }
 
@@ -8,7 +7,7 @@
 	width: 1100px;
 }
 .navbar-collapse{
-	margin-top: 10px;
+	margin-top: 0px;
 	width: 1100px;
 }
 .hero-unit{

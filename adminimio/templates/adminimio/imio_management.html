@@ -1,0 +1,28 @@
+{% extends "adminimio/imio_base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load url from future %}
+
+{% block title %} {% trans "Imio administration" %} - {{ block.super }} {% endblock %}
+
+{% block body_class %}adminimio{% endblock %}
+
+{% block body_outer %}
+<div class="row">
+  <div class="col-md-8">
+    {% block body %}{% endblock %}
+  </div>
+  <div class="col-md-4">
+  {% block sidebar %}{% endblock %}
+  </div>
+  <h2>Interface d'administration iMio</h2>
+  <br/>
+  <br/>
+  <div class="imio_management"><a href="{% url "imio_management_updatelayer" %}">Utilitaire de mise à jour des couches</a></div>
+  <br/>
+  <div class="imio_management"><a href="{% url "imio_management_commune" %}">Utilitaire de création d'une nouvelle commune</a></div>
+  <br/>
+  <div class="imio_addurb"><a href="{% url "imio_management_addurb" %}">Utilitaire de récuperation de couche</a></div>
+  <br/>
+</div>
+{% endblock %}

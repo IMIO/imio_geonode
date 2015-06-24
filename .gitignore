@@ -5,3 +5,41 @@ include/
 lib/
 man/
 src/
+# build artifacts
+*.pyc
+*.egg-info
+build
+target
+pip-log.txt
+MANIFEST
+dist
+
+docs/i18n/pot/
+
+# Static media handling
+*.jshintrc
+
+#Testing output
+.coverage
+.noseids
+nosetests.xml
+
+#Temporary files
+*~
+*.swp
+
+# OSX specific
+.Python
+.DS_Store
+
+# Docs
+docs/_build
+
+# ec2.py
+scripts/cloud/.gnec2.cfg
+jquery.raty.js
+angular.js
+angular-leaflet-directive.min.js
+bootstrap.min.js
+jquery.min.js
+bootstrap.min.css

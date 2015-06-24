@@ -1,0 +1,52 @@
+{% extends "adminimio/imio_base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load url from future %}
+
+{% block title %} {% trans "Imio administration" %} - {{ block.super }} {% endblock %}
+
+{% block body_class %}adminimio{% endblock %}
+
+{% block body_outer %}
+<div class="row">
+  <div class="col-md-8">
+    {% block body %}{% endblock %}
+  </div>
+  <div class="col-md-4">
+  {% block sidebar %}{% endblock %}
+  </div>
+</div>
+<div class="imio">
+  <h2>Interface d'administration iMio</h2>
+  <br/>
+  <br/>
+  <form id="form_updatelayers" action="{% url "imio_management_updatelayer" %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" value="{{ csrf_token }}" id="csrf_token" name="csrf_token">
+    <input class="btn" id="b_updatelayers" type="submit" value="Mise a jour des couches">
+  </form>
+  <br/>
+  <div id="form_updatelayers_result">
+  </div>
+</div>
+<script src="/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+{% autoescape off %}
+  csrf_token =  "{{ csrf_token }}",
+  form_target = "/admninimio",
+  geogig_enabled = {{ GEOGIG_ENABLED|lower  }},
+  time_enabled = {{ TIME_ENABLED|lower  }},
+  userLookup = "{% url "geonode.views.ajax_lookup" %}"
+{% endautoescape %}
+
+//jquery
+$( document ).ready(function() {
+    $("#b_updatelayers").click(function() {
+        $("#form_updatelayers_result").removeClass();
+        $("#form_updatelayers_result").html("Mise a jour en cours...");
+        $("#form_updatelayers_result").addClass("alert-warning");
+    });
+});
+</script>
+{% endblock %}
+
