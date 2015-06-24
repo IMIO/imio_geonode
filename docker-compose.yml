@@ -1,0 +1,12 @@
+postgis:
+    image: kartoza/postgis
+geoserver:
+    image: kartoza/geoserver
+    links:
+        - postgis:postgis
+    ports:
+        - 8081:8080
+#geonode:
+#    build: .
+#    ports:
+#        - 8000
