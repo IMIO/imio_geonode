@@ -7,11 +7,11 @@ all: run
 bin/python:
 	virtualenv-2.7 .
 
-src/imio_geonode/local_settings.py:
-	cp src/imio_geonode/local_settings.py.sample src/imio_geonode/local_settings.py
+imio_geonode/local_settings.py:
+	cp imio_geonode/local_settings.py.sample imio_geonode/local_settings.py
 
-install: bin/python src/imio_geonode/local_settings.py
-	./bin/pip install -e git+git@github.com:GeoNode/geonode.git#egg=geonode
+install: bin/python imio_geonode/local_settings.py
+	# ./bin/pip install -e git+git@github.com:GeoNode/geonode.git#egg=geonode
 	./bin/pip install -e .
 
 syncdb:
@@ -30,3 +30,16 @@ update:
 cleanall:
 	rm -fr develop-eggs include parts .installed.cfg lib include bin .mr.developer.cfg *.egg-info
 
+
+postgres_data:
+	mkdir postgres_data
+
+geoserver_data:
+	mkdir geoserver_data
+
+docker-up: imio_geonode/local_settings.py postgres_data geoserver_data
+	docker-compose up
+
+docker-init: imio_geonode/local_settings.py
+	docker-compose start
+	docker exec -ti imiogeonode_geonode_1 python manage.py syncdb
