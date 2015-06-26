@@ -1,21 +1,17 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
-FROM ubuntu:trusty
+FROM ubuntu:14.04
 MAINTAINER Benoît Suttor<bsuttor@imio.com>
 
-RUN export DEBIAN_FRONTEND=noninteractive
-ENV DEBIAN_FRONTEND noninteractive
-RUN dpkg-divert --local --rename --add /sbin/initctl
-#RUN ln -s /bin/true /sbin/initctl
-RUN apt-get install -y software-properties-common
 
-#-------------Application Specific Stuff ----------------------------------------------------
-RUN apt-get update -y
-RUN apt-get install -y python python-dev python-lxml
-RUN apt-get install -y gdal-bin
-#RUN add-apt-repository ppa:geonode/testing
-RUN add-apt-repository ppa:geonode/release
-RUN apt-get update -y
-RUN apt-get install -y geonode
-RUN geonode-updateip 127.0.0.1
-WORKDIR /opt
-RUN git clone https://github.com/IMIO/imio_geonode.git /opt/imio_geonode
+RUN \
+  apt-get update && \
+  apt-get install -y build-essential && \
+  apt-get install -y libxml2-dev libxslt1-dev libjpeg-dev gettext git python-dev python-pip libgdal1-dev && \
+  apt-get install -y python-pillow python-lxml python-psycopg2 python-django python-bs4 python-multipartposthandler transifex-client python-paver python-nose python-django-nose python-gdal python-django-pagination python-django-jsonfield python-django-extensions python-django-taggit python-httplib2
+
+RUN mkdir -p /opt/imio_geonode
+
+WORKDIR /opt/imio_geonode
+ADD requirements.txt /opt/imio_geonode/
+RUN pip install -r requirements.txt
+ADD . /opt/imio_geonode/

@@ -1,12 +1,28 @@
 postgis:
-    image: kartoza/postgis
+    image: mdillon/postgis
+    hostname: postgis
+    volumes:
+        - ./postgres_data:/var/lib/postgresql
+    environment:
+         - USERNAME=postgres
+         - PASS=postgres
 geoserver:
     image: kartoza/geoserver
+    hostname: localhost:8000
     links:
-        - postgis:postgis
+        - postgis:postgres
     ports:
-        - 8081:8080
-#geonode:
-#    build: .
-#    ports:
-#        - 8000
+        - 8080:8080
+    volumes:
+        - ./geoserver_data:/opt/geoserver/data_dir
+geonode:
+    build: .
+    hostname: geonode
+    links:
+        - geoserver
+        - postgis
+    ports:
+        - 8000:8000
+    volumes:
+        - .:/opt/imio_geonode/
+    command: python manage.py runserver 0.0.0.0:8000
