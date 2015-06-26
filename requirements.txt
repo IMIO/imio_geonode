@@ -1,0 +1,2 @@
+geonode==2.4b25
+pygdal==1.10.1
