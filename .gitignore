@@ -45,3 +45,4 @@ jquery.min.js
 bootstrap.min.css
 djcelery/
 imio_geonode/local_settings.py
+geoserver_data/logs/

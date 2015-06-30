@@ -1,3 +1,9 @@
+ambassador:
+    image: cpuguy83/docker-grand-ambassador
+    volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock"
+    command: "-name imiogeonodegeonode1 -name imiogeonodegeoserver1"
+
 postgis:
     image: mdillon/postgis
     hostname: postgis
@@ -10,8 +16,8 @@ geoserver:
     build: geoserver/
     hostname: geoserver
     links:
-        - postgis:postgres
-        - geonode
+        - postgis
+        - ambassador:imiogeonodegeonode1
     ports:
         - 8080:8080
     volumes:
@@ -21,8 +27,10 @@ geonode:
     hostname: geonode
     links:
         - postgis
+        - ambassador:imiogeonodegeoserver1
     ports:
         - 8000:8000
     volumes:
         - .:/opt/imio_geonode/
     command: python manage.py runserver 0.0.0.0:8000
+
