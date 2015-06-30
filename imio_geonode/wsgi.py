@@ -18,7 +18,7 @@
 #########################################################################
 
 import os, sys, site
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "geonode.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "imio_geonode.settings")
 
 
 # This application object is used by the development server
