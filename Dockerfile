@@ -15,3 +15,6 @@ WORKDIR /opt/imio_geonode
 ADD requirements.txt /opt/imio_geonode/
 RUN pip install -r requirements.txt
 ADD . /opt/imio_geonode/
+
+COPY ./docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
