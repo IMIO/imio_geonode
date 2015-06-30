@@ -7,10 +7,11 @@ postgis:
          - USERNAME=postgres
          - PASS=postgres
 geoserver:
-    image: kartoza/geoserver
-    hostname: localhost:8000
+    build: geoserver/
+    hostname: geoserver
     links:
         - postgis:postgres
+        - geonode
     ports:
         - 8080:8080
     volumes:
@@ -19,7 +20,6 @@ geonode:
     build: .
     hostname: geonode
     links:
-        - geoserver
         - postgis
     ports:
         - 8000:8000
