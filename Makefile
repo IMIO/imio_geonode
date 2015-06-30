@@ -43,3 +43,6 @@ docker-up: imio_geonode/local_settings.py postgres_data geoserver_data
 docker-init: imio_geonode/local_settings.py
 	docker-compose start
 	docker exec -ti imiogeonode_geonode_1 python manage.py syncdb
+
+docker-image:
+	docker build -t imio-geonode:latest .
