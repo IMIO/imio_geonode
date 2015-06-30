@@ -10,6 +10,7 @@ RUN \
   apt-get install -y python-pillow python-lxml python-psycopg2 python-django python-bs4 python-multipartposthandler transifex-client python-paver python-nose python-django-nose python-gdal python-django-pagination python-django-jsonfield python-django-extensions python-django-taggit python-httplib2
 
 RUN mkdir -p /opt/imio_geonode
+RUN mkdir /logs
 
 WORKDIR /opt/imio_geonode
 ADD requirements.txt /opt/imio_geonode/
