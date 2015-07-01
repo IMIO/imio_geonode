@@ -49,4 +49,4 @@ docker-image:
 	docker build -t imio-geonode:latest .
 
 docker-geoserver-image:
-	cd geoserver && docker build -t imio-geoserver:latest .
+	cd Dockerfiles/geoserver && docker build -t imio-geoserver:latest .

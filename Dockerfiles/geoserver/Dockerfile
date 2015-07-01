@@ -1,5 +1,5 @@
 FROM tomcat:8-jre7
-MAINTAINER Benoît Suttor<bsuttor@imio.com>
+MAINTAINER Benoît Suttor <bsuttor@imio.com>
 
 
 RUN apt-get update && apt-get install wget unzip
