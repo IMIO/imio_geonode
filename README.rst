@@ -1,47 +1,27 @@
 Imio_Geonode
-========================
+============
 
-You should write some docs, it's good for the soul.
+This module extends Geonode and add some feature for IMIO.
 
 Installation
 ------------
 
-Install geonode with::
+* Install Docker (https://docs.docker.com/installation/)
 
-    $ sudo add-apt-repository ppa:geonode/testing
+* Install docker-compose (https://docs.docker.com/compose/install/)
 
-    $ sudo apt-get update
+And then, run ::
 
-    $ sudo apt-get install geonode
+    $ make init
 
-Create a new template based on the geonode example project.::
-    
-    $ django-admin startproject my_geonode --template=https://github.com/GeoNode/geonode-project/archive/master.zip -epy,rst 
-    $ sudo pip install -e my_geonode
+    $ docker-compose up
 
-.. note:: You should NOT use the name geonode for your project as it will conflict with the default geonode package name.
+Now you can open your browser on http://localhost
 
-Usage
------
-
-Rename the local_settings.py.sample to local_settings.py and edit it's content by setting the SITEURL and SITENAME.
-
-Edit the file /etc/apache2/sites-available/geonode and change the following directive from:
-
-    WSGIScriptAlias / /var/www/geonode/wsgi/geonode.wsgi
-
-to:
-
-    WSGIScriptAlias / /path/to/my_geonode/my_geonode/wsgi.py
-
-Restart apache::
-
-    $ sudo service apache2 restart
-
-Edit the templates in my_geonode/templates, the css and images to match your needs.
-
-In the my_geonode folder run::
-
-    $ python manage.py collectstatic
+`make init` will build docker images and start Django syncdb.
 
 
+
+This template was created with ::
+
+    $ django-admin startproject imio_geonode --template=https://github.com/GeoNode/geonode-project/archive/master.zip -epy,rst
