@@ -2,5 +2,5 @@
   <id>-54fbcd7b:1402c24f6bc:-7fe9</id>
   <name>geonodeAuthProvider</name>
   <className>org.geonode.security.GeoNodeAuthenticationProvider</className>
-  <baseUrl>http://geonode:8000/</baseUrl>
+  <baseUrl>http://172.17.42.1:80/</baseUrl>
 </org.geonode.security.GeoNodeAuthProviderConfig>
