@@ -3,15 +3,11 @@ postgis:
     hostname: postgis
     volumes:
         - ./postgres_data:/var/lib/postgresql
-    environment:
-         - USERNAME=postgis
-         - PASS=postgis
 geoserver:
     build: Dockerfiles/geoserver/
     hostname: geoserver
     links:
         - postgis
-        - geonode
     ports:
         - 8080:8080
     volumes:
