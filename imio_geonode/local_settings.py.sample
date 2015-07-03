@@ -5,18 +5,18 @@ DEBUG = TEMPLATE_DEBUG = True
 DEBUG_STATIC = False
 
 SITENAME = 'GeoNode'
-SITEURL = 'http://localhost/'
+SITEURL = 'http://localhost'
 
-GEOSERVER_URL = 'http://localhost/geoserver/'
-
+GEOSERVER_URL = SITEURL + '/geoserver/'
+GEOSERVER_BASE_URL = GEOSERVER_URL
 # OGC (WMS/WFS/WCS) Server Settings
 OGC_SERVER = {
     'default': {
         'BACKEND': 'geonode.geoserver',
-        'LOCATION': 'http://localhost:8080/geoserver/',
+        'LOCATION': 'http://172.17.42.1:80/geoserver/',
         'PUBLIC_LOCATION': GEOSERVER_URL,
         'USER': 'admin',
-        'PASSWORD': 'geoserver',
+        'PASSWORD': 'admin',
         'MAPFISH_PRINT_ENABLED': True,
         'PRINT_NG_ENABLED': True,
         'GEONODE_SECURITY_ENABLED': True,
@@ -40,7 +40,7 @@ DATABASES = {
     },
     'datastore': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'geonode_data',
+        'NAME': 'geonode-imports',
         'USER': 'geonode',
         'PASSWORD': 'geonode',
         'HOST': 'postgis',
