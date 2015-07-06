@@ -19,6 +19,8 @@ cleanall:
 	docker-compose stop
 	docker-compose rm -f
 
+build: docker-update-images
+
 docker-update-images: cleanall
 	docker-compose build
 

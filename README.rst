@@ -31,6 +31,6 @@ If you add .dump postgres files in Dockerfiles/postgis/ folder, these files will
 
 
 
-This template was created with ::
+This project was created with a template ::
 
     $ django-admin startproject imio_geonode --template=https://github.com/GeoNode/geonode-project/archive/master.zip -epy,rst
