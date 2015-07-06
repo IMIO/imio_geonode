@@ -21,8 +21,9 @@ geonode:
         - 8000:8000
     volumes:
         - .:/opt/imio_geonode/
-    entrypoint: python
-    command: manage.py runserver 0.0.0.0:8000
+    entrypoint:
+        - /opt/imio_geonode/docker-entrypoint.sh
+    
 nginx:
     image: nginx:latest
     ports:
