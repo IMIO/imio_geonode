@@ -1,26 +1,14 @@
 #!/usr/bin/make
 GDALVERSION=`gdal-config --version`
 
-all: run
+all: init
 .PHONY: install run syncdb init
-
-bin/python:
-	virtualenv-2.7 .
 
 imio_geonode/local_settings.py:
 	cp imio_geonode/local_settings.py.sample imio_geonode/local_settings.py
 
-install: bin/python imio_geonode/local_settings.py
-	# ./bin/pip install -e git+git@github.com:GeoNode/geonode.git#egg=geonode
-	./bin/pip install -e .
-
 syncdb:
-	./bin/python manage.py syncdb
-
-init: install syncdb
-
-run:
-	./bin/python manage.py runserver 0.0.0.0:8080
+	docker-compose run --rm --entrypoint='/usr/bin/python' geonode manage.py syncdb
 
 update:
 	git fetch upstream
@@ -28,8 +16,11 @@ update:
 
 .PHONY: cleanall
 cleanall:
-	rm -fr develop-eggs include parts .installed.cfg lib include bin .mr.developer.cfg *.egg-info
+	docker-compose stop
+	docker-compose rm -f
 
+docker-update-images: cleanall
+	docker-compose build
 
 postgres_data:
 	mkdir postgres_data
@@ -37,16 +28,22 @@ postgres_data:
 geoserver_data:
 	mkdir geoserver_data
 
+up: docker-up
+
 docker-up: imio_geonode/local_settings.py postgres_data geoserver_data
 	docker-compose up
 
-docker-init: imio_geonode/local_settings.py
-	docker-compose start
-	docker exec -ti imiogeonode_geonode_1 python manage.py syncdb
+init: docker-init
+
+docker-init: imio_geonode/local_settings.py postgres_data geoserver_data
+	docker-compose up postgis &
+	sleep 15
+	docker-compose run --rm --entrypoint='/usr/bin/python' geonode manage.py syncdb
 	docker-compose stop
 
-docker-image:
+docker-geonode-image:
 	docker build -t imio-geonode:latest .
 
 docker-geoserver-image:
 	cd Dockerfiles/geoserver && docker build -t imio-geoserver:latest .
+
