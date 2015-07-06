@@ -12,6 +12,8 @@ Installation
 
 And then, run ::
 
+    $ docker-compose build
+
     $ make init
 
     $ docker-compose up
@@ -25,7 +27,7 @@ Postgis
 -------
 
 A postgis image is created from postgres:9.4 docker image (https://registry.hub.docker.com/_/postgres/).
-If you add .dump postgres files in Dockerfiles/postgis/ folder, these files will be imported into DB.
+If you add .dump postgres files in Dockerfiles/postgis/ folder, these files will be imported into DB during first start.
 
 
 
