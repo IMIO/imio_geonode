@@ -8,7 +8,7 @@ imio_geonode/local_settings.py:
 	cp imio_geonode/local_settings.py.sample imio_geonode/local_settings.py
 
 syncdb:
-	docker-compose run --rm --entrypoint='/usr/bin/python' geonode manage.py syncdb
+	docker-compose run --rm geonode manage.py syncdb
 
 update:
 	git fetch upstream
@@ -40,7 +40,7 @@ init: docker-init
 docker-init: imio_geonode/local_settings.py postgres_data geoserver_data
 	docker-compose up postgis &
 	sleep 15
-	docker-compose run --rm --entrypoint='/usr/bin/python' geonode manage.py syncdb
+	docker-compose run --rm  geonode manage.py syncdb
 	docker-compose stop
 
 docker-geonode-image:
