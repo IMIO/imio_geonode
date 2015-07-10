@@ -1,6 +1,6 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
 FROM ubuntu:14.04
-MAINTAINER Benoît Suttor<bsuttor@imio.com>
+MAINTAINER Benoît Suttor <bsuttor@imio.com>
 
 
 RUN \
