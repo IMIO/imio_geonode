@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 from django.core.management.base import BaseCommand, CommandError
+from django.conf import settings
 
 from optparse import OptionParser
 from optparse import make_option
@@ -16,7 +17,8 @@ class Command(BaseCommand):
 
     args = 'params'
     help = 'Collect layer from Database'
-    geoserver_rest_url = 'http://localhost:8080/geoserver/rest'
+    geoserver_url = settings.OGC_SERVER['default']['LOCATION']
+    geoserver_rest_url = geoserver_url + 'rest'
     urb = {
             "capa":"Parcelles",
             "toli":"cadastre_ln_toponymiques",
@@ -126,7 +128,7 @@ class Command(BaseCommand):
         except Exception as e:
             raise Exception(str(e))
         return ws.name , ds.name, ds.resource_type
-    
+
     def addLayersToGeoserver(self, options):
         cat = Catalog(self.geoserver_rest_url, options['geoserveradmin'], options['gpw'])
 
@@ -176,9 +178,9 @@ class Command(BaseCommand):
                     #"bbox_x0": Decimal(ft.latLonBoundingBox.miny),
                     #"bbox_x1": Decimal(ft.latLonBoundingBox.maxy),
                     #"bbox_y0": Decimal(ft.latLonBoundingBox.minx),
-                    #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)       
+                    #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)
                 })
-    
+
                 if created:
                     grName = unicode(options['groupname'])
                     perm = {
