@@ -30,7 +30,7 @@ class Im(models.Model):
             created = 0
             updated = 0
             failed = 0
-            
+
         finally:
             out.close()
         return created, updated, failed
@@ -87,8 +87,8 @@ class Im(models.Model):
         u_ro = name_group+'_'+name_user
         u_rw = name_group+'_admin'
 
-        g_user = name_group+'_ro'
-        g_admin = name_group+'_rw'
+        g_user = name_group+'-ro'
+        g_admin = name_group+'-rw'
 
 
         # Vérification de la disponibiliter des noms
@@ -100,7 +100,7 @@ class Im(models.Model):
             raise Exception('Le nom de groupe généré est déjà utilisé')
         if GroupProfile.objects.filter(title=g_admin).exists():
             raise Exception('Le nom de groupe généré est déjà utilisé')
-        
+
         # RW
         user_rw = User.objects.create_user(u_rw, None, u_rw)
         user_rw.save()
@@ -146,13 +146,13 @@ class Im(models.Model):
         if GroupProfile.objects.filter(title=in_groupname).exists():
             try:
                 call_command('addurb',
-                             stdout=out, 
-                             geoserveradmin=in_user, 
-                             gpw=in_password, 
+                             stdout=out,
+                             geoserveradmin=in_user,
+                             gpw=in_password,
                              urbanUrl=in_dbadresse,
-                             dbport=in_dbport, 
-                             database=in_dbname, 
-                             postuser=in_dbuser, 
+                             dbport=in_dbport,
+                             database=in_dbname,
+                             postuser=in_dbuser,
                              ropw=in_dbpassword,
                              alias=in_workspace,
                              uri=in_uri,
