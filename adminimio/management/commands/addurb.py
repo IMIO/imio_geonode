@@ -144,12 +144,15 @@ class Command(BaseCommand):
                 try:
                     style = self.urb[table]
                     ft = cat.publish_featuretype(table, ds, 'EPSG:31370', srs='EPSG:31370')
-                    ft.default_style = style
+                    gs_style = cat.get_style(style)
                     cat.save(ft)
                     res_name = ft.dirty['name']
                     res_title = options['alias']+"_"+table
                     cat.save(ft)
-
+                    layer_name = ds.workspace.name + ':' + res_name
+                    new_layer = cat.get_layer(layer_name)
+                    new_layer.default_style = gs_style
+                    cat.save(new_layer)
                     layers.append({ 'res_name' : res_name, 'res_title' : res_title })
                 except Exception as e:
                     # a verifier une fois un possesion des styles
