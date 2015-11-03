@@ -34,12 +34,6 @@ LOCAL_ROOT = os.path.abspath(os.path.dirname(__file__))
 WSGI_APPLICATION = "imio_geonode.wsgi.application"
 
 
-# Load more settings from a file called local_settings.py if it exists
-try:
-    from local_settings import *
-except ImportError:
-    pass
-
 # Additional directories which hold static files
 STATICFILES_DIRS.append(
     os.path.join(LOCAL_ROOT, "static"),
@@ -61,6 +55,30 @@ LOCALE_PATHS = (
 
 INSTALLED_APPS = (
 	'adminimio',
+    'imio_survey',
+    'djcelery',
 	) + INSTALLED_APPS
 
+BROKER_URL = "amqp://guest:guest@rabbitmq:5672//"
 
+CELERY_ALWAYS_EAGER = False
+CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
+CELERY_IGNORE_RESULT = False
+CELERY_SEND_EVENTS = True
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERY_TASK_RESULT_EXPIRES = 1
+CELERY_DISABLE_RATE_LIMITS = True
+CELERY_DEFAULT_QUEUE = "default"
+CELERY_DEFAULT_EXCHANGE = "default"
+CELERY_DEFAULT_EXCHANGE_TYPE = "direct"
+CELERY_DEFAULT_ROUTING_KEY = "default"
+CELERY_CREATE_MISSING_QUEUES = True
+CELERY_IMPORTS = (
+    'imio_survey.tasks',
+) + CELERY_IMPORTS
+
+# Load more settings from a file called local_settings.py if it exists
+try:
+    from local_settings import *
+except ImportError:
+    pass

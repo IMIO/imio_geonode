@@ -20,8 +20,27 @@ geoserver:
         - 8080:8080
     volumes:
         - ./geoserver_data:/opt/geoserver/data_dir
+
+# NOTES:
+#   - The C_FORCE_ROOT variable allows celery to run as the root user.
+surveyworker:
+    build: .
+    environment:
+        - C_FORCE_ROOT=true
+    hostname: geonode-worker
+    links:
+        - postgis
+        - rabbitmq
+    volumes:
+        - .:/opt/imio_geonode/
+    entrypoint:
+        - /usr/bin/python
+    command: manage.py celery worker -E -lINFO
+
 geonode:
     build: .
+    environment:
+        - C_FORCE_ROOT=true
     hostname: geonode
     links:
         - postgis
