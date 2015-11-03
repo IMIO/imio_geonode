@@ -3,6 +3,14 @@ postgis:
     hostname: postgis
     volumes:
         - ./postgres_data:/var/lib/postgresql
+
+rabbitmq:
+    image: rabbitmq
+    hostname: rabbitmq-server
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+
 geoserver:
     build: Dockerfiles/geoserver/
     hostname: geoserver
@@ -17,6 +25,7 @@ geonode:
     hostname: geonode
     links:
         - postgis
+        - rabbitmq
     ports:
         - 8000:8000
     volumes:
