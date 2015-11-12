@@ -12,7 +12,7 @@ echo Starting Gunicorn.
 exec gunicorn imio_geonode.wsgi:application \
     --name imio_geonode \
     --bind 0.0.0.0:8000 \
-    --workers 3 \
+    --workers 8 \
     --log-level=info \
     --log-file=/logs/gunicorn.log \
     --access-logfile=/logs/access.log \

@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 from django.core.management.base import BaseCommand, CommandError
+from django.conf import settings
 
 from optparse import OptionParser
 from optparse import make_option
@@ -16,7 +17,8 @@ class Command(BaseCommand):
 
     args = 'params'
     help = 'Collect layer from Database'
-    geoserver_rest_url = 'http://localhost:8080/geoserver/rest'
+    geoserver_url = settings.OGC_SERVER['default']['LOCATION']
+    geoserver_rest_url = geoserver_url + 'rest'
     urb = {
             "capa":"Parcelles",
             "toli":"cadastre_ln_toponymiques",
@@ -126,7 +128,7 @@ class Command(BaseCommand):
         except Exception as e:
             raise Exception(str(e))
         return ws.name , ds.name, ds.resource_type
-    
+
     def addLayersToGeoserver(self, options):
         cat = Catalog(self.geoserver_rest_url, options['geoserveradmin'], options['gpw'])
 
@@ -142,12 +144,15 @@ class Command(BaseCommand):
                 try:
                     style = self.urb[table]
                     ft = cat.publish_featuretype(table, ds, 'EPSG:31370', srs='EPSG:31370')
-                    ft.default_style = style
+                    gs_style = cat.get_style(style)
                     cat.save(ft)
                     res_name = ft.dirty['name']
                     res_title = options['alias']+"_"+table
                     cat.save(ft)
-
+                    layer_name = ds.workspace.name + ':' + res_name
+                    new_layer = cat.get_layer(layer_name)
+                    new_layer.default_style = gs_style
+                    cat.save(new_layer)
                     layers.append({ 'res_name' : res_name, 'res_title' : res_title })
                 except Exception as e:
                     # a verifier une fois un possesion des styles
@@ -176,9 +181,9 @@ class Command(BaseCommand):
                     #"bbox_x0": Decimal(ft.latLonBoundingBox.miny),
                     #"bbox_x1": Decimal(ft.latLonBoundingBox.maxy),
                     #"bbox_y0": Decimal(ft.latLonBoundingBox.minx),
-                    #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)       
+                    #"bbox_y1": Decimal(ft.latLonBoundingBox.maxx)
                 })
-    
+
                 if created:
                     grName = unicode(options['groupname'])
                     perm = {
