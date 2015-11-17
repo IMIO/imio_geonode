@@ -1,14 +1,18 @@
 from django.contrib import admin
-from imio_survey.models import SurveyTypeAdmin,SurveyLayerAdmin,SurveyGisServerAdmin
+from imio_survey.models import SurveyType,SurveyLayer,SurveyGisServer,SurveyTypeLayer
 
-@admin.register(SurveyType)
 class SurveyTypeAdmin(admin.ModelAdmin):
     pass
+admin.site.register(SurveyType, SurveyTypeAdmin)
 
-@admin.register(SurveyLayer)
 class SurveyLayerAdmin(admin.ModelAdmin):
     pass
+admin.site.register(SurveyLayer, SurveyLayerAdmin)
 
-@admin.register(SurveyGisServer)
 class SurveyGisServerAdmin(admin.ModelAdmin):
     pass
+admin.site.register(SurveyGisServer, SurveyGisServerAdmin)
+
+class SurveyTypeLayerAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(SurveyTypeLayer, SurveyTypeLayerAdmin)

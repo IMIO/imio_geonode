@@ -97,6 +97,21 @@ PROXY_ALLOWED_HOSTS = ('geoservices.wallonie.be', 'geoserver.imio.be')
 
 ALLOWED_HOSTS = ['*']
 
+BROKER_URL = "amqp://guest:guest@rabbitmq:5672//"
+
+CELERY_ALWAYS_EAGER = False
+CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
+CELERY_IGNORE_RESULT = False
+CELERY_SEND_EVENTS = True
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERY_TASK_RESULT_EXPIRES = 1
+CELERY_DISABLE_RATE_LIMITS = True
+CELERY_DEFAULT_QUEUE = "default"
+CELERY_DEFAULT_EXCHANGE = "default"
+CELERY_DEFAULT_EXCHANGE_TYPE = "direct"
+CELERY_DEFAULT_ROUTING_KEY = "default"
+CELERY_CREATE_MISSING_QUEUES = True
+
 
 # Uncomment the following to receive emails whenever there are errors in GeoNode
 #ADMINS = (
