@@ -3,3 +3,4 @@ pygdal==1.10.1
 gunicorn==19.3.0
 celery
 django-celery
+-e git+https://github.com/ndufrane/arcrest.git

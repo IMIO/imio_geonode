@@ -9,7 +9,7 @@ from django.db import transaction
 from django.contrib.gis.geos import GEOSGeometry, fromstr
 
 from imio_survey.models import SurveyType, SurveyTypeLayer, SurveyLayer, SurveyGisServer
-from imio_survey.factories import SurveyQuerierFactory
+from imio_survey.queriers.factories import SurveyQuerierFactory
 
 logger = get_task_logger(__name__)
 
