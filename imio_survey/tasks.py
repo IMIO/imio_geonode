@@ -22,18 +22,17 @@ def doSurvey(surveyTypekey,wktGeometry):
     #TODO Handle surveynotfound
     #TODO EagerLoad every layer and membership to avoid n+1 select
     #TODO Check geometry validity
-    surveyType = SurveyType.objects.get(pk = surveyType.key)
+    surveyType = SurveyType.objects.get(pk = surveyTypekey)
     results = []
     #TODO Check Error for querylayer and invalidate the survey if any
-    for survey_layer in surveyType.survey_layers:
+    for survey_layer in surveyType.survey_layers.all():
         surveyTypeLayer = SurveyTypeLayer.objects.get(survey_type = surveyType, survey_layer = survey_layer)
-        #TODO Check parallelism
         result = queryLayer.delay(survey_layer.pk, wktGeometry, surveyTypeLayer.buffer)
-        results.add(result)
+        results.append(result)
     return results
 
 @shared_task
-def queryLayer(layer_pk,wktGeometry, buffer):
+def queryLayer(layer_pk, wktGeometry, buffer):
     geosGeom = fromstr(wktGeometry)
     geosGeomBuffer = geosGeom.buffer(buffer)
     layer = SurveyLayer.objects.get(pk = layer_pk)

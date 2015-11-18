@@ -2,6 +2,8 @@
 POSTGRES="gosu postgres"
 
 $POSTGRES psql -c "CREATE ROLE geonode ENCRYPTED PASSWORD 'geonode' LOGIN;"
+$POSTGRES psql -c 'ALTER USER geonode SUPERUSER;'
+
 $POSTGRES psql -c "CREATE DATABASE geonode OWNER geonode ;"
 $POSTGRES psql -c "CREATE DATABASE test_geonode OWNER geonode ;"
 $POSTGRES psql -c 'CREATE DATABASE "geonode-imports" OWNER geonode ;'

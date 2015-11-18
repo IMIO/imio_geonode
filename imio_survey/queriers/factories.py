@@ -10,4 +10,4 @@ gisServerTypesMapping = {SurveyGisServer.OGC : OGCQuerier,
 
 class SurveyQuerierFactory:
     def createQuerier(self, gisServerType):
-        return gisServerTypesMapping.get(gisServerType)
+        return gisServerTypesMapping.get(gisServerType)()
