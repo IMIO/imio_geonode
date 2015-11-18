@@ -35,7 +35,7 @@ surveyworker:
         - .:/opt/imio_geonode/
     entrypoint:
         - /usr/bin/python
-    command: manage.py celery worker -E -lINFO
+    command: manage.py celery worker -E -lINFO 
 
 geonode:
     build: .

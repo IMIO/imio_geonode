@@ -25,7 +25,7 @@ app.conf.update(
 	CELERYBEAT_SCHEDULER='djcelery.schedulers.DatabaseScheduler',
 )
 app.conf.update(
-    CELERY_IMPORTS = ["imio_survey.tasks"] 
+    CELERY_IMPORTS = ["imio_survey.tasks"]
 )
 @app.task(bind=True)
 def debug_task(self):
