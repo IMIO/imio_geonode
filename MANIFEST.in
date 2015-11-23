@@ -1,0 +1,13 @@
+include *.conf
+include *.py
+include *.rst
+include *.sh
+include *.txt
+include *.yml
+include Dockerfile
+include Makefile
+recursive-exclude Dockerfiles
+recursive-exclude geoserver_data
+recursive-exclude postgres_data
+graft adminimio
+graft imio_geonode
