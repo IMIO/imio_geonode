@@ -4,8 +4,10 @@ include *.rst
 include *.sh
 include *.txt
 include *.yml
+include *.in
 include Dockerfile
 include Makefile
+global-exclude *.pyc
 recursive-exclude Dockerfiles
 recursive-exclude geoserver_data
 recursive-exclude postgres_data
