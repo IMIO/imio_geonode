@@ -46,3 +46,6 @@ bootstrap.min.css
 djcelery/
 imio_geonode/local_settings.py
 geoserver_data/logs/
+geoserver_data/geogig/
+geoserver_data/global.xml
+geoserver_data/security/filter/exception/config.xml
