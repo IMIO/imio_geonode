@@ -14,6 +14,11 @@ geoserver:
     volumes:
         - ./geoserver_data:/opt/geoserver/data_dir
     net: imiogeonode
+    environment:
+        - JAVA_OPTS='-Xmx1g'
+        - Xmx=2048M
+        - XX:MaxPermSize=256M
+
 geonode:
     build: .
     hostname: geonode
