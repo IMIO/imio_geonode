@@ -1,14 +1,14 @@
 Imio_Geonode
 ============
 
-This module extends Geonode and add some feature for IMIO.
+This module extends Geonode and add some features for IMIO.
 
 Installation
 ------------
 
-* Install Docker (https://docs.docker.com/installation/)
+* Install Docker >= 1.9 (https://docs.docker.com/installation/)
 
-* Install docker-compose (https://docs.docker.com/compose/install/)
+* Install docker-compose >= 1.5 (https://docs.docker.com/compose/install/)
 
 And then, run ::
 
@@ -18,9 +18,11 @@ And then, run ::
 
     $ docker-compose up
 
-Now you can open your browser on http://localhost
+Now you can open your browser on http://localhost:8080
 
-`make init` will build docker images and start Django syncdb.
+`make init` will build docker images and start Django syncdb. It also create Docker network named as docker-compose project name (name of folder by default, so imiogeonode).
+
+You can create Docker network with `docker network create imiogeonode` command
 
 
 Postgis
