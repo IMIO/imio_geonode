@@ -1,3 +1,3 @@
-geonode==2.4b26
+geonode==2.4
 pygdal==1.10.1
 gunicorn==19.3.0

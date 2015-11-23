@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from distutils.core import setup
-genode_version = '2.4b25'
+# genode_version = '2.4b25'
 gdal_version = '1.10.1'
 
 
@@ -9,8 +9,8 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 install_requires = [
-    # 'geonode',
-    'geonode=={0}'.format(genode_version),
+    'geonode',
+    # 'geonode'.format(genode_version),
     # 'numpy',
     'pygdal=={0}'.format(gdal_version),
 ]
