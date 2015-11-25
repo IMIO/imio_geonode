@@ -1,6 +1,8 @@
 postgis:
     build: Dockerfiles/postgis/
     hostname: postgis
+    ports:
+        - "5432:5432"
     volumes:
         - ./postgres_data:/var/lib/postgresql
 
@@ -15,7 +17,7 @@ geoserver:
     build: Dockerfiles/geoserver/
     hostname: geoserver
     links:
-        - postgis
+        - postgis:postgis
     ports:
         - 8080:8080
     volumes:
@@ -29,13 +31,13 @@ surveyworker:
         - C_FORCE_ROOT=true
     hostname: geonode-worker
     links:
-        - postgis
+        - postgis:postgis
         - rabbitmq
     volumes:
         - .:/opt/imio_geonode/
     entrypoint:
         - /usr/bin/python
-    command: manage.py celery worker -E -lINFO 
+    command: manage.py celery worker -E -lINFO
 
 geonode:
     build: .
@@ -43,7 +45,7 @@ geonode:
         - C_FORCE_ROOT=true
     hostname: geonode
     links:
-        - postgis
+        - postgis:postgis
         - rabbitmq
     ports:
         - 8000:8000
@@ -54,12 +56,10 @@ geonode:
     command: manage.py runserver 0.0.0.0:8000
 
 nginx:
-    image: nginx:latest
+    build: Dockerfiles/nginx/
     ports:
         - 80:80
     links:
         - geonode
         - geoserver
         - postgis
-    volumes:
-        - nginx-default.conf:/etc/nginx/conf.d/default.conf
