@@ -8,8 +8,9 @@ include *.in
 include Dockerfile
 include Makefile
 global-exclude *.pyc
-recursive-exclude Dockerfiles
-recursive-exclude geoserver_data
-recursive-exclude postgres_data
+recursive-exclude Dockerfiles *
+recursive-exclude geoserver_data *
+recursive-exclude postgres_data *
 graft adminimio
 graft imio_geonode
+exclude imio_geonode/local_settings.py
