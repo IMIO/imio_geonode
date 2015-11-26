@@ -4,7 +4,8 @@ Changelog
 0.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Fix for (bad esri) remote multisource.
+  [ndufrane]
 
 
 0.2 (2015-11-23)

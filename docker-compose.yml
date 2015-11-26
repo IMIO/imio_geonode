@@ -11,13 +11,13 @@ geoserver:
     container_name: geoserver
     ports:
         - 8080:8080
-    volumes:
-        - ./geoserver_data:/opt/geoserver/data_dir
-    net: imiogeonode
     environment:
         - JAVA_OPTS='-Xmx1g'
         - Xmx=2048M
         - XX:MaxPermSize=256M
+    volumes:
+        - ./geoserver_data:/opt/geoserver/data_dir
+    net: imiogeonode
 
 geonode:
     build: .
