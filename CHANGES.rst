@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.2 (unreleased)
+0.2.2 (2015-12-15)
 ------------------
 
 - fix and tune map wmc for urbanmap
