@@ -28,10 +28,11 @@ def queryLayer(layer_pk, wktGeometry, buffer):
     geosGeom = fromstr(wktGeometry)
     geosGeomBuffer = geosGeom.buffer(buffer)
     layer = SurveyLayer.objects.get(pk = layer_pk)
+    logger.info("Querying layer %s" % layer.layer_name)
     gis_server = layer.gis_server
     querier = SurveyQuerierFactory().createQuerier(gis_server.servertype)
     result = querier.identify(geosGeomBuffer, layer.layer_name, gis_server.url)
-    return result
+    return { 'name' : layer.layer_name, 'features' : result }
 
 def doSurvey(surveyTypekey,wktGeometry):
     #TODO Handle surveynotfound
@@ -39,7 +40,6 @@ def doSurvey(surveyTypekey,wktGeometry):
     #TODO Check geometry validity
     st = SurveyType.objects.get(pk = surveyTypekey)
     job = chord((queryLayer.s(sl.pk,wktGeometry,SurveyTypeLayer.objects.get(survey_type=st,survey_layer=sl).buffer) for sl in st.survey_layers.all()))(mergeResults.s())
-
     #TODO Set timeout value as a parameter
     result = job.get(timeout=15)
     if job.successful():

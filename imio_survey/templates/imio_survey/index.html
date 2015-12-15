@@ -1,2 +1,21 @@
-Survey
-{{ survey_result }} 
+{% extends "site_base.html" %}
+
+
+{% block middle %}
+   {{ block.super }}
+{% block mainbody %}
+
+{% for result in survey_result %}
+  <h2>Result for layer {{ result.name }}</h2>
+  {% for feat in result.features %}
+    {% for key, value in feat.attributes.items %}
+      <div>
+        <span>{{ key }}</span><span>{{ value }}</span>
+      </div>
+    {% endfor %}
+    <br />
+  {% endfor %}
+  <hr />
+{% endfor %}
+{% endblock %}
+{% endblock %}

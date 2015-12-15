@@ -6,7 +6,7 @@ from imio_survey.tasks import doSurvey
 
 
 def index(request):
-	poly = Polygon( ((150000, 150000), (150000, 160000), (160000, 160000), (160000, 150000), (150000, 150000)) )
+	poly = Polygon( ((121000, 126000), (121000, 126100), (121100, 126100), (121100, 126000), (121000, 126000)) )
 	result = doSurvey("TEST", poly.wkt)
 
 	return render(request, 'imio_survey/index.html', {
