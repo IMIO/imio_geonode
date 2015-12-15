@@ -4,7 +4,7 @@ Changelog
 0.2.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Remove layer_title from WMC
 
 
 0.2.2 (2015-12-15)
