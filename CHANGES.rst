@@ -4,7 +4,8 @@ Changelog
 0.2.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- fix and tune map wmc for urbanmap
+  [ndufrane]
 
 
 0.2.1 (2015-11-26)
