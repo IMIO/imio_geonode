@@ -1,5 +1,10 @@
 from django.db import models
 
+class SurveyResult():
+    def __init__(self, name, features):
+        self.name = name
+        self.features = features
+
 class SurveyGisServer(models.Model):
     OGC = 'OGC'
     ARCREST = 'ARCREST'

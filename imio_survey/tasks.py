@@ -10,7 +10,7 @@ from django.db import transaction
 
 from django.contrib.gis.geos import GEOSGeometry, fromstr
 
-from imio_survey.models import SurveyType, SurveyTypeLayer, SurveyLayer, SurveyGisServer
+from imio_survey.models import SurveyType, SurveyTypeLayer, SurveyLayer, SurveyGisServer, SurveyResult
 from imio_survey.queriers.factories import SurveyQuerierFactory
 
 logger = get_task_logger(__name__)
@@ -32,12 +32,13 @@ def queryLayer(layer_pk, wktGeometry, buffer):
     gis_server = layer.gis_server
     querier = SurveyQuerierFactory().createQuerier(gis_server.servertype)
     result = querier.identify(geosGeomBuffer, layer.layer_name, gis_server.url)
-    return { 'name' : layer.layer_name, 'features' : result }
+    return {'name': layer.layer_name, 'attributes': result}
 
 def doSurvey(surveyTypekey,wktGeometry):
     #TODO Handle surveynotfound
     #TODO EagerLoad every layer and membership to avoid n+1 select
     #TODO Check geometry validity
+    logger.info("Geom : %s" % wktGeometry)
     st = SurveyType.objects.get(pk = surveyTypekey)
     job = chord((queryLayer.s(sl.pk,wktGeometry,SurveyTypeLayer.objects.get(survey_type=st,survey_layer=sl).buffer) for sl in st.survey_layers.all()))(mergeResults.s())
     #TODO Set timeout value as a parameter

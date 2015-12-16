@@ -5,17 +5,29 @@
    {{ block.super }}
 {% block mainbody %}
 
+<div class="container">
 {% for result in survey_result %}
-  <h2>Result for layer {{ result.name }}</h2>
-  {% for feat in result.features %}
-    {% for key, value in feat.attributes.items %}
-      <div>
-        <span>{{ key }}</span><span>{{ value }}</span>
-      </div>
+  <h2>Results for layer {{ result.name }}</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+      {% for key in result.features.0.attributes %}
+        <td>{{ key }}</td>
+      {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+    {% for feat in result.features %}
+      <tr>
+      {% for key, value in feat.attributes.items %}
+        <td>{{ value }}</td>
+      {% endfor %}
+      </tr>
     {% endfor %}
-    <br />
-  {% endfor %}
+    </tbody>
+  </table>
   <hr />
 {% endfor %}
+</div>
 {% endblock %}
 {% endblock %}

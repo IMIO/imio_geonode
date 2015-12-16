@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     (r'^adminimio/', include('adminimio.urls')),
     (r'^survey/', include('imio_survey.urls')),
 
+
  ) + urlpatterns
