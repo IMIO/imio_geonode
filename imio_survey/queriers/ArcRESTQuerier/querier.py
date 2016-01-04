@@ -25,7 +25,14 @@ class ArcRESTQuerier(IQuerier):
         mapService =  MapService(url)
         #TODO build mapextent and imageDisplay and so... results are wrong without correct parameters
         result =  mapService.Identify(searchZone, sr="31370", layers=layers,tolerance=1, mapExtent="0,0,300000,300000", imageDisplay=1, returnGeometry=False)
-        return result.results.features
+        clean_results = []
+        if result:
+            for feat in result.results.features:
+                feat.pop('geometry')
+                clean_results.append(feat)
+            return clean_results
+        else:
+            return None
 
     def pointToEsri(self,geom):
         return Point(geom)

@@ -2,8 +2,7 @@ from django.test import TestCase
 
 from imio_survey.models import SurveyGisServer
 
-from imio_survey.tasks import mul
-from imio_survey.utils import doSurvey2
+from imio_survey.tasks import mul, doSurvey
 
 from imio_survey.queriers.factories import SurveyQuerierFactory
 from imio_survey.queriers.ArcRESTQuerier.querier import ArcRESTQuerier
@@ -34,13 +33,14 @@ class SurveyTestCase(TestCase):
 
     def test_ArcRestQuerier(self):
         url ="http://geoservices.wallonie.be/arcgis/rest/services/NATURA2000/NATURA2000_EP/MapServer"
-        poly = Polygon( ((150000, 150000), (150000, 160000), (160000, 160000), (160000, 150000), (150000, 150000)) )
+        poly = Polygon( ((121900, 125800), (121900, 125810), (121905, 125810), (121905, 125800), (121900, 125800)) )
         result = self.testArcRESTQuerier.identify( poly, "NATURA2000_EP", url)
+        print result
         self.assertIsNotNone(result)
         self.assertTrue(len(result) > 0)
 
     def test_query_layer(self):
-        poly = Polygon( ((150000, 150000), (150000, 160000), (160000, 160000), (160000, 150000), (150000, 150000)) )
+        poly = Polygon( ((121900, 125800), (121900, 125810), (121905, 125810), (121905, 125800), (121900, 125800)) )
         self.assertTrue(True)
 
     def test_celcery(self):
@@ -48,6 +48,6 @@ class SurveyTestCase(TestCase):
         self.assertEqual(result.get(timeout=5),4)
 
     def test_survey(self):
-        poly = Polygon( ((150000, 150000), (150000, 160000), (160000, 160000), (160000, 150000), (150000, 150000)) )
-        result = doSurvey2("TEST", poly.wkt)
+        poly = Polygon( ((121900, 125800), (121900, 125810), (121905, 125810), (121905, 125800), (121900, 125800)) )
+        result = doSurvey("TEST", poly.wkt)
         self.assertIsNotNone(result)

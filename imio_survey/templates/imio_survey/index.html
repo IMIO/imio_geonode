@@ -11,13 +11,13 @@
   <table class="table table-hover">
     <thead>
       <tr>
-      {% for key in result.features.0.attributes %}
+      {% for key in result.attributes.0.attributes %}
         <td>{{ key }}</td>
       {% endfor %}
       </tr>
     </thead>
     <tbody>
-    {% for feat in result.features %}
+    {% for feat in result.attributes %}
       <tr>
       {% for key, value in feat.attributes.items %}
         <td>{{ value }}</td>

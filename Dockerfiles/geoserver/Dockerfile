@@ -1,15 +1,10 @@
 FROM tomcat:8-jre7
 MAINTAINER Benoît Suttor <bsuttor@imio.com>
 
-<<<<<<< HEAD
-
 RUN apt-get -y update
 
 RUN apt-get -y install wget unzip
 
-=======
-RUN apt-get update && apt-get -y install wget
->>>>>>> master
 RUN wget -O /usr/local/tomcat/webapps/geoserver.war http://build.geonode.org/geoserver/latest/geoserver.war
 RUN apt-get remove -y wget
 

@@ -28,8 +28,7 @@ class SurveyView(View):
 		survey_type = request.GET["st"]
 		survey_geom  = request.GET["geom"]
 		result = doSurvey(survey_type, survey_geom)
-		#data = serializers.serialize('json', result)
-		return HttpResponse(json.dumps(result),content_type="application/json")
-		#return render(request, 'imio_survey/index.html', {
-		#	'survey_result' : result
-		#})
+		#return HttpResponse(json.dumps(result),content_type="application/json")
+		return render(request, 'imio_survey/index.html', {
+			'survey_result' : result
+		})

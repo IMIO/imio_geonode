@@ -35,15 +35,18 @@ def queryLayer(layer_pk, wktGeometry, buffer):
     return {'name': layer.layer_name, 'attributes': result}
 
 def doSurvey(surveyTypekey,wktGeometry):
-    #TODO Handle surveynotfound
     #TODO EagerLoad every layer and membership to avoid n+1 select
     #TODO Check geometry validity
     logger.info("Geom : %s" % wktGeometry)
-    st = SurveyType.objects.get(pk = surveyTypekey)
-    job = chord((queryLayer.s(sl.pk,wktGeometry,SurveyTypeLayer.objects.get(survey_type=st,survey_layer=sl).buffer) for sl in st.survey_layers.all()))(mergeResults.s())
-    #TODO Set timeout value as a parameter
-    result = job.get(timeout=15)
-    if job.successful():
-        return result
-    else:
+    try:
+        st = SurveyType.objects.get(pk = surveyTypekey)
+        job = chord((queryLayer.s(sl.pk,wktGeometry,SurveyTypeLayer.objects.get(survey_type=st,survey_layer=sl).buffer) for sl in st.survey_layers.all()))(mergeResults.s())
+        #TODO Set timeout value as a parameter
+        result = job.get(timeout=15)
+        if job.successful():
+            return result
+        else:
+            return None
+    except model.DoesNotExist:
+        logger.error("Survey Type %s does not exist" % surveyTypekey)
         return None
