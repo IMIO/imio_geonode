@@ -4,7 +4,7 @@ Changelog
 0.2.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add first version of imio_survey
 
 
 0.2.3 (2015-12-15)
