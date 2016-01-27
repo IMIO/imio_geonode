@@ -4,5 +4,5 @@ class IQuerier(object):
     __metaclass__  = abc.ABCMeta
 
     @abc.abstractmethod
-    def identify(self, geometry, layers, url, username, password):
+    def identify(self, geometry, geometryFieldName,  layers, url, username, password):
          """Method that should do something."""

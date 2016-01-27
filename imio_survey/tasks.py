@@ -31,7 +31,7 @@ def queryLayer(layer_pk, wktGeometry, buffer):
     logger.info("Querying layer %s" % layer.layer_name)
     gis_server = layer.gis_server
     querier = SurveyQuerierFactory().createQuerier(gis_server.servertype)
-    result = querier.identify(geosGeomBuffer, layer.layer_name, gis_server.url)
+    result = querier.identify(geosGeomBuffer,layer.geometry_field_name, layer.layer_name, gis_server.url)
     return {'name': layer.layer_name, 'attributes': result}
 
 def doSurvey(surveyTypekey,wktGeometry):

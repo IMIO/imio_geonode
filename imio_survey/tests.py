@@ -21,6 +21,7 @@ class SurveyTestCase(TestCase):
         self.testOGCQuerier     =  SurveyQuerierFactory().createQuerier(SurveyGisServer.OGC)
         self.testGeonodeQuerier =  SurveyQuerierFactory().createQuerier(SurveyGisServer.GEONODE)
         self.testArcRESTQuerier =  SurveyQuerierFactory().createQuerier(SurveyGisServer.ARCREST)
+        self.liegePolygon = Polygon( ((235745, 147615), (235745, 147616), (235746, 147616), (235746, 147615), (235745, 147615)) )
         settings.CELERY_ALWAYS_EAGER = True
 
     def test_querier_factory(self):
@@ -34,8 +35,7 @@ class SurveyTestCase(TestCase):
     def test_ArcRestQuerier(self):
         url ="http://geoservices.wallonie.be/arcgis/rest/services/NATURA2000/NATURA2000_EP/MapServer"
         poly = Polygon( ((121900, 125800), (121900, 125810), (121905, 125810), (121905, 125800), (121900, 125800)) )
-        result = self.testArcRESTQuerier.identify( poly, "NATURA2000_EP", url)
-        print result
+        result = self.testArcRESTQuerier.identify( poly,None, "NATURA2000_EP", url)
         self.assertIsNotNone(result)
         self.assertTrue(len(result) > 0)
 
@@ -50,4 +50,12 @@ class SurveyTestCase(TestCase):
     def test_survey(self):
         poly = Polygon( ((121900, 125800), (121900, 125810), (121905, 125810), (121905, 125800), (121900, 125800)) )
         result = doSurvey("TEST", poly.wkt)
+        self.assertIsNotNone(result)
+
+    def test_OGCFeatureIntersectQuery(self):
+        result = self.testOGCQuerier._buildWfsIntersectRequest(self.liegePolygon.ogr.gml, "liege:capa", "the_geom")
+        self.assertIsNotNone(result)
+    def test_WFSQuery(self):
+        result = self.testOGCQuerier.identify(self.liegePolygon,"the_geom", "liege:capa", "https://geonode.imio.be/geoserver/wfs", settings.SURVEY_TEST_USERNAME, settings.SURVET_TEST_PASSWD)
+        print(result)
         self.assertIsNotNone(result)
