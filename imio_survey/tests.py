@@ -55,7 +55,10 @@ class SurveyTestCase(TestCase):
     def test_OGCFeatureIntersectQuery(self):
         result = self.testOGCQuerier._buildWfsIntersectRequest(self.liegePolygon.ogr.gml, "liege:capa", "the_geom")
         self.assertIsNotNone(result)
+
     def test_WFSQuery(self):
         result = self.testOGCQuerier.identify(self.liegePolygon,"the_geom", "liege:capa", "https://geonode.imio.be/geoserver/wfs", settings.SURVEY_TEST_USERNAME, settings.SURVET_TEST_PASSWD)
-        print(result)
         self.assertIsNotNone(result)
+        self.assertEqual(len(result),1)
+        self.assertEqual(len(result[0].keys()),11)
+        self.assertEqual(result[0]['capakey'],'62817B0482/05A000')
