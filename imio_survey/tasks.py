@@ -31,22 +31,19 @@ def queryLayer(layer_pk, wktGeometry, buffer):
     logger.info("Querying layer %s" % layer.layer_name)
     gis_server = layer.gis_server
     querier = SurveyQuerierFactory().createQuerier(gis_server.servertype)
-    result = querier.identify(geosGeomBuffer,layer.geometry_field_name, layer.layer_name, gis_server.url)
+    result = querier.identify(geosGeomBuffer,layer.geometry_field_name, layer.layer_name, gis_server.url, gis_server.username, gis_server.password)
     return {'name': layer.layer_name, 'attributes': result}
 
 def doSurvey(surveyTypekey,wktGeometry):
     #TODO EagerLoad every layer and membership to avoid n+1 select
     #TODO Check geometry validity
     logger.info("Geom : %s" % wktGeometry)
-    try:
-        st = SurveyType.objects.get(pk = surveyTypekey)
-        job = chord((queryLayer.s(sl.pk,wktGeometry,SurveyTypeLayer.objects.get(survey_type=st,survey_layer=sl).buffer) for sl in st.survey_layers.all()))(mergeResults.s())
-        #TODO Set timeout value as a parameter
-        result = job.get(timeout=15)
-        if job.successful():
-            return result
-        else:
-            return None
-    except model.DoesNotExist:
-        logger.error("Survey Type %s does not exist" % surveyTypekey)
+
+    st = SurveyType.objects.get(pk = surveyTypekey)
+    job = chord((queryLayer.s(sl.pk,wktGeometry,SurveyTypeLayer.objects.get(survey_type=st,survey_layer=sl).buffer) for sl in st.survey_layers.all()))(mergeResults.s())
+    #TODO Set timeout value as a parameter
+    result = job.get(timeout=15)
+    if job.successful():
+        return result
+    else:
         return None
