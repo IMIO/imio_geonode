@@ -4,7 +4,7 @@ Changelog
 0.2.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add WFS querier to imio_survey
 
 
 0.2.4 (2016-01-13)
