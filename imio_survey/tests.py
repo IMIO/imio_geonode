@@ -7,7 +7,8 @@ from imio_survey.tasks import mul, doSurvey
 from imio_survey.queriers.factories import SurveyQuerierFactory
 from imio_survey.queriers.ArcRESTQuerier.querier import ArcRESTQuerier
 from imio_survey.queriers.GeonodeQuerier.querier import GeonodeQuerier
-from imio_survey.queriers.OGCQuerier.querier import OGCQuerier
+from imio_survey.queriers.OGCQuerier.querier import OGCQuerier_110
+from imio_survey.queriers.OGCQuerier.utils import to_gml3
 from imio_survey.queriers import IQuerier
 
 from django.contrib.gis.geos import GEOSGeometry
@@ -25,7 +26,7 @@ class SurveyTestCase(TestCase):
         settings.CELERY_ALWAYS_EAGER = True
 
     def test_querier_factory(self):
-        self.assertIsInstance(self.testOGCQuerier,OGCQuerier)
+        self.assertIsInstance(self.testOGCQuerier,OGCQuerier_110)
         self.assertIsInstance(self.testOGCQuerier,IQuerier)
         self.assertIsInstance(self.testGeonodeQuerier,GeonodeQuerier)
         self.assertIsInstance(self.testGeonodeQuerier,IQuerier)
@@ -62,3 +63,9 @@ class SurveyTestCase(TestCase):
         self.assertEqual(len(result),1)
         self.assertEqual(len(result[0].keys()),11)
         self.assertEqual(result[0]['capakey'],'62817B0482/05A000')
+
+    def test_exportgml3(self):
+        result_gml3 = to_gml3(self.liegePolygon.ogr)
+        result_gml2 = self.liegePolygon.ogr.gml
+        self.assertIsNotNone(result_gml3)
+        self.assertNotEqual(result_gml2,result_gml3)

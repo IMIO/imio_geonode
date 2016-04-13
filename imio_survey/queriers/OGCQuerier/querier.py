@@ -2,6 +2,7 @@ from imio_survey.queriers import IQuerier
 import requests
 from xml.etree.ElementTree import XML
 import xml.etree.ElementTree as ET
+from imio_survey.queriers.OGCQuerier.utils import to_gml3
 
 class OGCQuerier(IQuerier):
     WFS_GET_FEATURE = 'GetFeature'
@@ -72,6 +73,57 @@ class OGCQuerier(IQuerier):
         else:
             clean_results = []
             features = tree.findall('{http://www.opengis.net/gml}featureMember')
+            for feature in features:
+                attributes = {}
+                for child in feature:
+                    for child_elem in child:
+                        tag_name = child_elem.tag.split('}')[-1] #Get rid of namespace
+                        if child_elem.text is not None:
+                            attributes[tag_name] = child_elem.text
+                        else:
+                            attributes[tag_name] = ""
+                clean_results.append(attributes)
+            return clean_results
+
+class OGCQuerier_110(IQuerier):
+    WFS_GET_FEATURE = 'GetFeature'
+
+    def _buildWfsIntersectRequest(self, gmlString, typeName, geometryFieldName):
+        getfeatureTemplate = """<wfs:GetFeature service="WFS" version="1.1.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns="http://www.opengis.net/ogc"
+                            xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">
+                                <wfs:Query typeName="%s">
+                                    <Filter>
+                                        <Intersects>
+                                            <PropertyName>%s</PropertyName>
+                                            %s
+                                        </Intersects>
+                                    </Filter>
+                                </wfs:Query>
+                            </wfs:GetFeature>""" % (typeName, geometryFieldName, gmlString)
+        return getfeatureTemplate
+
+    def identify(self, geosGeometry, geometryFieldName, layers, url, username, password):
+        """
+            Assuming :
+            Url like http://localhost:8080/geoserver/wfs
+            layers like geonode:capa
+            geosGeometry is in Lambert72
+        """
+        #TODO input checking
+        gmlString = to_gml3(geosGeometry.ogr)
+        payload = self._buildWfsIntersectRequest(gmlString, layers, geometryFieldName)
+        #Verify False to avoid certificate not trusted problems
+        r = requests.post(url, data = payload, auth=(username, password), verify=False)
+        print(r.text)
+        tree = XML(r.text)
+        if tree.tag == "{http://www.opengis.net/ogc}ServiceExceptionReport":
+            #We Got OGC Error. Find the root cause and throw a proper Exception
+            se = tree.find('{http://www.opengis.net/ogc}ServiceException')
+            raise Exception(str(se.text).strip())
+        else:
+            clean_results = []
+            features = tree.findall('{http://www.opengis.net/gml}featureMembers')
             for feature in features:
                 attributes = {}
                 for child in feature:
