@@ -4,7 +4,7 @@ Changelog
 0.2.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Change WFS queries form 1.0.0 to 1.1.0 (for Liege)
 
 
 0.2.5 (2016-03-22)
