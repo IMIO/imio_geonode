@@ -24,11 +24,12 @@ class SurveyGisServer(models.Model):
         return self.description
 
 class SurveyLayer(models.Model):
+    description = models.CharField(max_length=200)
     layer_name = models.CharField(max_length=200)
     gis_server = models.ForeignKey(SurveyGisServer)
     geometry_field_name = models.CharField(max_length=50)
     def __unicode__(self):              # __str__ on Python 3
-        return self.layer_name
+        return self.description
 
 class SurveyType(models.Model):
     key = models.CharField(max_length=200,primary_key=True)

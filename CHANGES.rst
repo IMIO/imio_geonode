@@ -4,8 +4,9 @@ Changelog
 0.2.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- ESRI querier query hidden layers (all parameters)
+- ESRI querier layer can be limited to specifics layers
+- Added description for layer
 
 0.2.8 (2016-04-20)
 ------------------
