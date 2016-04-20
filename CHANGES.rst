@@ -4,7 +4,10 @@ Changelog
 0.2.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Improve tests
+- Result for each layer contain new attributes :
+  success : True or False -> Indicate the success of the Query
+  message : Non-empty if failure to query a layer
 
 
 0.2.9 (2016-04-20)
