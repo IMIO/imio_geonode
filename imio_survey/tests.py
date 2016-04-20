@@ -23,6 +23,7 @@ class SurveyTestCase(TestCase):
         self.testGeonodeQuerier =  SurveyQuerierFactory().createQuerier(SurveyGisServer.GEONODE)
         self.testArcRESTQuerier =  SurveyQuerierFactory().createQuerier(SurveyGisServer.ARCREST)
         self.liegePolygon = Polygon( ((235745, 147615), (235745, 147616), (235746, 147616), (235746, 147615), (235745, 147615)) )
+        self.multiPolygonWKT = "MULTIPOLYGON(((235424.935 148687.065,235429.244 148689.993,235429.943 148689.086,235433.273 148691.635,235438.99 148684.223,235443.735 148678.077,235445.516 148679.44,235454.802 148668.44,235453.069 148665.975,235448.739 148659.82,235433.586 148682.192,235429.837 148679.679,235426.711 148684.39,235424.935 148687.065)),((241020.367 152036.194,241024.691 152041.929,241036.183 152032.719,241031.701 152026.956,241020.367 152036.194)))"
         settings.CELERY_ALWAYS_EAGER = True
 
     def test_querier_factory(self):
@@ -69,3 +70,7 @@ class SurveyTestCase(TestCase):
         result_gml2 = self.liegePolygon.ogr.gml
         self.assertIsNotNone(result_gml3)
         self.assertNotEqual(result_gml2,result_gml3)
+
+    def test_MultiPolygon(self):
+        result = doSurvey("TEST", self.multiPolygonWKT)
+        self.assertIsNotNone(result)

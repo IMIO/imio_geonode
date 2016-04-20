@@ -115,7 +115,6 @@ class OGCQuerier_110(IQuerier):
         payload = self._buildWfsIntersectRequest(gmlString, layers, geometryFieldName)
         #Verify False to avoid certificate not trusted problems
         r = requests.post(url, data = payload, auth=(username, password), verify=False)
-        print(r.text)
         tree = XML(r.text)
         if tree.tag == "{http://www.opengis.net/ogc}ServiceExceptionReport":
             #We Got OGC Error. Find the root cause and throw a proper Exception

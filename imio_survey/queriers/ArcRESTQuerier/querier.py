@@ -1,7 +1,7 @@
 from imio_survey.queriers import IQuerier
 
 from arcrest.server import MapService
-from arcrest.geometry import Envelope, Polygon, Point, Polyline, Multipoint
+from arcrest.geometry import Envelope, Polygon, Point, Polyline, Multipoint, fromGeoJson
 from django.utils import simplejson
 
 if __name__ == "__main__":
@@ -22,6 +22,7 @@ class ArcRESTQuerier(IQuerier):
 
     def identify(self, geosGeometry, geometryFieldName, layers, url, username="", password=""):
         searchZone = self.geosGeom2EsriGeom(geosGeometry)
+
         mapService =  MapService(url)
         #TODO build mapextent and imageDisplay and so... results are wrong without correct parameters
         result =  mapService.Identify(searchZone, sr="31370", layers=layers,tolerance=1, mapExtent="0,0,300000,300000", imageDisplay=1, returnGeometry=False)
@@ -53,7 +54,18 @@ class ArcRESTQuerier(IQuerier):
         raise NotImplementedError("Unimplemented convert from GeoJSON")
 
     def multiPolygonToEsri(self,geom):
-        raise Polygon(geom)
+        """
+        ESRI Json geometry handle  multipolygon as one polygon with one ring
+        for each polygon inside multipolygon
+        """
+        multiPolygonJson = geom.json #TODO Maybe using gejson is not needed
+        struct = simplejson.loads(multiPolygonJson)
+        rings=[]
+        for polygonRings in struct['coordinates']:
+            for path in polygonRings:
+                rings.append(path)
+
+        return Polygon(rings)
 
     def geometryCollectionToEsri(self,geom):
         raise NotImplementedError("Unimplemented convert from GeoJSON")
