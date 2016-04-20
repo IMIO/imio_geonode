@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.7 (unreleased)
+0.2.7 (2016-04-20)
 ------------------
 
 - Esri queries now support Multipolygon (experimental)
