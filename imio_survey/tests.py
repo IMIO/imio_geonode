@@ -53,6 +53,7 @@ class SurveyTestCase(TestCase):
         poly = Polygon( ((121900, 125800), (121900, 125810), (121905, 125810), (121905, 125800), (121900, 125800)) )
         result = doSurvey("TEST", poly.wkt)
         self.assertIsNotNone(result)
+        self.inspectQueryResult(result)
 
     def test_OGCFeatureIntersectQuery(self):
         result = self.testOGCQuerier._buildWfsIntersectRequest(self.liegePolygon.ogr.gml, "liege:capa", "the_geom")
@@ -74,3 +75,9 @@ class SurveyTestCase(TestCase):
     def test_MultiPolygon(self):
         result = doSurvey("TEST", self.multiPolygonWKT)
         self.assertIsNotNone(result)
+        self.inspectQueryResult(result)
+
+    def inspectQueryResult(self, result):
+        for res in result:
+            self.assertEqual(res['success'], True)
+            self.assertEqual(res['message'], None)
