@@ -22,10 +22,9 @@ class ArcRESTQuerier(IQuerier):
 
     def identify(self, geosGeometry, geometryFieldName, layers, url, username="", password=""):
         searchZone = self.geosGeom2EsriGeom(geosGeometry)
-
         mapService =  MapService(url)
         #TODO build mapextent and imageDisplay and so... results are wrong without correct parameters
-        result =  mapService.Identify(searchZone, sr="31370", layers=layers,tolerance=1, mapExtent="0,0,300000,300000", imageDisplay=1, returnGeometry=False)
+        result =  mapService.Identify(searchZone, sr="31370", layers=layers,tolerance=0, mapExtent="0,0,300000,300000", imageDisplay=1024, returnGeometry=False)
         clean_results = []
         if result:
             for feat in result.results.features:

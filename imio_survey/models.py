@@ -42,3 +42,5 @@ class SurveyTypeLayer(models.Model):
     survey_type = models.ForeignKey(SurveyType)
     survey_layer = models.ForeignKey(SurveyLayer)
     buffer = models.DecimalField(max_digits=4, decimal_places=1, default=0.0)
+    def __unicode__(self):              # __str__ on Python 3
+        return str(self.survey_type) + ":" + str(self.survey_layer)

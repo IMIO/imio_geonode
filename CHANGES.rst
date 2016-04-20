@@ -4,7 +4,8 @@ Changelog
 0.2.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- More precise ESRI identify queries
+- Improve admin configuration lisibility
 
 
 0.2.7 (2016-04-20)
