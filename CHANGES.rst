@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.9 (unreleased)
+0.2.9 (2016-04-20)
 ------------------
 
 - ESRI querier query hidden layers (all parameters)
