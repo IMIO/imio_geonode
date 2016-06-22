@@ -4,7 +4,7 @@ Changelog
 0.2.12 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fix for POST Survey
 
 
 0.2.11 (2016-06-22)

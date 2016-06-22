@@ -19,7 +19,6 @@ class SurveyTypeView(View):
         return HttpResponse(json.dumps(result),content_type="application/json")
 
 class SurveyView(View):
-    @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):
         survey_type = request.POST["st"]
         survey_geom  = request.POST["geom"]
