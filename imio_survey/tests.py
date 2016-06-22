@@ -1,7 +1,10 @@
-from django.test import TestCase
+
+from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.geos import Polygon
+from django.conf import settings
+from django.test import Client, TestCase
 
 from imio_survey.models import SurveyGisServer
-
 from imio_survey.tasks import mul, doSurvey
 
 from imio_survey.queriers.factories import SurveyQuerierFactory
@@ -11,9 +14,7 @@ from imio_survey.queriers.OGCQuerier.querier import OGCQuerier_110
 from imio_survey.queriers.OGCQuerier.utils import to_gml3
 from imio_survey.queriers import IQuerier
 
-from django.contrib.gis.geos import GEOSGeometry
-from django.contrib.gis.geos import Polygon
-from django.conf import settings
+import json
 
 class SurveyTestCase(TestCase):
     fixtures = ['imio_survey_testdata.json']
@@ -76,6 +77,14 @@ class SurveyTestCase(TestCase):
         result = doSurvey("TEST", self.multiPolygonWKT)
         self.assertIsNotNone(result)
         self.inspectQueryResult(result)
+
+    def test_post_survey(self):
+        poly = Polygon( ((121900, 125800), (121900, 125810), (121905, 125810), (121905, 125800), (121900, 125800)) )
+        c =  Client()
+        response = c.post('/survey/', {'st': "TEST", 'geom': poly.wkt})
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.content)
+        self.inspectQueryResult(json.loads(response.content))
 
     def inspectQueryResult(self, result):
         for res in result:
