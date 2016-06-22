@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.11 (unreleased)
+0.2.11 (2016-06-22)
 -------------------
 
 - Remove CSRF check for POST Survey queries and add tests.
