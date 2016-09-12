@@ -4,7 +4,7 @@ Changelog
 0.2.13 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Modify ESRI identify parameters.
 
 
 0.2.12 (2016-06-22)
