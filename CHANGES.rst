@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.13 (unreleased)
+0.2.13 (2016-09-12)
 -------------------
 
 - Modify ESRI identify parameters.
