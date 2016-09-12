@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.15 (unreleased)
+0.2.15 (2016-09-12)
 -------------------
 
 - Modification du WFS 1.1.1 querier pour ONE-SPATIAL.
