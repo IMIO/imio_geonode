@@ -28,7 +28,7 @@ class ArcRESTQuerier(IQuerier):
         layers_param="all"
         if layers is not None:
             layers_param = layers_param + ":" + layers
-        result =  mapService.Identify(searchZone, sr="31370", layers=layers_param,tolerance=0, mapExtent="0,0,300000,300000", imageDisplay=1024, returnGeometry=False)
+        result =  mapService.Identify(searchZone, sr="31370", layers=layers_param,tolerance=0, mapExtent="0,0,300000,300000", imageDisplay="1024,1024,96", returnGeometry=False)
         clean_results = []
         if result:
             for feat in result.results.features:

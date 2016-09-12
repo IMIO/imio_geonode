@@ -8,6 +8,10 @@
 <div class="container">
 {% for result in survey_result %}
   <h2>Results for layer {{ result.name }}</h2>
+  <div>
+    Success : {{ result.success }}
+    Message : {{ result.message }}
+  </div>
   <table class="table table-hover">
     <thead>
       <tr>

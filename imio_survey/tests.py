@@ -61,7 +61,7 @@ class SurveyTestCase(TestCase):
         self.assertIsNotNone(result)
 
     def test_WFSQuery(self):
-        result = self.testOGCQuerier.identify(self.liegePolygon,"the_geom", "liege:capa", "https://geonode.imio.be/geoserver/wfs", settings.SURVEY_TEST_USERNAME, settings.SURVET_TEST_PASSWD)
+        result = self.testOGCQuerier.identify(self.liegePolygon,"the_geom", "liege:capa", "https://geonode.imio.be/geoserver/wfs", settings.SURVEY_TEST_USERNAME, settings.SURVEY_TEST_PASSWD)
         self.assertIsNotNone(result)
         self.assertEqual(len(result),1)
         self.assertEqual(len(result[0].keys()),11)
@@ -85,6 +85,11 @@ class SurveyTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIsNotNone(response.content)
         self.inspectQueryResult(json.loads(response.content))
+
+    def test_liege_wfs(self):
+        result = self.testOGCQuerier.identify(self.liegePolygon, "lxgeom", "starapic:PERMISSECTEURS", "http://e-services.liege.be:8100/ElyxRouter/rest/wfs/WFS","","")
+        print(result)
+        self.assertIsNotNone(result)
 
     def inspectQueryResult(self, result):
         for res in result:
