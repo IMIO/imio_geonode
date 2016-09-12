@@ -90,15 +90,16 @@ class OGCQuerier_110(IQuerier):
 
     def _buildWfsIntersectRequest(self, gmlString, typeName, geometryFieldName):
         getfeatureTemplate = """<wfs:GetFeature service="WFS" version="1.1.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns="http://www.opengis.net/ogc"
+        xmlns:ogc="http://www.opengis.net/ogc" xmlns:starapic="http://www.star-apic.com/elyx"
                             xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                             xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">
                                 <wfs:Query typeName="%s">
-                                    <Filter>
-                                        <Intersects>
-                                            <PropertyName>%s</PropertyName>
+                                    <ogc:Filter>
+                                        <ogc:Intersects>
+                                            <ogc:PropertyName>%s</ogc:PropertyName>
                                             %s
-                                        </Intersects>
-                                    </Filter>
+                                        </ogc:Intersects>
+                                    </ogc:Filter>
                                 </wfs:Query>
                             </wfs:GetFeature>""" % (typeName, geometryFieldName, gmlString)
         return getfeatureTemplate
@@ -113,16 +114,10 @@ class OGCQuerier_110(IQuerier):
         #TODO input checking
         gmlString = to_gml3(geosGeometry.ogr)
         payload = self._buildWfsIntersectRequest(gmlString, layers, geometryFieldName)
-        #print(payload)
         #Verify False to avoid certificate not trusted problems
         r = requests.post(url, data = payload, auth=(username, password), verify=False)
+        r.encoding = 'utf-8-sig' #Pour star-apic
         response_xml = r.text
-        #print(r.headers['content-type'])
-        #print(r.encoding)
-        #r.encoding = 'ISO-8859-1'
-        r.encoding = 'utf-8-sig'
-        #print(type(r.text))
-        #print(r.text.encode('latin1'))
         tree = ET.fromstring(response_xml)
         if tree.tag == "{http://www.opengis.net/ogc}ServiceExceptionReport":
             #We Got OGC Error. Find the root cause and throw a proper Exception
