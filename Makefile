@@ -38,7 +38,7 @@ docker-up: imio_geonode/local_settings.py postgres_data geoserver_data
 init: docker-init
 
 docker-init: imio_geonode/local_settings.py postgres_data geoserver_data
-	docker network create imiogeonode
+	#docker network create imiogeonode
 	docker-compose  up postgis &
 	sleep 15
 	docker-compose run --rm --entrypoint='/usr/bin/python' geonode manage.py syncdb

@@ -7,7 +7,7 @@
 
 <div class="container">
 {% for result in survey_result %}
-  <h2>Results for layer {{ result.name }}</h2>
+  <h2>Results for layer {{ result.description }} ({{ result.name }})</h2>
   <div>
     Success : {{ result.success }}
     Message : {{ result.message }}

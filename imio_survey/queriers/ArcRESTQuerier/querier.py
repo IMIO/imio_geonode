@@ -20,9 +20,13 @@ if __name__ == "__main__":
 
 class ArcRESTQuerier(IQuerier):
 
+    def query(self):
+        pass
+
     def identify(self, geosGeometry, geometryFieldName, layers, url, username="", password=""):
         searchZone = self.geosGeom2EsriGeom(geosGeometry)
         mapService =  MapService(url)
+
         #TODO build mapextent and imageDisplay and so... results are wrong without correct parameters
         #layers top (default) // visible // all
         layers_param="all"

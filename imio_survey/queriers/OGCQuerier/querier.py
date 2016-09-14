@@ -135,5 +135,5 @@ class OGCQuerier_110(IQuerier):
                             attributes[tag_name] = child_elem.text
                         else:
                             attributes[tag_name] = ""
-                clean_results.append(attributes)
+                clean_results.append({'attributes' :attributes})
             return clean_results
