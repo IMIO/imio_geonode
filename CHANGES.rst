@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.16 (unreleased)
+0.2.16 (2016-09-14)
 -------------------
 
 - Better WFS Handling
