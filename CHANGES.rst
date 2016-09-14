@@ -4,7 +4,11 @@ Changelog
 0.2.16 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Better WFS Handling
+- Better error handling
+- Update child lib for POST identify request (esri)
+- Set limit for celery chords
+- Add layer id in the response
 
 
 0.2.15 (2016-09-12)
