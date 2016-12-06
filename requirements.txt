@@ -6,4 +6,9 @@ celery<4.0.0
 djangorestframework
 markdown
 django-filter
+pyOpenSSL
+cryptography
+idna
+certifi
+urllib3[secure]
 -e git+https://github.com/ndufrane/arcrest.git#egg=arcrest
