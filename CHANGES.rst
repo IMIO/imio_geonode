@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.18 (unreleased)
+0.2.18 (2016-12-06)
 -------------------
 
 - Added urllib3 HTTP client package
