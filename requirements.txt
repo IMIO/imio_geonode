@@ -10,5 +10,5 @@ pyOpenSSL
 cryptography
 idna
 certifi
-urllib3[secure]
+urllib3[secure]==1.19.1
 -e git+https://github.com/ndufrane/arcrest.git#egg=arcrest

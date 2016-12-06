@@ -4,7 +4,7 @@ Changelog
 0.2.19 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Pinned urllib3 to 1.19.1
 
 
 0.2.18 (2016-12-06)
