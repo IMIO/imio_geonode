@@ -4,7 +4,7 @@ Changelog
 0.2.17 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Pin celery and django-celery version as celery 4.0.0 does nos support django<1.8
 
 
 0.2.16 (2016-09-14)

@@ -22,7 +22,7 @@ cleanall:
 build: docker-update-images
 
 docker-update-images: cleanall
-	docker-compose build
+	docker-compose build --no-cache
 
 postgres_data:
 	mkdir postgres_data
