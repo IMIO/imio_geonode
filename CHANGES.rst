@@ -1,10 +1,10 @@
 Changelog
 =========
 
-0.2.20 (unreleased)
+0.2.20 (2016-12-21)
 -------------------
 
-- Nothing changed yet.
+- Add survey/survey_type_layers and survey/survey_value_list first version
 
 
 0.2.19 (2016-12-06)
