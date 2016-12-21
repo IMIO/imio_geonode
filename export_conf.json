@@ -1,1 +1,111 @@
-[{"pk": "http://e-services.liege.be:8100/ElyxRouter/rest/wfs/WFS", "model": "imio_survey.surveygisserver", "fields": {"username": "", "password": "", "servertype": "OGC", "description": "Liege Public WFS"}}, {"pk": "http://geoservices.wallonie.be/arcgis/rest/services/AGRICULTURE/AMGT_FONC/MapServer", "model": "imio_survey.surveygisserver", "fields": {"username": "", "password": "", "servertype": "ARCREST", "description": "SPW AGRICULTURE/AMGT_FONC "}}, {"pk": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer", "model": "imio_survey.surveygisserver", "fields": {"username": "", "password": "", "servertype": "ARCREST", "description": "SPW PDS 5000"}}, {"pk": "http://geoservices.wallonie.be/arcgis/rest/services/PLAN_REGLEMENT/CADMAP_PARCELLES/MapServer", "model": "imio_survey.surveygisserver", "fields": {"username": "", "password": "", "servertype": "ARCREST", "description": "CADMAP SPW"}}, {"pk": "http://webgisdgo4.spw.wallonie.be/ArcGIS/rest/services/DGO4/ZPU/MapServer", "model": "imio_survey.surveygisserver", "fields": {"username": "", "password": "", "servertype": "ARCREST", "description": "SPW DG04 ZPU"}}, {"pk": 1, "model": "imio_survey.surveylayer", "fields": {"gis_server": "http://e-services.liege.be:8100/ElyxRouter/rest/wfs/WFS", "geometry_field_name": "lxgeom", "description": "permissecteurs", "layer_name": "starapic:PERMISSECTEURS"}}, {"pk": 2, "model": "imio_survey.surveylayer", "fields": {"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/PLAN_REGLEMENT/CADMAP_PARCELLES/MapServer", "geometry_field_name": "GEOMETRY", "description": "CADMAP_PARCELLES", "layer_name": "CADMAP_PARCELLES"}}, {"pk": 3, "model": "imio_survey.surveylayer", "fields": {"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer", "geometry_field_name": "GEOM", "description": "SPW PDS Affectation", "layer_name": "19"}}, {"pk": 4, "model": "imio_survey.surveylayer", "fields": {"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/AGRICULTURE/AMGT_FONC/MapServer", "geometry_field_name": "GEOM", "description": "SPW Perimetres de remembrements et amenagements fonciers", "layer_name": "0"}}, {"pk": 5, "model": "imio_survey.surveylayer", "fields": {"gis_server": "http://webgisdgo4.spw.wallonie.be/ArcGIS/rest/services/DGO4/ZPU/MapServer", "geometry_field_name": "GEOM", "description": "SPW DGO4 Zones Protegees en matiere d Urbanisme", "layer_name": "0"}}, {"pk": "TESTWFS", "model": "imio_survey.surveytype", "fields": {"description": "testwfs"}}, {"pk": 1, "model": "imio_survey.surveytypelayer", "fields": {"survey_layer": 1, "buffer": "0.0", "survey_type": "TESTWFS"}}, {"pk": 2, "model": "imio_survey.surveytypelayer", "fields": {"survey_layer": 2, "buffer": "0.0", "survey_type": "TESTWFS"}}, {"pk": 35, "model": "imio_survey.surveytypelayer", "fields": {"survey_layer": 3, "buffer": "0.0", "survey_type": "TESTWFS"}}, {"pk": 36, "model": "imio_survey.surveytypelayer", "fields": {"survey_layer": 4, "buffer": "0.0", "survey_type": "TESTWFS"}}, {"pk": 37, "model": "imio_survey.surveytypelayer", "fields": {"survey_layer": 5, "buffer": "0.0", "survey_type": "TESTWFS"}}]
+[{
+	"pk": "http://geoservices.wallonie.be/arcgis/rest/services/AGRICULTURE/AMGT_FONC/MapServer",
+	"model": "imio_survey.surveygisserver",
+	"fields": {
+		"username": "",
+		"password": "",
+		"servertype": "ARCREST",
+		"description": "SPW AGRICULTURE/AMGT_FONC "
+	}
+}, {
+	"pk": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer",
+	"model": "imio_survey.surveygisserver",
+	"fields": {
+		"username": "",
+		"password": "",
+		"servertype": "ARCREST",
+		"description": "SPW PDS 5000"
+	}
+}, {
+	"pk": "http://geoservices.wallonie.be/arcgis/rest/services/PLAN_REGLEMENT/CADMAP_PARCELLES/MapServer",
+	"model": "imio_survey.surveygisserver",
+	"fields": {
+		"username": "",
+		"password": "",
+		"servertype": "ARCREST",
+		"description": "CADMAP SPW"
+	}
+}, {
+	"pk": "http://webgisdgo4.spw.wallonie.be/ArcGIS/rest/services/DGO4/ZPU/MapServer",
+	"model": "imio_survey.surveygisserver",
+	"fields": {
+		"username": "",
+		"password": "",
+		"servertype": "ARCREST",
+		"description": "SPW DG04 ZPU"
+	}
+}, {
+	"pk": 2,
+	"model": "imio_survey.surveylayer",
+	"fields": {
+		"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/PLAN_REGLEMENT/CADMAP_PARCELLES/MapServer",
+		"geometry_field_name": "GEOMETRY",
+		"description": "CADMAP_PARCELLES",
+		"layer_name": "CADMAP_PARCELLES"
+	}
+}, {
+	"pk": 3,
+	"model": "imio_survey.surveylayer",
+	"fields": {
+		"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer",
+		"geometry_field_name": "GEOM",
+		"description": "SPW PDS Affectation",
+		"layer_name": "19"
+	}
+}, {
+	"pk": 4,
+	"model": "imio_survey.surveylayer",
+	"fields": {
+		"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/AGRICULTURE/AMGT_FONC/MapServer",
+		"geometry_field_name": "GEOM",
+		"description": "SPW Perimetres de remembrements et amenagements fonciers",
+		"layer_name": "0"
+	}
+}, {
+	"pk": 5,
+	"model": "imio_survey.surveylayer",
+	"fields": {
+		"gis_server": "http://webgisdgo4.spw.wallonie.be/ArcGIS/rest/services/DGO4/ZPU/MapServer",
+		"geometry_field_name": "GEOM",
+		"description": "SPW DGO4 Zones Protegees en matiere d Urbanisme",
+		"layer_name": "0"
+	}
+}, {
+	"pk": "TESTWFS",
+	"model": "imio_survey.surveytype",
+	"fields": {
+		"description": "testwfs"
+	}
+}, {
+	"pk": 2,
+	"model": "imio_survey.surveytypelayer",
+	"fields": {
+		"survey_layer": 2,
+		"buffer": "0.0",
+		"survey_type": "TESTWFS"
+	}
+}, {
+	"pk": 35,
+	"model": "imio_survey.surveytypelayer",
+	"fields": {
+		"survey_layer": 3,
+		"buffer": "0.0",
+		"survey_type": "TESTWFS"
+	}
+}, {
+	"pk": 36,
+	"model": "imio_survey.surveytypelayer",
+	"fields": {
+		"survey_layer": 4,
+		"buffer": "0.0",
+		"survey_type": "TESTWFS"
+	}
+}, {
+	"pk": 37,
+	"model": "imio_survey.surveytypelayer",
+	"fields": {
+		"survey_layer": 5,
+		"buffer": "0.0",
+		"survey_type": "TESTWFS"
+	}
+}]

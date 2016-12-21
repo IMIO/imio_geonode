@@ -1,1 +1,85 @@
-[{"pk": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer", "model": "imio_survey.surveygisserver", "fields": {"username": "", "password": "", "servertype": "ARCREST", "description": "SPW PDS 5000"}}, {"pk": "http://geoservices.wallonie.be/arcgis/rest/services/NATURA2000/NATURA2000_EP/MapServer", "model": "imio_survey.surveygisserver", "fields": {"username": "", "password": "", "servertype": "ARCREST", "description": "SPW Natura 2000"}}, {"pk": "http://geoservices.wallonie.be/arcgis/rest/services/PLAN_REGLEMENT/CADMAP_PARCELLES/MapServer", "model": "imio_survey.surveygisserver", "fields": {"username": "", "password": "", "servertype": "ARCREST", "description": "SPW CADMap"}}, {"pk": 1, "model": "imio_survey.surveylayer", "fields": {"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/NATURA2000/NATURA2000_EP/MapServer", "geometry_field_name": "geom", "description": "NATURA2000_EP", "layer_name": "1,2"}}, {"pk": 2, "model": "imio_survey.surveylayer", "fields": {"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/PLAN_REGLEMENT/CADMAP_PARCELLES/MapServer", "geometry_field_name": "", "description": "CADMAP_PARCELLES", "layer_name": "CADMAP_PARCELLES"}}, {"pk": 3, "model": "imio_survey.surveylayer", "fields": {"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer", "geometry_field_name": "GEOM", "description": "AFFECT_SECTEUR", "layer_name": "19,20"}}, {"pk": "TEST", "model": "imio_survey.surveytype", "fields": {"description": "test"}}, {"pk": 1, "model": "imio_survey.surveytypelayer", "fields": {"survey_layer": 1, "buffer": "0.0", "survey_type": "TEST"}}, {"pk": 2, "model": "imio_survey.surveytypelayer", "fields": {"survey_layer": 2, "buffer": "0.0", "survey_type": "TEST"}}, {"pk": 3, "model": "imio_survey.surveytypelayer", "fields": {"survey_layer": 3, "buffer": "0.0", "survey_type": "TEST"}}]
+[{
+	"pk": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer",
+	"model": "imio_survey.surveygisserver",
+	"fields": {
+		"username": "",
+		"password": "",
+		"servertype": "ARCREST",
+		"description": "SPW PDS 5000"
+	}
+}, {
+	"pk": "http://geoservices.wallonie.be/arcgis/rest/services/NATURA2000/NATURA2000_EP/MapServer",
+	"model": "imio_survey.surveygisserver",
+	"fields": {
+		"username": "",
+		"password": "",
+		"servertype": "ARCREST",
+		"description": "SPW Natura 2000"
+	}
+}, {
+	"pk": "http://geoservices.wallonie.be/arcgis/rest/services/PLAN_REGLEMENT/CADMAP_PARCELLES/MapServer",
+	"model": "imio_survey.surveygisserver",
+	"fields": {
+		"username": "",
+		"password": "",
+		"servertype": "ARCREST",
+		"description": "SPW CADMap"
+	}
+}, {
+	"pk": 1,
+	"model": "imio_survey.surveylayer",
+	"fields": {
+		"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/NATURA2000/NATURA2000_EP/MapServer",
+		"geometry_field_name": "geom",
+		"description": "NATURA2000_EP",
+		"layer_name": "1,2"
+	}
+}, {
+	"pk": 2,
+	"model": "imio_survey.surveylayer",
+	"fields": {
+		"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/PLAN_REGLEMENT/CADMAP_PARCELLES/MapServer",
+		"geometry_field_name": "",
+		"description": "CADMAP_PARCELLES",
+		"layer_name": "CADMAP_PARCELLES"
+	}
+}, {
+	"pk": 3,
+	"model": "imio_survey.surveylayer",
+	"fields": {
+		"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer",
+		"geometry_field_name": "GEOM",
+		"description": "AFFECT_SECTEUR",
+		"layer_name": "19,20"
+	}
+}, {
+	"pk": "TEST",
+	"model": "imio_survey.surveytype",
+	"fields": {
+		"description": "test"
+	}
+}, {
+	"pk": 1,
+	"model": "imio_survey.surveytypelayer",
+	"fields": {
+		"survey_layer": 1,
+		"buffer": "0.0",
+		"survey_type": "TEST"
+	}
+}, {
+	"pk": 2,
+	"model": "imio_survey.surveytypelayer",
+	"fields": {
+		"survey_layer": 2,
+		"buffer": "0.0",
+		"survey_type": "TEST"
+	}
+}, {
+	"pk": 3,
+	"model": "imio_survey.surveytypelayer",
+	"fields": {
+		"survey_layer": 3,
+		"buffer": "0.0",
+		"survey_type": "TEST"
+	}
+}]

@@ -95,9 +95,32 @@ class SurveyTestCase(TestCase):
         self.assertIsNotNone(response.content)
         self.inspectQueryResult(json.loads(response.content))
 
-    def test_liege_wfs(self):
-        result = self.testOGCQuerier.identify(self.liegePolygon, "lxgeom", "starapic:PERMISSECTEURS", "http://e-services.liege.be:8100/ElyxRouter/rest/wfs/WFS","","")
-        self.assertIsNotNone(result)
+#    def test_liege_wfs(self):
+#        result = self.testOGCQuerier.identify(self.liegePolygon, "lxgeom", "starapic:PERMISSECTEURS", "http://e-services.liege.be:8100/ElyxRouter/rest/wfs/WFS","","")
+#        self.assertIsNotNone(result)
+
+    def test_simple_attribute_query(self):
+        c = Client()
+        response = c.get('/survey/survey_value_list', {'l': "3", 'att': "AFFECT"})
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.content)
+        result = json.loads(response.content)
+        self.assertEqual(result['success'],True)
+
+    def test_badparameter_attribute_query(self):
+        c = Client()
+        response = c.get('/survey/survey_value_list', {'l': "3"})
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.content)
+        result = json.loads(response.content)
+        self.assertEqual(result['success'],False)
+
+    def test_survey_type_layer_list(self):
+        c = Client()
+        response = c.get('/survey/survey_type_layers', {'st': "TESTWFS"})
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.content)
+        result = json.loads(response.content)
 
     def inspectQueryResult(self, result):
         for res in result:

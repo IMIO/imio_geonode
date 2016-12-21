@@ -3,29 +3,39 @@ from imio_survey.queriers import IQuerier
 from arcrest.server import MapService
 from arcrest.geometry import Envelope, Polygon, Point, Polyline, Multipoint, fromGeoJson
 from django.utils import simplejson
-
-if __name__ == "__main__":
-    #url = "http://geoservices.wallonie.be/arcgis/rest/services/NATURA2000/NATURA2000_EP/MapServer"
-    url = "http://geoservices.wallonie.be/arcgis/rest/services/EAU/ATLAS_HYDRO__RESEAU/MapServer"
-    mapService =  MapService(url)
-    #print mapService.layernames
-    #print mapService.fullExtent
-
-    searchZone =  Envelope(150000,150000,160000,160000,spatialReference="31370")
-
-    result =  mapService.Identify(searchZone, sr="31370", layers="NATURA2000_EP",tolerance=1, mapExtent="0,0,300000,300000", imageDisplay=1, returnGeometry=True)
-    for r in result.results:
-        for key in r['attributes']:
-            print key , " = ",  r['attributes'][key]
+import requests
 
 class ArcRESTQuerier(IQuerier):
 
     def query(self):
         pass
 
+    def findAttributeValues(self, layerName, attributeName, url, username, password):
+        #http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer/19/query?where=1%3D1&outFields=AFFECT&returnGeometry=false&returnIdsOnly=false&returnCountOnly=false&returnZ=false&returnM=false&returnDistinctValues=true&f=pjson
+        payload = {
+            'where': '1=1',
+            'outFields': attributeName,
+            'returnGeometry': 'false',
+            'returnIdsOnly': 'false',
+            'returnCountOnly': 'false',
+            'returnZ': 'false',
+            'returnM': 'false',
+            'returnDistinctValues': 'true',
+            'f': 'pjson'
+        }
+        layer_url = url + '/' + layerName + '/query'
+        request_object = requests.get(layer_url, params=payload)
+        json_response = request_object.json()
+        response = {
+            'displayFieldName': json_response['displayFieldName'],
+            'fieldInfo': json_response['fields'][0], #We can assume only one field is passed to outFields
+            'features': [feat['attributes'][attributeName] for feat in json_response['features']]
+        }
+        return response
+
     def identify(self, geosGeometry, geometryFieldName, layers, url, username="", password=""):
         searchZone = self.geosGeom2EsriGeom(geosGeometry)
-        mapService =  MapService(url)
+        mapService = MapService(url)
 
         #TODO build mapextent and imageDisplay and so... results are wrong without correct parameters
         #layers top (default) // visible // all

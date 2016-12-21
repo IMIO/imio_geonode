@@ -53,6 +53,9 @@ class OGCQuerier(IQuerier):
                             </wfs:GetFeature>""" % (typeName, geometryFieldName, gmlString)
         return getfeatureTemplate
 
+    def findAttributeValues(self, layerName, attributeName, url, username, password):
+        pass
+
     def identify(self, geosGeometry, geometryFieldName, layers, url, username, password):
         """
             Assuming :
@@ -104,6 +107,9 @@ class OGCQuerier_110(IQuerier):
                             </wfs:GetFeature>""" % (typeName, geometryFieldName, gmlString)
         return getfeatureTemplate
 
+    def findAttributeValues(self, layerName, attributeName, url, username, password):
+        pass
+        
     def identify(self, geosGeometry, geometryFieldName, layers, url, username, password):
         """
             Assuming :
