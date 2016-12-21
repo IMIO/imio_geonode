@@ -108,7 +108,10 @@ class OGCQuerier_110(IQuerier):
         return getfeatureTemplate
 
     def findAttributeValues(self, layerName, attributeName, url, username, password):
-        pass
+        return None
+
+    def supportFindAttributeValues(self):
+        return False
         
     def identify(self, geosGeometry, geometryFieldName, layers, url, username, password):
         """

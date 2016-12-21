@@ -10,3 +10,7 @@ class IQuerier(object):
     @abc.abstractmethod
     def findAttributeValues(self, layerName, attributeName, url, username, password):
         """Method that harvest all distinct values for a given layer"""
+
+    @abc.abstractmethod
+    def supportFindAttributeValues(self):
+        """Method that return if the querier support findAttributeValues"""

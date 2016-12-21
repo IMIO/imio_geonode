@@ -5,3 +5,5 @@ class GeonodeQuerier(IQuerier):
         pass
     def findAttributeValues(self, layerName, attributeName, url, username, password):
         pass
+    def supportFindAttributeValues(self):
+        return False

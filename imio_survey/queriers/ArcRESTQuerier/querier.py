@@ -4,6 +4,7 @@ from arcrest.server import MapService
 from arcrest.geometry import Envelope, Polygon, Point, Polyline, Multipoint, fromGeoJson
 from django.utils import simplejson
 import requests
+from requests.exceptions import ConnectionError
 
 class ArcRESTQuerier(IQuerier):
 
@@ -24,14 +25,25 @@ class ArcRESTQuerier(IQuerier):
             'f': 'pjson'
         }
         layer_url = url + '/' + layerName + '/query'
-        request_object = requests.get(layer_url, params=payload)
-        json_response = request_object.json()
-        response = {
-            'displayFieldName': json_response['displayFieldName'],
-            'fieldInfo': json_response['fields'][0], #We can assume only one field is passed to outFields
-            'features': [feat['attributes'][attributeName] for feat in json_response['features']]
-        }
+        try:
+            request_object = requests.get(layer_url, params=payload)
+            json_response = request_object.json()
+            if json_response and json_response.get('error') is None:
+                response = {
+                    'displayFieldName': json_response['displayFieldName'],
+                    'fieldInfo': json_response['fields'][0], #We can assume only one field is passed to outFields
+                    'features': [feat['attributes'][attributeName] for feat in json_response['features']]
+                }
+            else:
+                #{u'error': {u'message': u'Failed to execute query.', u'code': 400, u'details': []}})
+                response = None #TODO Give more Informations about why
+        except ConnectionError:
+            response = None #TODO Give more Informations about why
+
         return response
+
+    def supportFindAttributeValues(self):
+        return True
 
     def identify(self, geosGeometry, geometryFieldName, layers, url, username="", password=""):
         searchZone = self.geosGeom2EsriGeom(geosGeometry)
