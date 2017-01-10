@@ -3,8 +3,9 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.geos import Polygon
 from django.conf import settings
 from django.test import Client, TestCase
+from django.core.exceptions import ObjectDoesNotExist
 
-from imio_survey.models import SurveyGisServer
+from imio_survey.models import SurveyGisServer, SurveyLayer
 from imio_survey.tasks import mul, doSurvey
 
 from imio_survey.queriers.factories import SurveyQuerierFactory
@@ -131,6 +132,13 @@ class SurveyTestCase(TestCase):
         self.assertIsNotNone(response.content)
         result = json.loads(response.content)
         self.assertEqual(len(result),4)
+        for layer in result:
+            layer_pk = layer["l"] #id
+            try:
+                layer = SurveyLayer.objects.get(pk = layer_pk)
+                self.assertEqual(layer_pk, layer.id)
+            except ObjectDoesNotExist:
+                self.fail('Layer with pk %s does not exist' % (layer_pk))
 
     def test_simple_badattribute_query(self):
         c = Client()

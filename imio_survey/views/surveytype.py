@@ -23,7 +23,7 @@ class SurveyTypeLayersView(View):
         result = []
         for layer in survey_type_obj.survey_layers.all():
             result.append({
-                'l': layer.layer_name,
+                'l': layer.id,
                 'desc': layer.description,
                 'geom': layer.geometry_field_name
             })
