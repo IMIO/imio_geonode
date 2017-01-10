@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.21 (unreleased)
+0.2.21 (2017-01-10)
 -------------------
 
 - Modify survey/survey_type_layers to give layer id instead of layer name
