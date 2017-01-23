@@ -4,7 +4,7 @@ Changelog
 0.2.22 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add surver_layer_fields for esri layers. Get fields definition for a given layer
 
 
 0.2.21 (2017-01-10)

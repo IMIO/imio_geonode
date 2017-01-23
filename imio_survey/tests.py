@@ -148,6 +148,12 @@ class SurveyTestCase(TestCase):
         result = json.loads(response.content)
         self.assertEqual(result['success'],False)
 
+    def test_layer_fields_affect(self):
+        c = Client()
+        response = c.get('/survey/survey_layer_fields', {'l': "3"})
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.content)
+
     def inspectQueryResult(self, result):
         for res in result:
             self.assertEqual(res['success'], True, res['message'])

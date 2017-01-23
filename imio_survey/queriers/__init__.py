@@ -14,3 +14,7 @@ class IQuerier(object):
     @abc.abstractmethod
     def supportFindAttributeValues(self):
         """Method that return if the querier support findAttributeValues"""
+
+    @abc.abstractmethod
+    def getFields(self, layerName, url, username, password):
+        """Method that return the list of fields for a specified layer"""

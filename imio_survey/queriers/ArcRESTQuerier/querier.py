@@ -8,8 +8,24 @@ from requests.exceptions import ConnectionError
 
 class ArcRESTQuerier(IQuerier):
 
-    def query(self):
-        pass
+    def getFields(self, layerName, url, username, password):
+        #http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer/19?f=json
+        response = None
+        payload = {
+            'f': 'json'
+        }
+        layer_url = url + '/' + layerName
+        try:
+            request_object = requests.get(layer_url, params=payload)
+            json_response = request_object.json()
+            if json_response and json_response.get('error') is None:
+                return json_response['fields']
+            else:
+                response = None #TODO Give more Informations about why
+        except ConnectionError:
+            response = None #TODO Give more Informations about why
+
+        return response
 
     def findAttributeValues(self, layerName, attributeName, url, username, password):
         #http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer/19/query?where=1%3D1&outFields=AFFECT&returnGeometry=false&returnIdsOnly=false&returnCountOnly=false&returnZ=false&returnM=false&returnDistinctValues=true&f=pjson
