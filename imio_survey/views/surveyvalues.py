@@ -32,7 +32,7 @@ class SurveyFieldsView(View):
                 'message': "Error : Parameter l (SurveyLayer) is missing",
                 'result': None
             }
-        return HttpResponse(json.dumps(result),content_type="application/json")
+        return HttpResponse(json.dumps(result),content_type="application/json; charset=utf-8")
 
 class SurveyValuesView(View):
     def get(self, request, *args, **kwargs):
@@ -89,4 +89,4 @@ class SurveyValuesView(View):
                 'result': None
             }
 
-        return HttpResponse(json.dumps(result),content_type="application/json")
+        return HttpResponse(json.dumps(result),content_type="application/json; charset=utf-8")

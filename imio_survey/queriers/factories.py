@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from imio_survey.models import SurveyGisServer
 from imio_survey.queriers.ArcRESTQuerier.querier import ArcRESTQuerier
 from imio_survey.queriers.GeonodeQuerier.querier import GeonodeQuerier

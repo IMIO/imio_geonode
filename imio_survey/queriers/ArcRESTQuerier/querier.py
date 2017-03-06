@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from imio_survey.queriers import IQuerier
 
 from arcrest.server import MapService
@@ -29,6 +30,7 @@ class ArcRESTQuerier(IQuerier):
 
     def findAttributeValues(self, layerName, attributeName, url, username, password):
         #http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer/19/query?where=1%3D1&outFields=AFFECT&returnGeometry=false&returnIdsOnly=false&returnCountOnly=false&returnZ=false&returnM=false&returnDistinctValues=true&f=pjson
+
         payload = {
             'where': '1=1',
             'outFields': attributeName,
@@ -38,17 +40,19 @@ class ArcRESTQuerier(IQuerier):
             'returnZ': 'false',
             'returnM': 'false',
             'returnDistinctValues': 'true',
-            'f': 'pjson'
+            'f': 'json'
         }
         layer_url = url + '/' + layerName + '/query'
         try:
-            request_object = requests.get(layer_url, params=payload)
-            json_response = request_object.json()
+            headers = {'Content-Type': 'application/json; charset=utf-8'}
+            request_object = requests.get(layer_url, params=payload, headers=headers)
+            json_response = simplejson.loads(request_object.content, encoding="utf-8")
+
             if json_response and json_response.get('error') is None:
                 response = {
                     'displayFieldName': json_response['displayFieldName'],
-                    'fieldInfo': json_response['fields'][0], #We can assume only one field is passed to outFields
-                    'features': [feat['attributes'][attributeName] for feat in json_response['features']]
+                    'fieldInfo': json_response['fields'], #We can assume only one field is passed to outFields
+                    'features': [feat['attributes'] for feat in json_response['features']]
                 }
             else:
                 #{u'error': {u'message': u'Failed to execute query.', u'code': 400, u'details': []}})
