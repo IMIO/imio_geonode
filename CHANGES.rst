@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.23 (unreleased)
+0.2.23 (2017-03-06)
 -------------------
 
 - Multiple values for distinct.
