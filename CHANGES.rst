@@ -4,7 +4,7 @@ Changelog
 0.2.25 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Pinning setuptools. Workaround requirements madness qith python cffi
 
 
 0.2.24 (2017-03-07)
