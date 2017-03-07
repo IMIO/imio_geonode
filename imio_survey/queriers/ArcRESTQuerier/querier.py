@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from imio_survey.queriers import IQuerier
 
+from django.contrib.gis.geos import fromstr
 from arcrest.server import MapService
 from arcrest.geometry import Envelope, Polygon, Point, Polyline, Multipoint, fromGeoJson
 from django.utils import simplejson
 import requests
 from requests.exceptions import ConnectionError
+import json
 
 class ArcRESTQuerier(IQuerier):
 
@@ -28,20 +30,43 @@ class ArcRESTQuerier(IQuerier):
 
         return response
 
-    def findAttributeValues(self, layerName, attributeName, url, username, password):
-        #http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer/19/query?where=1%3D1&outFields=AFFECT&returnGeometry=false&returnIdsOnly=false&returnCountOnly=false&returnZ=false&returnM=false&returnDistinctValues=true&f=pjson
+    def buildPayload(self, attributeName, area):
+        payload = {}
+        mustmerge = False
+        if not area is None:
+            geosArea = fromstr(area)
+            esriArea = self.geosGeom2EsriGeom(geosArea)
+            payload = {
+                'where': '1=1',
+                'outFields': attributeName,
+                'geometry': str(esriArea),
+                'geometryType': 'esriGeometryPolygon',
+                'returnGeometry': 'false',
+                'returnIdsOnly': 'false',
+                'returnCountOnly': 'false',
+                'returnZ': 'false',
+                'returnM': 'false',
+                'f': 'json'
+            }
+            mustmerge = True
+        else:
+            payload = {
+                'where': '1=1',
+                'outFields': attributeName,
+                'returnGeometry': 'false',
+                'returnIdsOnly': 'false',
+                'returnCountOnly': 'false',
+                'returnZ': 'false',
+                'returnM': 'false',
+                'returnDistinctValues': 'true',
+                'f': 'json'
+            }
+        return payload, mustmerge
 
-        payload = {
-            'where': '1=1',
-            'outFields': attributeName,
-            'returnGeometry': 'false',
-            'returnIdsOnly': 'false',
-            'returnCountOnly': 'false',
-            'returnZ': 'false',
-            'returnM': 'false',
-            'returnDistinctValues': 'true',
-            'f': 'json'
-        }
+    def findAttributeValues(self, layerName, attributeName, url, username, password, area=None):
+        #http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer/19/query?where=1%3D1&outFields=AFFECT&returnGeometry=false&returnIdsOnly=false&returnCountOnly=false&returnZ=false&returnM=false&returnDistinctValues=true&f=pjson
+        payload, mustmerge = self.buildPayload(attributeName, area)
+
         layer_url = url + '/' + layerName + '/query'
         try:
             headers = {'Content-Type': 'application/json; charset=utf-8'}
@@ -54,6 +79,9 @@ class ArcRESTQuerier(IQuerier):
                     'fieldInfo': json_response['fields'], #We can assume only one field is passed to outFields
                     'features': [feat['attributes'] for feat in json_response['features']]
                 }
+                if mustmerge: #YOLO in memory distinct
+                    response['features'] = [dict(s) for s in set(frozenset(d.items()) for d in response['features'])]
+
             else:
                 #{u'error': {u'message': u'Failed to execute query.', u'code': 400, u'details': []}})
                 response = None #TODO Give more Informations about why

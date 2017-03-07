@@ -56,7 +56,7 @@ class OGCQuerier(IQuerier):
     def getFields(self, layerName, url, username, password):
         return None
 
-    def findAttributeValues(self, layerName, attributeName, url, username, password):
+    def findAttributeValues(self, layerName, attributeName, url, username, password, area=None):
         pass
 
     def identify(self, geosGeometry, geometryFieldName, layers, url, username, password):
@@ -110,7 +110,7 @@ class OGCQuerier_110(IQuerier):
                             </wfs:GetFeature>""" % (typeName, geometryFieldName, gmlString)
         return getfeatureTemplate
 
-    def findAttributeValues(self, layerName, attributeName, url, username, password):
+    def findAttributeValues(self, layerName, attributeName, url, username, password, area=None):
         return None
 
     def supportFindAttributeValues(self):
@@ -118,7 +118,7 @@ class OGCQuerier_110(IQuerier):
 
     def getFields(self, layerName, url, username, password):
         return None
-        
+
     def identify(self, geosGeometry, geometryFieldName, layers, url, username, password):
         """
             Assuming :

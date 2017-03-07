@@ -9,7 +9,7 @@ class IQuerier(object):
         """Method that query spacialy a given and return a list of intersected entities"""
 
     @abc.abstractmethod
-    def findAttributeValues(self, layerName, attributeName, url, username, password):
+    def findAttributeValues(self, layerName, attributeName, url, username, password, area=None):
         """Method that harvest all distinct values for a given layer"""
 
     @abc.abstractmethod

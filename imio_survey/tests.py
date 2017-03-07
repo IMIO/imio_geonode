@@ -109,6 +109,27 @@ class SurveyTestCase(TestCase):
         self.assertEqual(result['success'],True)
         #"{u'message': u'Success', u'result': {u'fieldInfo': {u'alias': u'AFFECT', u'length': 3, u'type': u'esriFieldTypeString', u'name': u'AFFECT'}, u'displayFieldName': u'DESCRIPTION', u'features': [u'R03', u'X01', u'V01', u'A11', u'L01', u'R02', u'P11', u'R05', u'P01', u'L11', u'D02', u'P02', u'V02', u'D01', u'A12', u'P12', u'R04', u'A02', u'H02', u'R01', u'E01', u'H01', u'E02', u'L12', u'L13', u'A01']}, u'success': True}"
 
+    def test_double_attribute_query(self):
+        c = Client()
+        response = c.get('/survey/survey_value_list', {'l': "3", 'att': "AFFECT,DESCRIPTION"})
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.content)
+        result = json.loads(response.content)
+        self.assertEqual(result['success'],True)
+
+    def test_area_multipolygon_attribute_query(self):
+        c = Client()
+        response = c.get('/survey/survey_value_list', {
+            'l': "3",
+            'att': "AFFECT,DESCRIPTION",
+            'area': self.multiPolygonWKT
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.content)
+        result = json.loads(response.content)
+        print(result)
+        self.assertEqual(result['success'],True)
+
     def test_badparameter_attribute_query(self):
         c = Client()
         response = c.get('/survey/survey_value_list', {'l': "3"})

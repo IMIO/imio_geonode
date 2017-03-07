@@ -39,6 +39,7 @@ class SurveyValuesView(View):
         result = None
         survey_layer_param = request.GET.get("l", None) #SurveyLayer
         survey_attribute_param = request.GET.get("att", None) #SurveyAttributeName
+        survey_area_filter = request.GET.get("area", None) #SurveyAttributeName
         if survey_layer_param:
             if survey_attribute_param:
                 try:
@@ -50,7 +51,8 @@ class SurveyValuesView(View):
                             survey_attribute_param,
                             survey_layer.gis_server.url,
                             survey_layer.gis_server.username,
-                            survey_layer.gis_server.password
+                            survey_layer.gis_server.password,
+                            survey_area_filter
                         )
                         if find_attributes_result:
                             result = {
