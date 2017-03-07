@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.25 (unreleased)
+0.2.25 (2017-03-07)
 -------------------
 
 - Pinning setuptools. Workaround requirements madness qith python cffi
