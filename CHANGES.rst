@@ -4,7 +4,7 @@ Changelog
 0.2.24 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add (optional) area filter to survey_type_list .
 
 
 0.2.23 (2017-03-06)
