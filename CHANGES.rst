@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.26 (unreleased)
+0.2.26 (2017-03-21)
 -------------------
 
 - Add support for DGO4 Old ESRI rest api
