@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.27 (unreleased)
+0.2.27 (2017-03-21)
 -------------------
 
 - Allow  unchecked POST request for surveyvalues
