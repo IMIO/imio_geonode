@@ -100,6 +100,7 @@ class ArcRESTQuerier(IQuerier):
             'geometry': json.dumps(searchZone._json_struct_without_sr),#str(esriArea),
             'geometryType': 'esriGeometryPolygon',
             'returnGeometry': 'false',
+            'outFields': '*',
             'returnIdsOnly': 'false',
             'returnCountOnly': 'false',
             'returnZ': 'false',

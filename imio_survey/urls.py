@@ -11,6 +11,6 @@ urlpatterns = [
     url(r'^$', csrf_exempt(SurveyView.as_view()), name='index'),
     url(r'survey_type_list', SurveyTypeView.as_view(), name='survey_type_list'),
     url(r'survey_type_layers', SurveyTypeLayersView.as_view(), name='survey_type_layers'),
-    url(r'survey_value_list', SurveyValuesView.as_view(), name='survey_value_list'),
+    url(r'survey_value_list', csrf_exempt(SurveyValuesView.as_view()), name='survey_value_list'),
     url(r'survey_layer_fields', SurveyFieldsView.as_view(), name='survey_layer_fields'),
 ]

@@ -39,7 +39,7 @@ def queryLayer(layer_pk, wktGeometry, buffer):
     except urllib2.HTTPError, error:
         query_result['success'] = False
         query_result['message'] = "HTTPError : " + str(error.code) + error.filename
-        print("ERROR: ", error.read())
+        #print("ERROR: ", error.read())
     except Exception as ex:
         query_result['success'] = False
         template = "An exception of type {0} occured. Arguments:\n{1!r}"

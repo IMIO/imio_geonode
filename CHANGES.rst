@@ -4,7 +4,7 @@ Changelog
 0.2.27 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Allow  unchecked POST request for surveyvalues
 
 
 0.2.26 (2017-03-21)
