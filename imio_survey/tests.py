@@ -27,6 +27,8 @@ class SurveyTestCase(TestCase):
         self.testArcRESTQuerier =  SurveyQuerierFactory().createQuerier(SurveyGisServer.ARCREST)
         self.liegePolygon = Polygon( ((235745, 147615), (235745, 147616), (235746, 147616), (235746, 147615), (235745, 147615)) )
         self.multiPolygonWKT = "MULTIPOLYGON(((235424.935 148687.065,235429.244 148689.993,235429.943 148689.086,235433.273 148691.635,235438.99 148684.223,235443.735 148678.077,235445.516 148679.44,235454.802 148668.44,235453.069 148665.975,235448.739 148659.82,235433.586 148682.192,235429.837 148679.679,235426.711 148684.39,235424.935 148687.065)),((241020.367 152036.194,241024.691 152041.929,241036.183 152032.719,241031.701 152026.956,241020.367 152036.194)))"
+        with open('imio_survey/test_data/liege.wkt', 'r') as liegeWKTFile:
+            self.liegeWKT=liegeWKTFile.read().replace('\n', '')
         settings.CELERY_ALWAYS_EAGER = True
 
     def test_querier_factory(self):
@@ -123,6 +125,18 @@ class SurveyTestCase(TestCase):
             'l': "3",
             'att': "AFFECT,DESCRIPTION",
             'area': self.multiPolygonWKT
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.content)
+        result = json.loads(response.content)
+        self.assertEqual(result['success'],True)
+
+    def test_liege_commune_attribute_query(self):
+        c = Client()
+        response = c.post('/survey/survey_value_list', {
+            'l': "3",
+            'att': "AFFECT,DESCRIPTION",
+            'area': self.liegeWKT
         })
         self.assertEqual(response.status_code, 200)
         self.assertIsNotNone(response.content)

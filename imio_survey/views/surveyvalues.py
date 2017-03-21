@@ -35,15 +35,13 @@ class SurveyFieldsView(View):
         return HttpResponse(json.dumps(result),content_type="application/json; charset=utf-8")
 
 class SurveyValuesView(View):
-    def get(self, request, *args, **kwargs):
+
+    def _processQuery(self, survey_layer_param, survey_attribute_param, survey_area_filter):
         result = None
-        survey_layer_param = request.GET.get("l", None) #SurveyLayer
-        survey_attribute_param = request.GET.get("att", None) #SurveyAttributeName
-        survey_area_filter = request.GET.get("area", None) #SurveyAttributeName
         if survey_layer_param:
             if survey_attribute_param:
                 try:
-                    survey_layer = SurveyLayer.objects.get(pk = survey_layer_param)
+                    survey_layer = SurveyLayer.objects.get(pk=survey_layer_param)
                     querier = SurveyQuerierFactory().createQuerier(survey_layer.gis_server.servertype)
                     if querier.supportFindAttributeValues():
                         find_attributes_result = querier.findAttributeValues(
@@ -90,5 +88,20 @@ class SurveyValuesView(View):
                 'message': "Error : Parameter l (SurveyLayer) is missing",
                 'result': None
             }
+        return result
 
+    def get(self, request, *args, **kwargs):
+        result = None
+        survey_layer_param = request.GET.get("l", None) #SurveyLayer
+        survey_attribute_param = request.GET.get("att", None) #SurveyAttributeName
+        survey_area_filter = request.GET.get("area", None) #SurveyAttributeName
+        result = self._processQuery(survey_layer_param, survey_attribute_param, survey_area_filter)
+        return HttpResponse(json.dumps(result),content_type="application/json; charset=utf-8")
+
+    def post(self, request, *args, **kwargs):
+        result = None
+        survey_layer_param = request.POST.get("l", None) #SurveyLayer
+        survey_attribute_param = request.POST.get("att", None) #SurveyAttributeName
+        survey_area_filter = request.POST.get("area", None) #SurveyAttributeName
+        result = self._processQuery(survey_layer_param, survey_attribute_param, survey_area_filter)
         return HttpResponse(json.dumps(result),content_type="application/json; charset=utf-8")

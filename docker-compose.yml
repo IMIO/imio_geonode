@@ -37,8 +37,8 @@ surveyworker:
     build: .
     environment:
         - C_FORCE_ROOT=true
-    hostname: geonode-worker
-    container_name: geonode-worker
+    #hostname: geonode-worker
+    #scontainer_name: geonode-worker
     volumes:
         - .:/opt/imio_geonode/
     entrypoint:

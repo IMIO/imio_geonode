@@ -36,10 +36,11 @@ class ArcRESTQuerier(IQuerier):
         if not area is None:
             geosArea = fromstr(area)
             esriArea = self.geosGeom2EsriGeom(geosArea)
+
             payload = {
                 'where': '1=1',
                 'outFields': attributeName,
-                'geometry': str(esriArea),
+                'geometry': json.dumps(esriArea._json_struct_without_sr),#str(esriArea),
                 'geometryType': 'esriGeometryPolygon',
                 'returnGeometry': 'false',
                 'returnIdsOnly': 'false',
@@ -66,11 +67,9 @@ class ArcRESTQuerier(IQuerier):
     def findAttributeValues(self, layerName, attributeName, url, username, password, area=None):
         #http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer/19/query?where=1%3D1&outFields=AFFECT&returnGeometry=false&returnIdsOnly=false&returnCountOnly=false&returnZ=false&returnM=false&returnDistinctValues=true&f=pjson
         payload, mustmerge = self.buildPayload(attributeName, area)
-
         layer_url = url + '/' + layerName + '/query'
         try:
-            headers = {'Content-Type': 'application/json; charset=utf-8'}
-            request_object = requests.get(layer_url, params=payload, headers=headers)
+            request_object = requests.post(layer_url, data=payload)
             json_response = simplejson.loads(request_object.content, encoding="utf-8")
 
             if json_response and json_response.get('error') is None:
@@ -93,10 +92,33 @@ class ArcRESTQuerier(IQuerier):
     def supportFindAttributeValues(self):
         return True
 
+    def identify_raw(self, geosGeometry, geometryFieldName, layers, url, username="", password=""):
+        searchZone = self.geosGeom2EsriGeom(geosGeometry)
+        layer_url = url + '/' + layers + '/query'
+        payload = {
+            'where': '1=1',
+            'geometry': json.dumps(searchZone._json_struct_without_sr),#str(esriArea),
+            'geometryType': 'esriGeometryPolygon',
+            'returnGeometry': 'false',
+            'returnIdsOnly': 'false',
+            'returnCountOnly': 'false',
+            'returnZ': 'false',
+            'returnM': 'false',
+            'f': 'json'
+        }
+        request_object = requests.post(layer_url, data=payload)
+        json_response = simplejson.loads(request_object.content, encoding="utf-8")
+        clean_results = []
+        for feat in json_response['features']:
+            clean_results.append(feat)
+        return clean_results
+
     def identify(self, geosGeometry, geometryFieldName, layers, url, username="", password=""):
+        #if layers is not None:
+        #    return self.identify_raw(geosGeometry, geometryFieldName, layers, url, username="", password="")
         searchZone = self.geosGeom2EsriGeom(geosGeometry)
         mapService = MapService(url)
-
+        mapService.__post__ = True
         #TODO build mapextent and imageDisplay and so... results are wrong without correct parameters
         #layers top (default) // visible // all
         layers_param="all"

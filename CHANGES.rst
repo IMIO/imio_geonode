@@ -4,8 +4,10 @@ Changelog
 0.2.26 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Add support for DGO4 Old ESRI rest api
+- Add LiegeWKT test data
+- Add POST facadate for querying values
+- Passing POST queries to ESRI API
 
 0.2.25 (2017-03-07)
 -------------------
