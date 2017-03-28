@@ -41,7 +41,7 @@
 		"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/PLAN_REGLEMENT/CADMAP_PARCELLES/MapServer",
 		"geometry_field_name": "GEOMETRY",
 		"description": "CADMAP_PARCELLES",
-		"layer_name": "CADMAP_PARCELLES"
+		"layer_name": "0"
 	}
 }, {
 	"pk": 3,

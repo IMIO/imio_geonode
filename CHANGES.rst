@@ -4,7 +4,7 @@ Changelog
 0.2.28 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Optimisation for ESRI Based survey. Using ESRI API Query instead of identify as much as possible
 
 
 0.2.27 (2017-03-21)

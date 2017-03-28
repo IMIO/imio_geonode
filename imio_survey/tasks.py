@@ -8,6 +8,7 @@ from celery.result import AsyncResult
 
 from django.db import transaction
 from django.contrib.gis.geos import GEOSGeometry, fromstr
+from django.core.exceptions import ObjectDoesNotExist
 from imio_survey.models import SurveyType, SurveyTypeLayer, SurveyLayer, SurveyGisServer, SurveyResult
 from imio_survey.queriers.factories import SurveyQuerierFactory
 
@@ -51,21 +52,24 @@ def doSurvey(surveyTypekey,wktGeometry):
     #TODO EagerLoad every layer and membership to avoid n+1 select
     #TODO Check geometry validity
     logger.info("Geom : %s" % wktGeometry)
-    #TODO Check if surveytype exist
-    st = SurveyType.objects.get(pk = surveyTypekey)
-    MAX_RETRIES_CHORD=30
-    CHORD_INTERVAL=1
-    queries= [queryLayer.s(sl.pk,wktGeometry,SurveyTypeLayer.objects.get(survey_type=st,survey_layer=sl).buffer) for sl in st.survey_layers.all() ]
-    merger=mergeResults.s()
-    #job = chord((queryLayer.s(sl.pk,wktGeometry,SurveyTypeLayer.objects.get(survey_type=st,survey_layer=sl).buffer) for sl in st.survey_layers.all()))(mergeResults.s())
-    job = chord(
-        header=queries,
-        body =merger).apply_async(max_retries=MAX_RETRIES_CHORD, interval=CHORD_INTERVAL)
+    try:
+        st = SurveyType.objects.get(pk = surveyTypekey)
+        MAX_RETRIES_CHORD=30
+        CHORD_INTERVAL=1
+        queries= [queryLayer.s(sl.pk,wktGeometry,SurveyTypeLayer.objects.get(survey_type=st,survey_layer=sl).buffer) for sl in st.survey_layers.all() ]
+        merger=mergeResults.s()
+        #job = chord((queryLayer.s(sl.pk,wktGeometry,SurveyTypeLayer.objects.get(survey_type=st,survey_layer=sl).buffer) for sl in st.survey_layers.all()))(mergeResults.s())
+        job = chord(
+            header=queries,
+            body =merger).apply_async(max_retries=MAX_RETRIES_CHORD, interval=CHORD_INTERVAL)
 
-    #TODO Set timeout value as a parameter
-    #TODO Catch TimouOut error
-    result = job.get(timeout=30)
-    if job.successful():
-        return result
-    else:
+        #TODO Set timeout value as a parameter
+        #TODO Catch TimouOut error
+        result = job.get(timeout=30)
+        if job.successful():
+            return result
+        else:
+            return None
+    except ObjectDoesNotExist as e:
+        logger.error("SurveyType %s does not exist in database" % surveyTypekey)
         return None

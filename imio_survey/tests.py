@@ -42,7 +42,7 @@ class SurveyTestCase(TestCase):
     def test_ArcRestQuerier(self):
         url ="http://geoservices.wallonie.be/arcgis/rest/services/NATURA2000/NATURA2000_EP/MapServer"
         poly = Polygon( ((121900, 125800), (121900, 125810), (121905, 125810), (121905, 125800), (121900, 125800)) )
-        result = self.testArcRESTQuerier.identify( poly,None, "NATURA2000_EP", url)
+        result = self.testArcRESTQuerier.identify( poly,None, "2", url)
         self.assertIsNotNone(result)
         self.assertTrue(len(result) > 0)
 
@@ -141,7 +141,6 @@ class SurveyTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIsNotNone(response.content)
         result = json.loads(response.content)
-        print(result)
         self.assertEqual(result['success'],True)
 
     def test_badparameter_attribute_query(self):

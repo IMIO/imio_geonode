@@ -110,13 +110,16 @@ class ArcRESTQuerier(IQuerier):
         request_object = requests.post(layer_url, data=payload)
         json_response = simplejson.loads(request_object.content, encoding="utf-8")
         clean_results = []
-        for feat in json_response['features']:
-            clean_results.append(feat)
+        if 'features' in json_response:
+            for feat in json_response['features']:
+                clean_results.append(feat)
+        else:
+            print("Error in query")
         return clean_results
 
     def identify(self, geosGeometry, geometryFieldName, layers, url, username="", password=""):
-        #if layers is not None:
-        #    return self.identify_raw(geosGeometry, geometryFieldName, layers, url, username="", password="")
+        if layers is not None and len(layers.split(',')) == 1:
+            return self.identify_raw(geosGeometry, geometryFieldName, layers, url, username="", password="")
         searchZone = self.geosGeom2EsriGeom(geosGeometry)
         mapService = MapService(url)
         mapService.__post__ = True
