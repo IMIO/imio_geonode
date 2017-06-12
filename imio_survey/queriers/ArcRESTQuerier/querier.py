@@ -8,6 +8,8 @@ from django.utils import simplejson
 import requests
 from requests.exceptions import ConnectionError
 import json
+from celery.utils.log import get_task_logger
+logger = get_task_logger(__name__)
 
 class ArcRESTQuerier(IQuerier):
 
@@ -114,7 +116,8 @@ class ArcRESTQuerier(IQuerier):
             for feat in json_response['features']:
                 clean_results.append(feat)
         else:
-            print("Error in query")
+            logger.error("Error in query for : %s" % layer_url)
+            logger.info(json_response)
         return clean_results
 
     def identify(self, geosGeometry, geometryFieldName, layers, url, username="", password=""):

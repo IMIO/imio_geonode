@@ -51,7 +51,7 @@ def queryLayer(layer_pk, wktGeometry, buffer):
 def doSurvey(surveyTypekey,wktGeometry):
     #TODO EagerLoad every layer and membership to avoid n+1 select
     #TODO Check geometry validity
-    logger.info("Geom : %s" % wktGeometry)
+    logger.debug("Geom : %s" % wktGeometry)
     try:
         st = SurveyType.objects.get(pk = surveyTypekey)
         MAX_RETRIES_CHORD=30

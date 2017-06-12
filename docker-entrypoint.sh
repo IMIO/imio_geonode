@@ -1,5 +1,5 @@
 #!/bin/bash
-python manage.py syncdb                   # Apply database migrations
+python manage.py syncdb --noinput  # Apply database migrations
 python manage.py collectstatic --noinput  # Collect static files
 
 # Prepare log files and start outputting logs to stdout

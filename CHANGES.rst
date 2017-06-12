@@ -4,7 +4,8 @@ Changelog
 0.2.29 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add no-input to syncdb
+- Add logging
 
 
 0.2.28 (2017-03-28)
