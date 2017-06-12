@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.29 (unreleased)
+0.2.29 (2017-06-12)
 -------------------
 
 - Add no-input to syncdb
