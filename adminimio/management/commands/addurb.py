@@ -47,10 +47,10 @@ class Command(BaseCommand):
         default="",
         help="Geoserver password [default: %default]"),
     )+ (
-    make_option("-u", "--urbanUrl",
+    make_option("-u", "--dbadr",
         action='store',
         type="string",
-        dest='urbanUrl',
+        dest='dbadr',
         default="",
         help="Adresse base de données [default: %default]"),
     )+ (

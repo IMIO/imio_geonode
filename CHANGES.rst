@@ -4,7 +4,8 @@ Changelog
 0.2.30 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add "add_municipality" administrative command to adminimio app. Used for automatic geonode instance creation
+- Modifications to "addurb" administrative command in adminimio app. Change db parameter to more accurate name
 
 
 0.2.29 (2017-06-12)

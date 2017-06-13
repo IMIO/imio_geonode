@@ -67,8 +67,6 @@ class Im(models.Model):
         group.save()
 
         group.join(user, role="manager")
-
-        user.save()
         group.save()
 
         return True
@@ -84,12 +82,11 @@ class Im(models.Model):
         User = get_user_model()
 
 
-        u_ro = name_group+'_'+name_user
-        u_rw = name_group+'_admin'
+        u_ro = name_group+'-'+name_user
+        u_rw = name_group
 
         g_user = name_group+'-ro'
         g_admin = name_group+'-rw'
-
 
         # Vérification de la disponibiliter des noms
         if Profile.objects.filter(username=u_ro).exists():
@@ -100,6 +97,7 @@ class Im(models.Model):
             raise Exception('Le nom de groupe généré est déjà utilisé')
         if GroupProfile.objects.filter(title=g_admin).exists():
             raise Exception('Le nom de groupe généré est déjà utilisé')
+
 
         # RW
         user_rw = User.objects.create_user(u_rw, None, u_rw)
