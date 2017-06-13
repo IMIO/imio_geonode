@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.33 (unreleased)
+0.2.33 (2017-06-13)
 -------------------
 
 - Better execptions to addurb
