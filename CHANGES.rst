@@ -4,7 +4,7 @@ Changelog
 0.2.33 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Better execptions to addurb
 
 
 0.2.32 (2017-06-13)

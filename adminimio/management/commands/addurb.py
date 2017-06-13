@@ -108,10 +108,8 @@ class Command(BaseCommand):
         try:
             cat = Catalog(self.geoserver_rest_url, options['geoserveradmin'], options['gpw'])
             #create datastore for URB schema
-            try:
-                ws = cat.create_workspace(options['alias'],options['uri'])
-            except Exception as e:
-                raise Exception('Le nom du workspace ou l\'alias est déja utiliser')
+            ws = cat.create_workspace(options['alias'],options['uri'])
+
             try:
                 ds = cat.create_datastore(options['alias'], ws)
                 ds.connection_parameters.update(
