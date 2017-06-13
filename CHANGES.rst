@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.31 (unreleased)
+0.2.31 (2017-06-13)
 -------------------
 
 - Add 'create_map' command. 
