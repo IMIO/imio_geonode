@@ -115,7 +115,7 @@ class Command(BaseCommand):
             try:
                 ds = cat.create_datastore(options['alias'], ws)
                 ds.connection_parameters.update(
-                    host=options['urbanUrl'],
+                    host=options['dbadr'],
                     port=options['dbport'],
                     database=options['database'],
                     user=options['postuser'],
@@ -207,7 +207,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if self.verifParams(options):
             try:
-                conn = psycopg2.connect("dbname='" + options['database'] + "' user='" + options['postuser'] + "' host='" + options['urbanUrl'] + "' password='" + options['ropw'] + "' port='" + options['dbport'] + "'")
+                conn = psycopg2.connect("dbname='" + options['database'] + "' user='" + options['postuser'] + "' host='" + options['dbadr'] + "' password='" + options['ropw'] + "' port='" + options['dbport'] + "'")
                 conn.close()
             except psycopg2.Error as e:
                 if 'could not connect to server: Connection refused' in e.message:
@@ -229,7 +229,7 @@ class Command(BaseCommand):
 
     def verifParams(self, options):
         if(options['gpw'] is None or options['gpw'] is '' or
-           options['urbanUrl'] is None or options['urbanUrl'] is '' or
+           options['dbadr'] is None or options['dbadr'] is '' or
            options['ropw'] is None or options['ropw'] is '' or
            options['alias'] is None or options['alias'] is '' or
            options['groupname'] is None or options['groupname'] is ''):

@@ -4,13 +4,13 @@ Changelog
 0.2.32 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Quick fix
 
 
 0.2.31 (2017-06-13)
 -------------------
 
-- Add 'create_map' command. 
+- Add 'create_map' command.
 
 
 0.2.30 (2017-06-13)
