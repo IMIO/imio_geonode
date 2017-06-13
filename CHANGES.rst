@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.30 (unreleased)
+0.2.30 (2017-06-13)
 -------------------
 
 - Add "add_municipality" administrative command to adminimio app. Used for automatic geonode instance creation
