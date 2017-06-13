@@ -4,7 +4,7 @@ Changelog
 0.2.31 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add 'create_map' command. 
 
 
 0.2.30 (2017-06-13)

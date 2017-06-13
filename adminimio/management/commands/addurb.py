@@ -223,6 +223,7 @@ class Command(BaseCommand):
             ws_name , ds_name, ds_resource_type =  self.createDataStore(options)
             layers = self.addLayersToGeoserver(options)
             self.addLayersToGeonode(options,ws_name, ds_name,ds_resource_type, layers)
+
         else:
             raise Exception('Des paramètres non pas été définit')
 
