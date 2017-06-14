@@ -1,13 +1,16 @@
 # -*- coding: utf8 -*-
-from django.core.management.base import BaseCommand, CommandError
-from django.conf import settings
-
 from optparse import OptionParser
 from optparse import make_option
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import get_user_model
-from geonode.maps.models import Map
+from django.core.management.base import BaseCommand, CommandError
+from django.conf import settings
+
+from geonode.maps.models import Map, MapLayer
 from geonode.layers.models import Layer
+from geonode.utils import default_map_config
+from geonode.base.models import Link
 
 class Command(BaseCommand):
 
@@ -36,6 +39,70 @@ class Command(BaseCommand):
         help="Map id"),
     )
 
+    def create_from_layer_list(self, new_map, user, layers, title, abstract):
+        new_map.owner = user
+        new_map.title = title
+        new_map.abstract = abstract
+        new_map.projection = getattr(settings, 'DEFAULT_MAP_CRS', 'EPSG:900913')
+        new_map.zoom = 0
+        new_map.center_x = 0
+        new_map.center_y = 0
+        bbox = None
+        index = 0
+
+        DEFAULT_MAP_CONFIG, DEFAULT_BASE_LAYERS = default_map_config()
+
+        # Save the map in order to create an id in the database
+        # used below for the maplayers.
+        new_map.save()
+
+        for layer in layers:
+            if not isinstance(layer, Layer):
+                try:
+                    layer = Layer.objects.get(typename=layer)
+                    print(layer)
+                except ObjectDoesNotExist:
+                    raise Exception(
+                        'Could not find layer with name %s' %
+                        layer)
+
+            if not user.has_perm(
+                    'base.view_resourcebase',
+                    obj=layer.resourcebase_ptr):
+                # invisible layer, skip inclusion or raise Exception?
+                raise Exception(
+                    'User %s tried to create a map with layer %s without having premissions' %
+                    (user, layer))
+
+
+            ows_link_url = None
+            try:
+                ows_link = layer.link_set.get(link_type='OGC:WMS')
+                ows_link_url = ows_link.url
+            except Link.DoesNotExist:
+                pass
+            print(ows_link_url)
+            MapLayer.objects.create(
+                map=new_map,
+                name=layer.typename,
+                ows_url=ows_link_url,
+                stack_order=index,
+                visibility=True
+            )
+
+            index += 1
+
+        # Set bounding box based on all layers extents.
+        bbox = new_map.get_bbox_from_layers(new_map.local_layers)
+
+        new_map.set_bounds_from_bbox(bbox)
+
+        new_map.set_missing_info()
+
+        # Save again to persist the zoom and bbox changes and
+        # to generate the thumbnail.
+        new_map.save()
+
     def create_map_withlayers(self, user_name, ws_name, map_id):
         """
         Create Map
@@ -48,13 +115,14 @@ class Command(BaseCommand):
         map_owner = User.objects.get(username=user_name)
         layers = Layer.objects.filter(workspace=ws_name).all()
         new_map = Map()
-        new_map.create_from_layer_list(
+
+        self.create_from_layer_list(
+            new_map,
             map_owner,
             layers,
             "UrbanMap",
             "Urban Map. Be carefull"
         )
-        new_map.save()
 
     def handle(self, *args, **options):
         self.create_map_withlayers(
