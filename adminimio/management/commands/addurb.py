@@ -186,7 +186,7 @@ class Command(BaseCommand):
                     grName = unicode(options['groupname'])
                     perm = {
                            u'users': {
-                               u'AnonymousUser': [] },
+                               u'AnonymousUser': [u'view_resourcebase'] },
                            u'groups': {
                                grName:[u'view_resourcebase',u'download_resourcebase'] }
                            }

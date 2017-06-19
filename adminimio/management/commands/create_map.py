@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 from optparse import OptionParser
 from optparse import make_option
+import uuid
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import get_user_model
@@ -40,6 +41,7 @@ class Command(BaseCommand):
     )
 
     def create_from_layer_list(self, new_map, user, layers, title, abstract):
+        new_map.uuid = str(uuid.uuid1())
         new_map.owner = user
         new_map.title = title
         new_map.abstract = abstract
@@ -81,13 +83,17 @@ class Command(BaseCommand):
                 ows_link_url = ows_link.url
             except Link.DoesNotExist:
                 pass
-            print(ows_link_url)
+            layer_cfg = """{"selected": true, "title": "brainelechateau_cabu", "cached": true, "capability": {"abstract": "No abstract provided", "nestedLayers": [], "cascaded": 0, "fixedHeight": 0, "prefix": "cabu", "keywords": ["features", "cabu"], "noSubsets": false, "dimensions": {}, "opaque": false, "infoFormats": ["text/plain", "application/vnd.ogc.gml", "text/xml", "application/vnd.ogc.gml/3.1.1", "text/xml; subtype=gml/3.1.1", "text/html", "application/json"], "styles": [{"abstract": "A sample style that just prints out a transparent red interior with a red outline", "legend": {"href": "http://brainelechateau-geonode.imio-app.be:80/geoserver/brainelechateau/wms?request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=cabu", "width": "20", "format": "image/png", "height": "20"}, "name": "polygon", "title": "A boring default style"}], "attribution": {"title": "admin"}, "authorityURLs": {}, "bbox": {"EPSG:31370": {"srs": "EPSG:31370", "bbox": [140784.65625, 149937.875, 147527.25, 154404.359375]}}, "fixedWidth": 0, "metadataURLs": [{"href": "https://brainelechateau-geonode.imio-app.be/catalogue/csw?outputschema=http%3A%2F%2Fwww.opengis.net%2Fcat%2Fcsw%2Fcsdgm&service=CSW&request=GetRecordById&version=2.0.2&elementsetname=full&id=4c048bf4-2b0d-45a1-a643-e08b9a5aa6f8", "type": "FGDC", "format": "text/xml"}], "name": "cabu", "identifiers": {}, "srs": {"EPSG:900913": true}, "formats": ["image/png", "application/atom xml", "application/atom+xml", "application/openlayers", "application/pdf", "application/rss xml", "application/rss+xml", "application/vnd.google-earth.kml", "application/vnd.google-earth.kml xml", "application/vnd.google-earth.kml+xml", "application/vnd.google-earth.kml+xml;mode=networklink", "application/vnd.google-earth.kmz", "application/vnd.google-earth.kmz xml", "application/vnd.google-earth.kmz+xml", "application/vnd.google-earth.kmz;mode=networklink", "atom", "image/geotiff", "image/geotiff8", "image/gif", "image/gif;subtype=animated", "image/jpeg", "image/png8", "image/png; mode=8bit", "image/svg", "image/svg xml", "image/svg+xml", "image/tiff", "image/tiff8", "kml", "kmz", "openlayers", "rss", "text/html; subtype=openlayers"], "title": "brainelechateau_cabu", "queryable": true, "llbbox": [4.237258724748909, 50.65973330186791, 4.332730242848743, 50.69995344778437]}, "tiled": true}"""
+            
             MapLayer.objects.create(
                 map=new_map,
                 name=layer.typename,
                 ows_url=ows_link_url,
                 stack_order=index,
-                visibility=True
+                visibility=True,
+                format="image/png",
+                layer_params=json.dumps(layer_cfg),
+                source_params=json.dumps(source_cfg)
             )
 
             index += 1
