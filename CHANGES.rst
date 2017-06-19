@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.35 (unreleased)
+0.2.35 (2017-06-19)
 -------------------
 
 - AnonymousUser can now access layers created by addurb command.
