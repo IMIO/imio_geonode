@@ -4,7 +4,7 @@ Changelog
 0.2.36 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Use the editable title in wmc response instead of capability title.
 
 
 0.2.35 (2017-06-19)
