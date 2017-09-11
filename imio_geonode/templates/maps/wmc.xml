@@ -48,7 +48,7 @@
                 <OnlineResource xlink:type="simple" xlink:href="{{ layer.ows_url }}"/>
             </Server>
             <Name>{{ layer.name }}</Name>
-            <Title>{{ lc.capability.title }}</Title>
+            <Title>{{ lc.title }}</Title>
             <Abstract>{{ lc.capability.abstract }}</Abstract>
             {% if lc.capability.metadataURLs %}
             <MetadataURL>
