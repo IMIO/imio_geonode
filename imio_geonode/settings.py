@@ -39,6 +39,7 @@ STATICFILES_DIRS.append(
     os.path.join(LOCAL_ROOT, "static"),
 )
 
+
 # Note that Django automatically includes the "templates" dir in all the
 # INSTALLED_APPS, se there is no need to add maps/templates or admin/templates
 TEMPLATE_DIRS = (
@@ -54,10 +55,10 @@ LOCALE_PATHS = (
     ) + LOCALE_PATHS
 
 INSTALLED_APPS = (
-	'adminimio',
+    'adminimio',
     'imio_survey',
     'djcelery',
-	) + INSTALLED_APPS
+) + INSTALLED_APPS
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,

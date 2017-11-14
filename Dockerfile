@@ -16,6 +16,8 @@ ADD requirements.txt /opt/imio_geonode/
 RUN wget -qO- http://frontend1.imio.be/20150127-star.imio.be.crt >> /etc/ssl/certs/ca-certificates.crt
 RUN wget -qO- http://frontend1.imio.be/20150127-star.guichet-citoyen.be.crt >> /etc/ssl/certs/ca-certificates.crt
 RUN wget -qO- http://frontend1.imio.be/20150127-star.imio-app.be.crt >> /etc/ssl/certs/ca-certificates.crt
+
+RUN pip install -U pip
 RUN pip install -r requirements.txt
 ADD . /opt/imio_geonode/
 
