@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.37 (unreleased)
+0.2.37 (2017-11-14)
 -------------------
 
 - Bump geonode version to 2.4.1
