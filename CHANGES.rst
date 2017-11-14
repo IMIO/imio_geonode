@@ -4,7 +4,10 @@ Changelog
 0.2.37 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Bump geonode version to 2.4.1
+- Force gxp addlayer plugin to use 1.3.0 instead of 1.1.1 for WMS (special F to rw)
+- update pip in Dockerfile
+- update setuptools version
 
 
 0.2.36 (2017-09-11)
