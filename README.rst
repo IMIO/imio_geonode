@@ -42,3 +42,5 @@ Utilitaire
 ----------
 
 [out:json];area[name="België - Belgique - Belgien"];(rel[name="Mons"][admin_level=8][boundary=administrative](area););out geom;
+
+python manage.py addurb -c admin -p admin -u docker.for.mac.localhost  -m 5432 -g postgres -d test_cadastre -a soignies -z soignies.be -n soignies-ro -r grog

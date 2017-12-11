@@ -20,6 +20,6 @@ RUN wget -qO- http://frontend1.imio.be/20150127-star.imio-app.be.crt >> /etc/ssl
 RUN pip install -U pip
 RUN pip install -r requirements.txt
 ADD . /opt/imio_geonode/
-
+RUN cp -R /usr/local/geonode/*  /usr/local/lib/python2.7/dist-packages/geonode
 COPY ./docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]

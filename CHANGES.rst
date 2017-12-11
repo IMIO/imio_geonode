@@ -4,7 +4,8 @@ Changelog
 0.2.38 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Update Dokerfile to copy ressources
+- Add output to addurb command
 
 
 0.2.37 (2017-11-14)

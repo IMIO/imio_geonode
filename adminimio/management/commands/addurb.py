@@ -166,6 +166,7 @@ class Command(BaseCommand):
         try:
             for l in layers:
                 created = False
+                print("Add layer %s in geonode" % (ws_name + ':' + l['res_name']))
                 layer, created = Layer.objects.get_or_create(typename=ws_name + ':' + l['res_name'], defaults={
                     "name" : l['res_name'],
                     "workspace": ws_name,
@@ -184,6 +185,7 @@ class Command(BaseCommand):
 
                 if created:
                     grName = unicode(options['groupname'])
+                    print("Couche ok, ajout de la couche au groupe %s" % (grName))
                     perm = {
                            u'users': {
                                u'AnonymousUser': [u'view_resourcebase'] },
@@ -193,12 +195,14 @@ class Command(BaseCommand):
                     try:
                         layer.set_permissions(perm)
                         layer.save()
-                    except:
+                    except Exception as e:
+                        print(str(e))
                         raise Exception('Problème survenu lors de l\'application des permissions aux couches')
                 else:
                     raise Exception('Erreur lors de l\'importation. Le layer'+ws_name + ':' + l['res_name']+'existe déjà')
 
         except Exception as e:
+            print("Erreur ***")
             print(str(e))
             raise Exception('Erreur lors de l\'importation des couches depuis Geoserver',e)
 
