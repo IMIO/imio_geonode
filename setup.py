@@ -24,7 +24,7 @@ install_requires = [
 
 setup(
     name="imio_geonode",
-    version='0.2.38.dev0',
+    version='0.2.38',
     author="",
     author_email="",
     description="imio_geonode, based on GeoNode",

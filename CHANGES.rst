@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.38 (unreleased)
+0.2.38 (2017-12-11)
 -------------------
 
 - Update Dokerfile to copy ressources
