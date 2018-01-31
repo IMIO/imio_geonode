@@ -4,7 +4,7 @@ Changelog
 0.2.39 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Upgrade httplib2 from 0.8 to 0.10.3 to SNI support.
 
 
 0.2.38 (2017-12-11)

@@ -12,4 +12,5 @@ idna
 certifi
 urllib3[secure]==1.19.1
 setuptools==36.6.0
+httplib2==0.10.3
 -e git+https://github.com/ndufrane/arcrest.git#egg=arcrest
