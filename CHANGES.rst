@@ -4,7 +4,8 @@ Changelog
 0.2.40 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add httplib2 plugin httplib2.ca_certs_locater. This plugin allow httplib2 to look correctly to the OS
+  certificate store.
 
 
 0.2.39 (2018-01-31)
