@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.40 (unreleased)
+0.2.40 (2018-02-06)
 -------------------
 
 - Add httplib2 plugin httplib2.ca_certs_locater. This plugin allow httplib2 to look correctly to the OS
