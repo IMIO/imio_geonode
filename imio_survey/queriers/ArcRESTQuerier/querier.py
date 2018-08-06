@@ -109,6 +109,7 @@ class ArcRESTQuerier(IQuerier):
             'returnM': 'false',
             'f': 'json'
         }
+        logger.debug(payload)
         request_object = requests.post(layer_url, data=payload)
         json_response = simplejson.loads(request_object.content, encoding="utf-8")
         clean_results = []

@@ -1,0 +1,75 @@
+function fromWKT2Json(WKTstr) {
+    var mods = {};
+    var convertToPointArray = function (ptArrayString) {
+        var points = [],
+            ptStringArray = ptArrayString.replace(/\)|\(/gi, "").split(",");
+        ptStringArray.forEach(function (pt) {
+
+            var splitpt = pt.trim().split(" "),
+                x = parseFloat(splitpt[0], 10),
+                y = parseFloat(splitpt[1], 10);
+
+            points[points.length] = [x, y];
+        });
+        return points;
+    };
+
+    mods.POINT = function (tailStr) {
+        ///point should be in the following format:
+        //    (xxxx yyyy)
+        console.log(tailStr);
+        var point = tailStr.replace(/\)|\(/gi, "").trim().split(" ");
+        return {
+            type: 'point',
+            x: parseFloat(point[0], 10),
+            y: parseFloat(point[1], 10)
+        };
+    };
+    mods.MULTILINESTRING = function (tailStr) {
+        //should be in the following format:
+        //    MULTILINESTRING((10 10, 20 20), (15 15, 30 15))
+        ///strip outermost parenthesis
+        tailStr = tailStr.replace(/(\(\()|(\)\))/gi, '');
+        //split on tailing parenthesis and comma
+        var paths = [],
+            pathsRaw = tailStr.split("),"); ///show now have ['(x1 y1, x2 y2,....)','(x1 y1, x2 y2,....)',...]
+
+        pathsRaw.forEach(function (p) {
+            paths[paths.length] = convertToPointArray(p);
+
+        });
+        return {
+            type: 'polyline',
+            paths: paths
+        };
+    };
+
+    mods.POLYGON = function (tailStr) {
+        var ml = mods.MULTILINESTRING(tailStr);
+        ///DIFFERENCES BETWEEN THIS AND MULTILINE IS THAT THE PATHS ARE RINGS
+        return {
+            type: 'polygon',
+            rings: ml.paths
+        };
+    };
+    mods.MULTIPOLYGON = function (tailStr) {
+        console.error('MULTIPOLYGON - not implemented');
+    };
+    mods.MULTIPOINT = function (tailStr) {
+        return {
+            type: 'multipoint',
+            points: convertToPointArray(tailStr)
+        };
+    };
+    mods.LINESTRING = function (tailStr) {
+        //only close translation is multipoint
+        return mods.MULTIPOINT(tailStr);
+
+    };
+    //chunk up the incoming geometry WKT  string
+    var geoArray = WKTstr.split("("),
+        head = geoArray.shift().trim(), ///head should be the geometry type
+        tail = '(' + (geoArray.join("(").trim()); ///reconstitute the body
+
+    return mods[head](tail);
+}

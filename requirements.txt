@@ -1,8 +1,8 @@
 geonode==2.4.1
 pygdal==1.10.1
 gunicorn==19.3.0
-django-celery==3.1.17
-celery<4.0.0
+django-celery==3.1.16
+celery==3.1.17
 djangorestframework
 markdown
 django-filter
