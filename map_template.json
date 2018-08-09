@@ -1,0 +1,219 @@
+[
+{
+  "fields": {
+    "rating": 0,
+    "constraints_other": null,
+    "bbox_x0": "1.9062530558",
+    "csw_mdsource": "local",
+    "csw_schema": "http://www.isotc211.org/2005/gmd",
+    "csw_typename": "gmd:MD_Metadata",
+    "date_type": "publication",
+    "srid": "EPSG:4326",
+    "bbox_x1": "7.3994609815",
+    "metadata_xml": "<gmd:MD_Metadata xmlns:gmd=\"http://www.isotc211.org/2005/gmd\"/>",
+    "edition": null,
+    "featured": false,
+    "owner": 1,
+    "detail_url": "/maps/4",
+    "category": null,
+    "spatial_representation_type": null,
+    "uuid": "276186a6-9b10-11e8-982f-0242ac130006",
+    "title": "map_template",
+    "regions": [],
+    "thumbnail_url": "http://localhost/uploaded/thumbs/map-276186a6-9b10-11e8-982f-0242ac130006-thumb.png",
+    "share_count": 0,
+    "abstract": "",
+    "bbox_y0": "48.3533026291",
+    "bbox_y1": "52.1983426140",
+    "popular_count": 0,
+    "csw_insert_date": "2018-08-08T08:37:55.128",
+    "purpose": null,
+    "csw_wkt_geometry": "POLYGON((-180 -90,-180 90,180 90,180 -90,-180 -90))",
+    "date": "2018-08-08T08:37:11.436",
+    "polymorphic_ctype": 68,
+    "temporal_extent_end": null,
+    "license": null,
+    "language": "eng",
+    "restriction_code_type": null,
+    "maintenance_frequency": null,
+    "csw_anytext": null,
+    "supplemental_information": "Auncune information fournie",
+    "tkeywords": [],
+    "metadata_uploaded_preserve": false,
+    "csw_type": "dataset",
+    "metadata_uploaded": false,
+    "data_quality_statement": null,
+    "temporal_extent_start": null,
+    "is_published": true
+  },
+  "model": "base.resourcebase",
+  "pk": 4
+},
+{
+  "fields": {
+    "role": "pointOfContact",
+    "contact": 1,
+    "resource": 4
+  },
+  "model": "base.contactrole",
+  "pk": 7
+},
+{
+  "fields": {
+    "role": "author",
+    "contact": 1,
+    "resource": 4
+  },
+  "model": "base.contactrole",
+  "pk": 8
+},
+{
+  "fields": {
+    "resource": 4,
+    "name": "Remote Thumbnail",
+    "extension": "png",
+    "url": "http://localhost/geoserver/wms/reflect?layers=&width=200&height=150&TIME=-99999999999-01-01T00:00:00.0Z/99999999999-01-01T00:00:00.0Z&format=image/png8",
+    "mime": "image/png",
+    "link_type": "image"
+  },
+  "model": "base.link",
+  "pk": 38
+},
+{
+  "fields": {
+    "resource": 4,
+    "name": "Remote Thumbnail",
+    "extension": "png",
+    "url": "http://localhost/geoserver/wms/reflect?layers=&format=image/png8&height=150&width=200&bbox=-175.782653624,-123.047857537,175.782653624,123.047857537&TIME=-99999999999-01-01T00:00:00.0Z/99999999999-01-01T00:00:00.0Z",
+    "mime": "image/png",
+    "link_type": "image"
+  },
+  "model": "base.link",
+  "pk": 39
+},
+{
+  "fields": {
+    "resource": 4,
+    "name": "Thumbnail",
+    "extension": "png",
+    "url": "http://localhost/uploaded/thumbs/map-276186a6-9b10-11e8-982f-0242ac130006-thumb.png",
+    "mime": "image/png",
+    "link_type": "image"
+  },
+  "model": "base.link",
+  "pk": 40
+},
+{
+  "fields": {
+    "resource": 4,
+    "name": "Remote Thumbnail",
+    "extension": "png",
+    "url": "http://localhost/geoserver/wms/reflect?layers=&format=image/png8&height=150&width=200&bbox=1.90625305578,48.3533026291,7.39946098152,52.198342614&TIME=-99999999999-01-01T00:00:00.0Z/99999999999-01-01T00:00:00.0Z",
+    "mime": "image/png",
+    "link_type": "image"
+  },
+  "model": "base.link",
+  "pk": 41
+},
+{
+  "fields": {
+    "projection": "EPSG:900913",
+    "urlsuffix": "",
+    "title_en": "map_template",
+    "zoom": 8,
+    "featuredurl": "",
+    "data_quality_statement_en": null,
+    "regions": [],
+    "center_x": 517953.67405,
+    "center_y": 6494181.196636,
+    "last_modified": "2018-08-08T08:37:11.440",
+    "supplemental_information_en": "Auncune information fournie",
+    "abstract_en": "",
+    "tkeywords": [],
+    "purpose_en": null,
+    "constraints_other_en": null
+  },
+  "model": "maps.map",
+  "pk": 4
+},
+{
+  "fields": {
+    "opacity": 1.0,
+    "map": 4,
+    "group": "background",
+    "name": "No background",
+    "format": null,
+    "visibility": false,
+    "source_params": "{\"id\": \"1\", \"ptype\": \"gxp_olsource\"}",
+    "layer_params": "{\"selected\": false, \"title\": \"No background\", \"args\": [\"No background\"], \"type\": \"OpenLayers.Layer\"}",
+    "ows_url": null,
+    "stack_order": 0,
+    "styles": null,
+    "fixed": true,
+    "local": false,
+    "transparent": false
+  },
+  "model": "maps.maplayer",
+  "pk": 21
+},
+{
+  "fields": {
+    "opacity": 1.0,
+    "map": 4,
+    "group": "background",
+    "name": "OpenStreetMap",
+    "format": null,
+    "visibility": true,
+    "source_params": "{\"id\": \"1\", \"ptype\": \"gxp_olsource\"}",
+    "layer_params": "{\"selected\": false, \"title\": \"OpenStreetMap\", \"args\": [\"OpenStreetMap\"], \"type\": \"OpenLayers.Layer.OSM\"}",
+    "ows_url": null,
+    "stack_order": 1,
+    "styles": null,
+    "fixed": true,
+    "local": false,
+    "transparent": false
+  },
+  "model": "maps.maplayer",
+  "pk": 22
+},
+{
+  "fields": {
+    "opacity": 1.0,
+    "map": 4,
+    "group": null,
+    "name": "0",
+    "format": "image/png",
+    "visibility": true,
+    "source_params": "{\"id\": \"gxp-source-345\", \"baseParams\": {\"VERSION\": \"1.3.0\", \"REQUEST\": \"GetCapabilities\", \"TILED\": true, \"SERVICE\": \"WMS\"}, \"ptype\": \"gxp_wmscsource\", \"title\": \"SOL\"}",
+    "layer_params": "{\"selected\": true, \"attribution\": null, \"title\": \"Sch\\u00e9ma d'Orientation Local (CoDT - SOL)\", \"cached\": true, \"maxscale\": \"236.2351190000000\", \"capability\": {\"abstract\": \"Cette s\\u00e9rie de couches de donn\\u00e9es compile les informations spatiales constitutives des Sch\\u00e9mas d'Orientation locaux (SOL) au sens du CoDT.\\n\\nLe Code du D\\u00e9veloppement Territorial (CoDT) est entr\\u00e9 en vigueur le 1er juin 2017 et a modifi\\u00e9 la terminologie et la valeur des outils d'am\\u00e9nagement du territoire en Wallonie. Dans sa logique d'urbanisme de projet, le CoDT met en place les sch\\u00e9mas, qui sont des balises dans lesquelles la politique d\\u2019am\\u00e9nagement du territoire est men\\u00e9e en Wallonie. Il y a 4 types de sch\\u00e9mas qui portent sur des \\u00e9chelles diff\\u00e9rentes.\\n\\nDans ce cadre, le sch\\u00e9ma d\\u2019orientation local (SOL - Art. D.II.11 et ss du CoDT) est un des deux sch\\u00e9mas communaux. Il est \\u00e9tabli \\u00e0 l\\u2019initiative du conseil communal sur une partie du territoire de la commune et y d\\u00e9termine les objectifs d\\u2019am\\u00e9nagement du territoire et d\\u2019urbanisme. Outre ces objectifs, le SOL contient la carte d\\u2019orientation, et les indications relatives \\u00e0 l\\u2019implantation et \\u00e0 la hauteur des constructions et des ouvrages, aux voiries et aux espaces publics, ainsi qu\\u2019\\u00e0 l\\u2019int\\u00e9gration des \\u00e9quipements techniques, en cas de dispense de permis d\\u2019urbanisation lors de la division d\\u2019un bien en lots. \\n\\nLe SOL se substitue au Rapport Urbanistique et Environnemental (RUE) et au Plan Communal d\\u2019Am\\u00e9nagement (PCA) d\\u00e9finis dans le CWATUP. On retrouve \\u00e9galement les Plans Directeurs approuv\\u00e9s par le Gouvernement ou les Sch\\u00e9mas Directeurs adopt\\u00e9s par le conseil communal, pour autant que l'approbation par le Gouvernement ou la commune soit intervenue avant le 1er mars 1998.\\n\\nLe SOL a une valeur indicative alors que les PCA avaient auparavant une valeur l\\u00e9gale. Il s'applique au Guide Communal d'Urbanisme (GCU) ainsi qu'\\u00e0 toute d\\u00e9cision prise en mati\\u00e8re de permis, certificats, d\\u00e9clarations et de politique fonci\\u00e8re.\\n\\nUne commune peut se doter d'un ou plusieurs SOL (CoDT - Art. D.II.9).\\n\\nAu niveau cartographique, la s\\u00e9rie de couches de donn\\u00e9es des SOL regroupe les p\\u00e9rim\\u00e8tres identifi\\u00e9s dans les (ex)PCA, les (ex) Plans et Sch\\u00e9mas Directeurs et les (ex)RUE au sens du CWATUP.\\n\\nPour plus d'informations sur cette donn\\u00e9e, consultez http://geoportail.wallonie.be/catalogue/679a02c9-7c2c-4132-ab49-32147bd01ce9.html\", \"nestedLayers\": [], \"cascaded\": 0, \"fixedHeight\": 0, \"prefix\": \"0\", \"keywords\": [], \"noSubsets\": false, \"dimensions\": {}, \"opaque\": false, \"infoFormats\": [\"application/vnd.esri.wms_raw_xml\", \"application/vnd.esri.wms_featureinfo_xml\", \"application/vnd.ogc.wms_xml\", \"application/geojson\", \"text/xml\", \"text/html\", \"text/plain\"], \"styles\": [{\"legend\": {\"href\": \"http://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/SOL/MapServer/WmsServer?request=GetLegendGraphic%26version=1.3.0%26format=image/png%26layer=0\", \"width\": \"16\", \"format\": \"image/png\", \"height\": \"16\"}, \"name\": \"default\", \"title\": \"0\"}], \"authorityURLs\": {}, \"bbox\": {\"EPSG:31370\": {\"srs\": \"EPSG:31370\", \"bbox\": [30000, 15000, 310000, 200000]}, \"EPSG:4326\": {\"srs\": \"EPSG:4326\", \"bbox\": [49.426123, 2.654318, 51.110623, 6.651396]}, \"EPSG:4258\": {\"srs\": \"EPSG:4258\", \"bbox\": [49.426123, 2.654318, 51.110623, 6.651396]}, \"CRS:84\": {\"srs\": \"CRS:84\", \"bbox\": [2.654318, 49.426123, 6.651396, 51.110623]}, \"EPSG:3857\": {\"srs\": \"EPSG:3857\", \"bbox\": [295477.314255, 6347477.319654, 740430.033845, 6640885.073618]}}, \"fixedWidth\": 0, \"metadataURLs\": [], \"name\": \"0\", \"identifiers\": {}, \"maxScale\": \"236.2351190000000\", \"srs\": {\"EPSG:3857\": true}, \"formats\": [\"image/bmp\", \"image/jpeg\", \"image/tiff\", \"image/png\", \"image/png8\", \"image/png24\", \"image/png32\", \"image/gif\", \"image/svg+xml\"], \"title\": \"Sch\\u00e9ma d'Orientation Local (CoDT - SOL)\", \"minScale\": \"28348214.28571400\", \"queryable\": true, \"llbbox\": [\"2.654318\", \"49.426123\", \"6.651396\", \"51.110623\"]}, \"tiled\": true, \"minscale\": \"28348214.28571400\"}",
+    "ows_url": "http://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/SOL/MapServer/WMSServer",
+    "stack_order": 4,
+    "styles": "",
+    "fixed": false,
+    "local": false,
+    "transparent": true
+  },
+  "model": "maps.maplayer",
+  "pk": 25
+},
+{
+  "fields": {
+    "map": 4,
+    "created_dttm": "2018-08-08T08:37:11.868",
+    "config": "{\"map\": {\"layers\": [{\"opacity\": 1, \"args\": [\"No background\"], \"group\": \"background\", \"name\": \"No background\", \"title\": \"No background\", \"selected\": false, \"visibility\": false, \"source\": \"1\", \"fixed\": true, \"type\": \"OpenLayers.Layer\"}, {\"opacity\": 1, \"args\": [\"OpenStreetMap\"], \"group\": \"background\", \"name\": \"OpenStreetMap\", \"title\": \"OpenStreetMap\", \"selected\": false, \"visibility\": true, \"source\": \"1\", \"fixed\": true, \"type\": \"OpenLayers.Layer.OSM\"}, {\"opacity\": 1, \"group\": \"background\", \"name\": \"osm\", \"title\": \"MapQuest OpenStreetMap\", \"selected\": false, \"visibility\": false, \"source\": \"2\", \"fixed\": true}, {\"opacity\": 1, \"group\": \"background\", \"name\": \"naip\", \"title\": \"MapQuest Imagery\", \"selected\": false, \"visibility\": false, \"source\": \"2\", \"fixed\": true}], \"projection\": \"EPSG:900913\", \"center\": [0, 0], \"zoom\": 2, \"units\": \"m\", \"maxResolution\": 156543.03390625, \"maxExtent\": [-20037508.34, -20037508.34, 20037508.34, 20037508.34]}, \"about\": {\"abstract\": \"\", \"title\": \"map_template\"}, \"aboutUrl\": \"../about\", \"viewerTools\": [{\"hidden\": true, \"checked\": true, \"actions\": [\"layerchooser\"]}, {\"hidden\": true, \"checked\": true, \"actions\": [\"-\"]}, {\"leaf\": true, \"customParams\": {\"outputFilename\": \"GeoExplorer-print\"}, \"text\": \"Imprimer la carte\", \"ptype\": \"gxp_print\", \"printService\": \"http://localhost/geoserver/pdf/\", \"checked\": true, \"iconCls\": \"gxp-icon-print\"}, {\"leaf\": true, \"text\": \"Faire glisser la carte\", \"ptype\": \"gxp_navigation\", \"toggleGroup\": \"navigation\", \"checked\": true, \"iconCls\": \"gxp-icon-pan\"}, {\"leaf\": true, \"format\": \"grid\", \"text\": \"Get Feature Info\", \"ptype\": \"gxp_wmsgetfeatureinfo\", \"toggleGroup\": \"interaction\", \"checked\": true, \"iconCls\": \"gxp-icon-getfeatureinfo\"}, {\"leaf\": true, \"text\": \"Mesurer\", \"ptype\": \"gxp_measure\", \"toggleGroup\": \"interaction\", \"controlOptions\": {\"immediate\": true}, \"checked\": true, \"iconCls\": \"gxp-icon-measure-length\"}, {\"text\": \"Zoomer / D\\u00e9zoomer\", \"iconCls\": \"gxp-icon-zoom-in\", \"leaf\": true, \"ptype\": \"gxp_zoom\", \"checked\": true}, {\"text\": \"Retourner \\u00e0 la position pr\\u00e9c\\u00e9dente / Aller \\u00e0 la position suivante\", \"iconCls\": \"gxp-icon-zoom-previous\", \"leaf\": true, \"ptype\": \"gxp_navigationhistory\", \"checked\": true}, {\"text\": \"Zoomer sur la carte max\", \"iconCls\": \"gxp-icon-zoomtoextent\", \"leaf\": true, \"ptype\": \"gxp_zoomtoextent\", \"checked\": true}, {\"text\": \"Afficher la l\\u00e9gende\", \"iconCls\": \"gxp-icon-legend\", \"leaf\": true, \"ptype\": \"gxp_legend\", \"checked\": true}, {\"text\": \"Passer \\u00e0 la visionneuse 3D\", \"iconCls\": \"gxp-icon-googleearth\", \"leaf\": true, \"ptype\": \"gxp_googleearth\", \"checked\": true}, {\"hidden\": true, \"checked\": true, \"actions\": [\"->\"]}, {\"hidden\": true, \"checked\": true, \"actions\": [\"aboutbutton\"]}], \"listeners\": {}, \"sources\": {\"search\": {\"url\": \"/api/layers/\", \"restUrl\": \"/gs/rest\", \"id\": \"search\", \"ptype\": \"gxp_geonodeapicataloguesource\", \"projection\": \"EPSG:900913\"}, \"1\": {\"id\": \"1\", \"ptype\": \"gxp_olsource\", \"projection\": \"EPSG:900913\"}, \"0\": {\"projection\": \"EPSG:900913\", \"title\": \"Local Geoserver\", \"url\": \"http://localhost/geoserver/wms?access_token=a6a1ac129a4211e8b68c0242ac130005\", \"baseParams\": {\"VERSION\": \"1.3.0\", \"REQUEST\": \"GetCapabilities\", \"TILED\": true, \"SERVICE\": \"WMS\"}, \"ptype\": \"gxp_wmscsource\", \"restUrl\": \"/gs/rest\", \"id\": \"0\"}, \"3\": {\"id\": \"3\", \"ptype\": \"gxp_mapboxsource\", \"projection\": \"EPSG:900913\"}, \"2\": {\"id\": \"2\", \"ptype\": \"gxp_mapquestsource\", \"projection\": \"EPSG:900913\"}, \"4\": {\"projection\": \"EPSG:900913\", \"title\": \"Local Geoserver\", \"url\": \"http://localhost/geoserver/wms\", \"baseParams\": {\"VERSION\": \"1.3.0\", \"REQUEST\": \"GetCapabilities\", \"TILED\": true, \"SERVICE\": \"WMS\"}, \"ptype\": \"gxp_wmscsource\", \"restUrl\": \"/gs/rest\", \"id\": \"4\"}}, \"printService\": \"http://localhost/geoserver/pdf/\", \"proxy\": \"/proxy/?url=\", \"defaultSourceType\": \"gxp_wmscsource\", \"ajaxLoginUrl\": \"/account/ajax_login\", \"id\": 0}",
+    "user": 1
+  },
+  "model": "maps.mapsnapshot",
+  "pk": 4
+},
+{
+  "fields": {
+    "map": 4,
+    "created_dttm": "2018-08-08T08:37:55.190",
+    "config": "{\"map\": {\"layers\": [{\"opacity\": 1, \"args\": [\"No background\"], \"group\": \"background\", \"name\": \"No background\", \"title\": \"No background\", \"selected\": false, \"visibility\": false, \"source\": \"1\", \"fixed\": true, \"type\": \"OpenLayers.Layer\"}, {\"opacity\": 1, \"args\": [\"OpenStreetMap\"], \"group\": \"background\", \"name\": \"OpenStreetMap\", \"title\": \"OpenStreetMap\", \"selected\": false, \"visibility\": true, \"source\": \"1\", \"fixed\": true, \"type\": \"OpenLayers.Layer.OSM\"}, {\"opacity\": 1, \"group\": \"background\", \"name\": \"osm\", \"title\": \"MapQuest OpenStreetMap\", \"selected\": false, \"visibility\": false, \"source\": \"2\", \"fixed\": true}, {\"opacity\": 1, \"group\": \"background\", \"name\": \"naip\", \"title\": \"MapQuest Imagery\", \"selected\": false, \"visibility\": false, \"source\": \"2\", \"fixed\": true}, {\"opacity\": 1, \"styles\": \"\", \"attribution\": null, \"name\": \"0\", \"title\": \"Sch\\u00e9ma d'Orientation Local (CoDT - SOL)\", \"cached\": true, \"format\": \"image/png\", \"selected\": true, \"maxscale\": \"236.2351190000000\", \"visibility\": true, \"capability\": {\"abstract\": \"Cette s\\u00e9rie de couches de donn\\u00e9es compile les informations spatiales constitutives des Sch\\u00e9mas d'Orientation locaux (SOL) au sens du CoDT.\\n\\nLe Code du D\\u00e9veloppement Territorial (CoDT) est entr\\u00e9 en vigueur le 1er juin 2017 et a modifi\\u00e9 la terminologie et la valeur des outils d'am\\u00e9nagement du territoire en Wallonie. Dans sa logique d'urbanisme de projet, le CoDT met en place les sch\\u00e9mas, qui sont des balises dans lesquelles la politique d\\u2019am\\u00e9nagement du territoire est men\\u00e9e en Wallonie. Il y a 4 types de sch\\u00e9mas qui portent sur des \\u00e9chelles diff\\u00e9rentes.\\n\\nDans ce cadre, le sch\\u00e9ma d\\u2019orientation local (SOL - Art. D.II.11 et ss du CoDT) est un des deux sch\\u00e9mas communaux. Il est \\u00e9tabli \\u00e0 l\\u2019initiative du conseil communal sur une partie du territoire de la commune et y d\\u00e9termine les objectifs d\\u2019am\\u00e9nagement du territoire et d\\u2019urbanisme. Outre ces objectifs, le SOL contient la carte d\\u2019orientation, et les indications relatives \\u00e0 l\\u2019implantation et \\u00e0 la hauteur des constructions et des ouvrages, aux voiries et aux espaces publics, ainsi qu\\u2019\\u00e0 l\\u2019int\\u00e9gration des \\u00e9quipements techniques, en cas de dispense de permis d\\u2019urbanisation lors de la division d\\u2019un bien en lots. \\n\\nLe SOL se substitue au Rapport Urbanistique et Environnemental (RUE) et au Plan Communal d\\u2019Am\\u00e9nagement (PCA) d\\u00e9finis dans le CWATUP. On retrouve \\u00e9galement les Plans Directeurs approuv\\u00e9s par le Gouvernement ou les Sch\\u00e9mas Directeurs adopt\\u00e9s par le conseil communal, pour autant que l'approbation par le Gouvernement ou la commune soit intervenue avant le 1er mars 1998.\\n\\nLe SOL a une valeur indicative alors que les PCA avaient auparavant une valeur l\\u00e9gale. Il s'applique au Guide Communal d'Urbanisme (GCU) ainsi qu'\\u00e0 toute d\\u00e9cision prise en mati\\u00e8re de permis, certificats, d\\u00e9clarations et de politique fonci\\u00e8re.\\n\\nUne commune peut se doter d'un ou plusieurs SOL (CoDT - Art. D.II.9).\\n\\nAu niveau cartographique, la s\\u00e9rie de couches de donn\\u00e9es des SOL regroupe les p\\u00e9rim\\u00e8tres identifi\\u00e9s dans les (ex)PCA, les (ex) Plans et Sch\\u00e9mas Directeurs et les (ex)RUE au sens du CWATUP.\\n\\nPour plus d'informations sur cette donn\\u00e9e, consultez http://geoportail.wallonie.be/catalogue/679a02c9-7c2c-4132-ab49-32147bd01ce9.html\", \"nestedLayers\": [], \"cascaded\": 0, \"fixedHeight\": 0, \"prefix\": \"0\", \"keywords\": [], \"noSubsets\": false, \"dimensions\": {}, \"opaque\": false, \"infoFormats\": [\"application/vnd.esri.wms_raw_xml\", \"application/vnd.esri.wms_featureinfo_xml\", \"application/vnd.ogc.wms_xml\", \"application/geojson\", \"text/xml\", \"text/html\", \"text/plain\"], \"styles\": [{\"legend\": {\"href\": \"http://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/SOL/MapServer/WmsServer?request=GetLegendGraphic%26version=1.3.0%26format=image/png%26layer=0\", \"width\": \"16\", \"format\": \"image/png\", \"height\": \"16\"}, \"name\": \"default\", \"title\": \"0\"}], \"authorityURLs\": {}, \"bbox\": {\"EPSG:31370\": {\"srs\": \"EPSG:31370\", \"bbox\": [30000, 15000, 310000, 200000]}, \"EPSG:4326\": {\"srs\": \"EPSG:4326\", \"bbox\": [49.426123, 2.654318, 51.110623, 6.651396]}, \"EPSG:4258\": {\"srs\": \"EPSG:4258\", \"bbox\": [49.426123, 2.654318, 51.110623, 6.651396]}, \"CRS:84\": {\"srs\": \"CRS:84\", \"bbox\": [2.654318, 49.426123, 6.651396, 51.110623]}, \"EPSG:3857\": {\"srs\": \"EPSG:3857\", \"bbox\": [295477.314255, 6347477.319654, 740430.033845, 6640885.073618]}}, \"fixedWidth\": 0, \"metadataURLs\": [], \"name\": \"0\", \"identifiers\": {}, \"maxScale\": \"236.2351190000000\", \"srs\": {\"EPSG:3857\": true}, \"formats\": [\"image/bmp\", \"image/jpeg\", \"image/tiff\", \"image/png\", \"image/png8\", \"image/png24\", \"image/png32\", \"image/gif\", \"image/svg+xml\"], \"title\": \"Sch\\u00e9ma d'Orientation Local (CoDT - SOL)\", \"minScale\": \"28348214.28571400\", \"queryable\": true, \"llbbox\": [\"2.654318\", \"49.426123\", \"6.651396\", \"51.110623\"]}, \"source\": \"gxp-source-345\", \"tiled\": true, \"minscale\": \"28348214.28571400\", \"transparent\": true}], \"projection\": \"EPSG:900913\", \"center\": [517953.67405, 6494181.196636], \"zoom\": 8, \"units\": \"m\", \"maxResolution\": 156543.03390625, \"maxExtent\": [-20037508.34, -20037508.34, 20037508.34, 20037508.34]}, \"about\": {\"abstract\": \"\", \"title\": \"map_template\"}, \"aboutUrl\": \"../about\", \"viewerTools\": [{\"hidden\": true, \"checked\": true, \"actions\": [\"layerchooser\"]}, {\"hidden\": true, \"checked\": true, \"actions\": [\"-\"]}, {\"leaf\": true, \"customParams\": {\"outputFilename\": \"GeoExplorer-print\"}, \"text\": \"Imprimer la carte\", \"ptype\": \"gxp_print\", \"printService\": \"http://localhost/geoserver/pdf/\", \"checked\": true, \"iconCls\": \"gxp-icon-print\"}, {\"leaf\": true, \"text\": \"Faire glisser la carte\", \"ptype\": \"gxp_navigation\", \"toggleGroup\": \"navigation\", \"checked\": true, \"iconCls\": \"gxp-icon-pan\"}, {\"leaf\": true, \"format\": \"grid\", \"text\": \"Get Feature Info\", \"ptype\": \"gxp_wmsgetfeatureinfo\", \"toggleGroup\": \"interaction\", \"checked\": true, \"iconCls\": \"gxp-icon-getfeatureinfo\"}, {\"leaf\": true, \"text\": \"Mesurer\", \"ptype\": \"gxp_measure\", \"toggleGroup\": \"interaction\", \"controlOptions\": {\"immediate\": true}, \"checked\": true, \"iconCls\": \"gxp-icon-measure-length\"}, {\"text\": \"Zoomer / D\\u00e9zoomer\", \"iconCls\": \"gxp-icon-zoom-in\", \"leaf\": true, \"ptype\": \"gxp_zoom\", \"checked\": true}, {\"text\": \"Retourner \\u00e0 la position pr\\u00e9c\\u00e9dente / Aller \\u00e0 la position suivante\", \"iconCls\": \"gxp-icon-zoom-previous\", \"leaf\": true, \"ptype\": \"gxp_navigationhistory\", \"checked\": true}, {\"text\": \"Zoomer sur la carte max\", \"iconCls\": \"gxp-icon-zoomtoextent\", \"leaf\": true, \"ptype\": \"gxp_zoomtoextent\", \"checked\": true}, {\"text\": \"Afficher la l\\u00e9gende\", \"iconCls\": \"gxp-icon-legend\", \"leaf\": true, \"ptype\": \"gxp_legend\", \"checked\": true}, {\"text\": \"Passer \\u00e0 la visionneuse 3D\", \"iconCls\": \"gxp-icon-googleearth\", \"leaf\": true, \"ptype\": \"gxp_googleearth\", \"checked\": true}, {\"hidden\": true, \"checked\": true, \"actions\": [\"->\"]}, {\"hidden\": true, \"checked\": true, \"actions\": [\"aboutbutton\"]}], \"listeners\": {}, \"sources\": {\"search\": {\"url\": \"/api/layers/\", \"restUrl\": \"/gs/rest\", \"id\": \"search\", \"ptype\": \"gxp_geonodeapicataloguesource\", \"projection\": \"EPSG:900913\"}, \"1\": {\"id\": \"1\", \"ptype\": \"gxp_olsource\", \"projection\": \"EPSG:900913\"}, \"0\": {\"projection\": \"EPSG:900913\", \"title\": \"Local Geoserver\", \"url\": \"http://localhost/geoserver/wms?access_token=a6a1ac129a4211e8b68c0242ac130005\", \"baseParams\": {\"VERSION\": \"1.3.0\", \"REQUEST\": \"GetCapabilities\", \"TILED\": true, \"SERVICE\": \"WMS\"}, \"ptype\": \"gxp_wmscsource\", \"restUrl\": \"/gs/rest\", \"id\": \"0\"}, \"3\": {\"id\": \"3\", \"ptype\": \"gxp_mapboxsource\", \"projection\": \"EPSG:900913\"}, \"2\": {\"id\": \"2\", \"ptype\": \"gxp_mapquestsource\", \"projection\": \"EPSG:900913\"}, \"4\": {\"projection\": \"EPSG:900913\", \"title\": \"Local Geoserver\", \"url\": \"http://localhost/geoserver/wms\", \"baseParams\": {\"VERSION\": \"1.3.0\", \"REQUEST\": \"GetCapabilities\", \"TILED\": true, \"SERVICE\": \"WMS\"}, \"ptype\": \"gxp_wmscsource\", \"restUrl\": \"/gs/rest\", \"id\": \"4\"}, \"gxp-source-345\": {\"url\": \"http://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/SOL/MapServer/WMSServer\", \"title\": \"SOL\", \"baseParams\": {\"VERSION\": \"1.3.0\", \"REQUEST\": \"GetCapabilities\", \"TILED\": true, \"SERVICE\": \"WMS\"}, \"ptype\": \"gxp_wmscsource\", \"id\": \"gxp-source-345\"}}, \"printService\": \"http://localhost/geoserver/pdf/\", \"proxy\": \"/proxy/?url=\", \"defaultSourceType\": \"gxp_wmscsource\", \"ajaxLoginUrl\": \"/account/ajax_login\", \"id\": 0}",
+    "user": 1
+  },
+  "model": "maps.mapsnapshot",
+  "pk": 5
+}
+]

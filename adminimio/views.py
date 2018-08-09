@@ -13,7 +13,8 @@ from django.shortcuts import render_to_response
 from django.conf import settings
 from django.template import RequestContext, loader
 from django.utils.translation import ugettext as _
-from django.utils import simplejson as json
+#from django.utils import simplejson as json
+import json
 from django.utils.html import escape
 from django.template.defaultfilters import slugify
 from django.forms.models import inlineformset_factory
@@ -102,7 +103,7 @@ def admin_view_crea_group_with_manager(request, template='adminimio/imio_managem
             form_token = form.cleaned_data['csrf_token']
             user_name = form.cleaned_data['in_user']
             comm_name = form.cleaned_data['in_comm']
-            
+
             try:
                result = Im.crea_group_with_manager_and_user(user_name,comm_name)
             except Exception as e:

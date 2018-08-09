@@ -3,31 +3,25 @@
 {% load base_tags %}
 {% load staticfiles %}
 {% load url from future %}
-<img src="static/geonode/img/imio-logo-large.png" alt="IMIO" title="IMIO" height="78" width="639">
-  {% block hero %}
-  <div class="hero-unit">
-    <h1>{% trans "Welcome" %}</h1>
-    <div class="hero-unit-content">
-		<div class="intro">
-				<img src = '/static/img/imio-logo-large.png'>
-			<p>
-				{% blocktrans %}
-				IMIO-Géonode est un plateforme d'hébergement et de gestion des données cartographiques.
-				{% endblocktrans %}
-			</p>
-			<span>
-				Pour davantage d'informations à propos d'IMIO, l'intercommunale de Mutualisation Informatique et Organisationnelle merci de visiter
-				<a href="http://www.imio.be/">notre site web</a>.
-			</span>
-		</div>
-      <div class="btns">
-        <a class="btn btn-large" href="{% url "layer_browse" %}">
-          {% trans "Explore Layers" %}
-        </a>
-        <a class="btn btn-large" href="{% url "maps_browse" %}">
-          {% trans "Explore Maps" %}
-        </a>
-      </div>
-    </div>
+
+
+{% block title %} {% trans "Welcome!" %} - {{ block.super }} {% endblock %}
+{% block hero %}
+<div class="jumbotron">
+  <div class="container">
+    <p><img src="static/img/imio-logo-large.png" alt="IMIO" title="IMIO" height="78" width="639"></p>
+    <p>
+      {% blocktrans %}
+      IMIO-Geonode est un plateforme d'hébergement et de gestion des données cartographiques.
+      {% endblocktrans %}
+    </p>
+    <span>
+      Pour davantage d'informations à propos d'IMIO, l'intercommunale de Mutualisation Informatique et Organisationnelle merci de visiter
+      <a href="http://www.imio.be/">notre site web</a>.
+    </span>
   </div>
-  {% endblock %}
+</div>
+{% include "_status_message.html" %}
+{% include "_announcements.html" %}
+{% include "_messages.html" %}
+{% endblock %}

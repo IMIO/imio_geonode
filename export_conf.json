@@ -8,7 +8,7 @@
 		"description": "SPW AGRICULTURE/AMGT_FONC "
 	}
 }, {
-	"pk": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer",
+	"pk": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS/MapServer",
 	"model": "imio_survey.surveygisserver",
 	"fields": {
 		"username": "",
@@ -24,6 +24,15 @@
 		"password": "",
 		"servertype": "ARCREST",
 		"description": "CADMAP SPW"
+	}
+}, {
+	"pk": "http://geoservices.wallonie.be/arcgis/rest/services/EAU/ALEA_2016/MapServer",
+	"model": "imio_survey.surveygisserver",
+	"fields": {
+		"username": "",
+		"password": "",
+		"servertype": "ARCREST",
+		"description": "ALEA INONDATION"
 	}
 }, {
 	"pk": "http://webgisdgo4.spw.wallonie.be/ArcGIS/rest/services/DGO4/ZPU/MapServer",
@@ -47,10 +56,10 @@
 	"pk": 3,
 	"model": "imio_survey.surveylayer",
 	"fields": {
-		"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS_5000/MapServer",
+		"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS/MapServer",
 		"geometry_field_name": "GEOM",
 		"description": "SPW PDS Affectation",
-		"layer_name": "19"
+		"layer_name": "22"
 	}
 }, {
 	"pk": 4,
@@ -68,6 +77,15 @@
 		"gis_server": "http://webgisdgo4.spw.wallonie.be/ArcGIS/rest/services/DGO4/ZPU/MapServer",
 		"geometry_field_name": "GEOM",
 		"description": "SPW DGO4 Zones Protegees en matiere d Urbanisme",
+		"layer_name": "0"
+	}
+}, {
+	"pk": 6,
+	"model": "imio_survey.surveylayer",
+	"fields": {
+		"gis_server": "http://geoservices.wallonie.be/arcgis/rest/services/EAU/ALEA_2016/MapServer",
+		"geometry_field_name": "GEOM",
+		"description": "ALEA INDONDATION",
 		"layer_name": "0"
 	}
 }, {
@@ -105,6 +123,14 @@
 	"model": "imio_survey.surveytypelayer",
 	"fields": {
 		"survey_layer": 5,
+		"buffer": "0.0",
+		"survey_type": "TESTWFS"
+	}
+}, {
+	"pk": 38,
+	"model": "imio_survey.surveytypelayer",
+	"fields": {
+		"survey_layer": 6,
 		"buffer": "0.0",
 		"survey_type": "TESTWFS"
 	}

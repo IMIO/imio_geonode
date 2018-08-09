@@ -4,7 +4,8 @@ from imio_survey.queriers import IQuerier
 from django.contrib.gis.geos import fromstr
 from arcrest.server import MapService
 from arcrest.geometry import Envelope, Polygon, Point, Polyline, Multipoint, fromGeoJson
-from django.utils import simplejson
+#from django.utils import simplejson
+import json as simplejson
 import requests
 from requests.exceptions import ConnectionError
 import json

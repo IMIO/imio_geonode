@@ -62,10 +62,11 @@ geonode:
     net: imiogeonode
 
 
-#nginx:
-#    build: Dockerfiles/nginx/
-#    ports:
-#        - 80:80
+nginx:
+    build: Dockerfiles/nginx/
+    net: imiogeonode
+    ports:
+        - 80:80
 #    links:
 #        - geonode
 #        - geoserver

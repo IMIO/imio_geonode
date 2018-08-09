@@ -39,12 +39,35 @@ STATICFILES_DIRS.append(
     os.path.join(LOCAL_ROOT, "static"),
 )
 
-
+TEMPLATES = [
+    {
+        'NAME': 'GeoNode Project Templates',
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(LOCAL_ROOT, "templates"),os.path.join(PROJECT_ROOT, "templates")],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.core.context_processors.debug',
+                'django.core.context_processors.i18n',
+                'django.core.context_processors.tz',
+                'django.core.context_processors.media',
+                'django.core.context_processors.static',
+                'django.core.context_processors.request',
+                'django.contrib.messages.context_processors.messages',
+                'account.context_processors.account',
+                'geonode.context_processors.resource_urls',
+                'geonode.geoserver.context_processors.geoserver_urls',
+            ],
+            'debug': DEBUG,
+        },
+    },
+]
 # Note that Django automatically includes the "templates" dir in all the
 # INSTALLED_APPS, se there is no need to add maps/templates or admin/templates
-TEMPLATE_DIRS = (
-    os.path.join(LOCAL_ROOT, "templates"),
-) + TEMPLATE_DIRS
+#TEMPLATE_DIRS = (
+#    os.path.join(LOCAL_ROOT, "templates"),
+#) + TEMPLATE_DIRS
 
 # Location of url mappings
 ROOT_URLCONF = 'imio_geonode.urls'
@@ -57,7 +80,7 @@ LOCALE_PATHS = (
 INSTALLED_APPS = (
     'adminimio',
     'imio_survey',
-    'djcelery',
+    #'djcelery', Removed because duplicate in geonode 2.6.x
 ) + INSTALLED_APPS
 
 REST_FRAMEWORK = {
