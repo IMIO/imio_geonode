@@ -595,6 +595,25 @@
     "local": false,
     "transparent": true
   }
+},
+{
+  "fields": {
+    "opacity": 1.0,
+    "map": 4,
+    "group": null,
+    "name": "28",
+    "format": "image/png",
+    "visibility": true,
+    "source_params": "{\"id\": \"gxp-source-398\", \"baseParams\": {\"VERSION\": \"1.3.0\", \"REQUEST\": \"GetCapabilities\", \"TILED\": true, \"SERVICE\": \"WMS\"}, \"ptype\": \"gxp_wmscsource\", \"title\": \"Projet Informatique de Cartographie Continue (PICC) - Service de visualisation\"}",
+    "layer_params": "{\"cql_filter\": null, \"attribution\": null, \"maxscale\": null, \"tiled\": true, \"minscale\": null, \"title\": \"ADRESSES\", \"cached\": true, \"selected\": true, \"capability\": {\"abstract\": \"Le PICC est la r\\u00e9f\\u00e9rence cartographique num\\u00e9rique en 3 dimensions de l'ensemble de la Wallonie.\\r\\n\\r\\nLe PICC reprend selon leurs coordonn\\u00e9es x, y, z, avec une pr\\u00e9cision inf\\u00e9rieure \\u00e0 25 cm, tous les \\u00e9l\\u00e9ments identifiables du paysage wallon :\\r\\n\\r\\n- B\\u00e2timents et ouvrages d'art ;\\r\\n- \\u00c9quipements (taques, poteaux, pyl\\u00f4nes, etc.);\\r\\n- R\\u00e9seau ferroviaire ;\\r\\n- R\\u00e9seau hydrographique ;\\r\\n- Occupation du sol (arbres isol\\u00e9s, lisi\\u00e8res, terrains de sport, etc.) ;\\r\\n- \\u00c9l\\u00e9ments du relief (talus, etc.) ;\\r\\n- Voiries (axes, bords, trottoirs, etc.).\\r\\n- Depuis d\\u00e9cembre 2014, le PICC couvre toute la Wallonie.\\r\\n\\r\\nPar rapport au \\\"PICC \\u2013 ancien mod\\u00e8le\\\", les principales diff\\u00e9rences sont les suivantes :\\r\\n\\r\\n- R\\u00e9partition des donn\\u00e9es en couches th\\u00e9matiques (Construction, \\u00c9quipement, Voirie\\u2026)\\r\\n- Cr\\u00e9ation de nouvelles donn\\u00e9es (Points Adresses)\\r\\n- Donn\\u00e9es attributaires plus riches (Description du Code nature, Technique de lev\\u00e9, par exemple)\\r\\n- Code des natures des objets sous la forme d\\u2019un acronyme, en lieu et place du Code PICC num\\u00e9rique\\r\\n- L\\u00e9gende retravaill\\u00e9e en profondeur\\r\\n\\r\\nIl existe une extension du PICC (version \\\"PICC-vTOPO\\\"), qui comprend des objets et des attributs suppl\\u00e9mentaires, issus de lev\\u00e9s topographiques. Cette version est r\\u00e9serv\\u00e9e aux \\\"Partenaires Waltopo\\\", li\\u00e9s au SPW par une convention, qui contribuent activement \\u00e0 la mise \\u00e0 jour du PICC. Le PICC fait ainsi l'objet d'une mise \\u00e0 jour r\\u00e9guli\\u00e8re.\\r\\n\\r\\nDes documents relatifs \\u00e0 la l\\u00e9gende et au mod\\u00e8le de donn\\u00e9es sont disponibles au sein de la Fiche descriptive.\", \"nestedLayers\": [], \"cascaded\": 0, \"fixedHeight\": 0, \"prefix\": \"28\", \"keywords\": [{\"vocabulary\": \"GEMET - INSPIRE themes\", \"value\": \"Adresses\"}, {\"vocabulary\": \"INFRASIG\", \"value\": \"Reporting INSPIRE\"}, {\"vocabulary\": null, \"value\": \"(50) Donn\\u00e9es de base\"}, {\"vocabulary\": null, \"value\": \"(5010) Donn\\u00e9es topographiques\"}, {\"vocabulary\": null, \"value\": \"PICC\"}], \"noSubsets\": false, \"dimensions\": {}, \"opaque\": false, \"infoFormats\": [\"application/vnd.esri.wms_raw_xml\", \"application/vnd.esri.wms_featureinfo_xml\", \"application/vnd.ogc.wms_xml\", \"application/geojson\", \"text/xml\", \"text/html\", \"text/plain\"], \"styles\": [{\"legend\": {\"href\": \"http://geoservices.wallonie.be/arcgis/services/TOPOGRAPHIE/PICC_VDIFF/MapServer/WmsServer?request=GetLegendGraphic%26version=1.3.0%26format=image/png%26layer=28\", \"width\": \"16\", \"format\": \"image/png\", \"height\": \"16\"}, \"name\": \"default\", \"title\": \"28\"}], \"authorityURLs\": {\"BE.WALLONIE\": \"http://geoportail.wallonie.be/ressources/id/\"}, \"bbox\": {\"EPSG:4326\": {\"srs\": \"EPSG:4326\", \"bbox\": [49.426123, 2.654318, 51.110623, 6.651396]}, \"EPSG:3857\": {\"srs\": \"EPSG:3857\", \"bbox\": [295477.314255, 6347477.319654, 740430.033845, 6640885.073618]}, \"EPSG:31370\": {\"srs\": \"EPSG:31370\", \"bbox\": [30000, 15000, 310000, 200000]}, \"CRS:84\": {\"srs\": \"CRS:84\", \"bbox\": [2.654318, 49.426123, 6.651396, 51.110623]}, \"EPSG:4258\": {\"srs\": \"EPSG:4258\", \"bbox\": [49.426123, 2.654318, 51.110623, 6.651396]}, \"EPSG:102100\": {\"srs\": \"EPSG:102100\", \"bbox\": [295477.314255, 6347477.319654, 740430.033845, 6640885.073618]}}, \"fixedWidth\": 0, \"metadataURLs\": [{\"href\": \"http://metawal.wallonie.be/geonetwork/srv/fre/csw?REQUEST=GetRecordById&SERVICE=CSW&version=2.0.2&elementSetName=full&outputSchema=http://www.isotc211.org/2005/gmd&id=b795de68-726c-4bdf-a62a-a42686aa5b6f\", \"type\": \"ISO19115:2003\", \"format\": \"text/xml\"}], \"name\": \"28\", \"identifiers\": {\"BE.WALLONIE\": \"b795de68-726c-4bdf-a62a-a42686aa5b6f\"}, \"srs\": {\"EPSG:3857\": true}, \"formats\": [\"image/bmp\", \"image/jpeg\", \"image/tiff\", \"image/png\", \"image/png8\", \"image/png24\", \"image/png32\", \"image/gif\", \"image/svg+xml\"], \"title\": \"ADRESSES\", \"minScale\": \"944.9404760000000\", \"queryable\": true, \"llbbox\": [\"2.654318\", \"49.426123\", \"6.651396\", \"51.110623\"]}}",
+    "ows_url": "http://geoservices.wallonie.be/arcgis/services/TOPOGRAPHIE/PICC_VDIFF/MapServer/WMSServer",
+    "stack_order": 28,
+    "styles": "",
+    "fixed": false,
+    "local": false,
+    "transparent": true
+  },
+  "model": "maps.maplayer",
+  "pk": 337
 }
-
 ]
