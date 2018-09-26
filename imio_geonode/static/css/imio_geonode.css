@@ -5,3 +5,11 @@
         margin-top: 15px;
         height: 50px;
 }
+
+.home .jumbotron {
+    background: #fff;
+    color: #000;
+    margin-bottom: 0;
+    padding: 7.5em 0 3.75em;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
+}

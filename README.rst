@@ -54,3 +54,9 @@ Charger la carte template
 -------------------------
 
 python manage.py loaddata map_template.json
+
+Migration 2.4 vers 2.6
+-----------------------
+
+python manage.py makemigrations
+python manage.py migrate --fake-initial
