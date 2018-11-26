@@ -60,3 +60,8 @@ Migration 2.4 vers 2.6
 
 python manage.py makemigrations
 python manage.py migrate --fake-initial
+
+Charger la configuration de reperage par defaut
+-------------------------
+
+python manage.py loaddata imio_survey.json
