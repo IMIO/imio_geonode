@@ -1,73 +1,128 @@
-postgis:
-    build: Dockerfiles/postgis/
-    hostname: postgis
-    container_name: postgis
-    ports:
-        - "5433:5432"
-    volumes:
-        - ./postgres_data:/var/lib/postgresql
-    net: imiogeonode
+version: '2.2'
+services:
+    postgis:
+        build: Dockerfiles/postgis/
+        hostname: postgis
+        container_name: postgis
+        ports:
+            - "5433:5432"
+        volumes:
+            - ./postgres_data:/var/lib/postgresql
+        networks: 
+            - imiogeonode
 
-rabbitmq:
-    image: rabbitmq
-    hostname: rabbitmq
-    container_name: rabbitmq
-    ports:
-        - "5672:5672"
-        - "15672:15672"
-    net: imiogeonode
+    rabbitmq:
+        image: rabbitmq
+#    restart: unless-stopped
+        container_name: rabbitmq4
+        stdin_open: true
+        tty: true
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        labels:
+            org.geonode.component: rabbitmq
+            org.geonode.instance.name: geonode
+        networks: 
+            - imiogeonode
 
-geoserver:
-    build: Dockerfiles/geoserver/
-    hostname: geoserver
-    container_name: geoserver
-    ports:
-        - 8080:8080
-    environment:
-        - JAVA_OPTS='-Xmx1g'
-        - Xmx=2048M
-        - XX:MaxPermSize=256M
-    volumes:
-        - ./geoserver_data:/opt/geoserver/data_dir
-    net: imiogeonode
+    data-dir-conf:
+        image: geonode/geoserver_data:2.14.x
+#        restart: on-failure
+        container_name: gsconf4
+        labels:
+            org.geonode.component: conf
+            org.geonode.instance.name: geonode
+        command: /bin/true
+        volumes:
+            - geoserver-data-dir:/geoserver_data/data
 
-# NOTES:
-#   - The C_FORCE_ROOT variable allows celery to run as the root user.
-surveyworker:
-    build: .
-    environment:
-        - C_FORCE_ROOT=true
-    #hostname: geonode-worker
-    #scontainer_name: geonode-worker
-    volumes:
-        - .:/opt/imio_geonode/
-    entrypoint:
-        - /usr/bin/python
-    command: manage.py celery worker -E -lINFO
-    net: imiogeonode
+    geoserver:
+        image: geonode/geoserver:2.14.x
+#        restart: unless-stopped
+        container_name: geoserver4
+        stdin_open: true
+        # tty: true
+        labels:
+            org.geonode.component: geoserver
+            org.geonode.instance.name: geonode
+        depends_on:
+            - postgis
+            # - elasticsearch
+            - rabbitmq
+            - data-dir-conf
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - geoserver-data-dir:/geoserver_data/data
+        env_file:
+            - ./scripts/docker/env/production/geoserver.env
+        networks: 
+            - imiogeonode
 
-geonode:
-    build: .
-    environment:
-        - C_FORCE_ROOT=true
-    hostname: geonode
-    container_name: geonode
-    ports:
-        - 8000:8000
-    volumes:
-        - .:/opt/imio_geonode/
-    entrypoint:
-        - /usr/bin/python
-    command: manage.py runserver 0.0.0.0:8000
-    net: imiogeonode
+    #geoserver:
+    #    build: Dockerfiles/geoserver/
+    #    hostname: geoserver
+    #    container_name: geoserver
+    #    ports:
+    #        - 8080:8080
+    #    environment:
+    #        - JAVA_OPTS='-Xmx1g'
+    #        - Xmx=2048M
+    #        - XX:MaxPermSize=256M
+    #    volumes:
+    #        - ./geoserver_data:/opt/geoserver/data_dir
+    #    net: imiogeonode
+
+    # NOTES:
+    #   - The C_FORCE_ROOT variable allows celery to run as the root user.
+    surveyworker:
+        build: .
+        environment:
+            - C_FORCE_ROOT=true
+        #hostname: geonode-worker
+        #scontainer_name: geonode-worker
+        volumes:
+            - .:/opt/imio_geonode/
+        entrypoint:
+            - /usr/bin/python
+        command: manage.py celery worker -E -lINFO
+        networks: 
+            - imiogeonode
+
+    geonode:
+        build: .
+        environment:
+            - C_FORCE_ROOT=true
+        hostname: geonode
+        container_name: geonode
+        ports:
+            - 8000:8000
+        volumes:
+            - .:/opt/imio_geonode/
+        entrypoint:
+            - /usr/bin/python
+        command: manage.py runserver 0.0.0.0:8000
+        networks: 
+            - imiogeonode
 
 
-nginx:
-    build: Dockerfiles/nginx/
-    net: imiogeonode
-    ports:
-        - 80:80
-#    links:
-#        - geonode
-#        - geoserver
-#        - postgis
+    nginx:
+        build: Dockerfiles/nginx/
+        networks: 
+            - imiogeonode
+        depends_on:
+            - geonode
+            - geoserver
+        ports:
+            - 80:80
+    #    links:
+    #        - geonode
+    #        - geoserver
+    #        - postgis
+
+volumes:
+  geoserver-data-dir:
+    name: gsdatadir
+
+networks:
+  imiogeonode:

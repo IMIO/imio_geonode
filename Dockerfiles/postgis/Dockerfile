@@ -1,9 +1,8 @@
 FROM postgres:9.4
 MAINTAINER Benoît Suttor <bsuttor@imio.com>
 
-ENV POSTGIS_MAJOR 2.1
 
-RUN apt-get update && apt-get install -y postgresql-9.4-postgis-2.1 --fix-missing
+RUN apt-get update && apt-get install -y postgresql-9.4-postgis
 
 # RUN ./docker-entrypoint.sh postgres
 # USER postgres
